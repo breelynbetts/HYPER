@@ -39,13 +39,13 @@ console.log('HELLO!')
   <td>
 
 ```
-FUNC fibonacci( INT num)! 
-    DOES num == 0: 
-        GIMME 0
-    OR DOES num == 1 OR num == 2: 
-        GIMME 1
+FUNC fibonacci( INT num) ~  
+    DOES num == 0 ~
+        GIMME 0!
+    OR DOES num == 1 OR num == 2 ~ 
+        GIMME 1!
     
-    SAY fibonacci(num-2) + fibonacci(num-1)
+    SAY fibonacci(num-2) + fibonacci(num-1)!
 ```
 
   </td>
