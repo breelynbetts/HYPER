@@ -1,11 +1,13 @@
 # HYPER
 
+![Logo](./hyper.png)
+
 ## Example Programs
 
 <table>
   <tr>
   <th>HYPER!</th>
-  <th>JavaScript</th>
+  <th>Python</th>
   </tr>
 
   <tr>
@@ -16,15 +18,13 @@ SAY "HELLO!"!
 ```
 
   </td>
-
   <td>
 
-```Python
+```python
 print('HELLO!')
 ```
 
   </td>
-
   </tr>
 </table>
 
