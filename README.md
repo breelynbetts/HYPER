@@ -19,8 +19,8 @@ SAY "HELLO!"
 
   <td>
 
-```javascript
-console.log('HELLO!')
+```Python
+print('HELLO!')
 ```
 
   </td>
@@ -32,7 +32,7 @@ console.log('HELLO!')
 <table>
   <tr>
   <th>HYPER!</th>
-  <th>JavaScript</th>
+  <th>Python</th>
   </tr>
 
   <tr>
