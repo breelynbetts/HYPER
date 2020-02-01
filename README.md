@@ -40,12 +40,12 @@ print('HELLO!')
 
 ```
 FUNC fibonacci( INT num) ~  
-    DOES num == 0 ~
+    TRY num EQUAL 0 ~
         GIMME 0!
-    OR DOES num == 1 OR num == 2 ~ 
+    NO?TRY num EQUAL 1 OR num EQUAL 2 ~ 
         GIMME 1!
     
-    SAY fibonacci(num-2) + fibonacci(num-1)!
+    SAY fibonacci(num-2) ADD fibonacci(num-1)!
 ```
 
   </td>
