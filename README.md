@@ -39,10 +39,10 @@ print('HELLO!')
   <td>
 
 ```
-FUNC fibonacci( INT num) ~  
-    TRY num EQUAL 0 ~
+FUNC fibonacci( INT num): 
+    TRY num EQUAL 0:
         GIMME 0!
-    NO?TRY num EQUAL 1 OR num EQUAL 2 ~ 
+    NO?TRY num EQUAL 1 OR num EQUAL 2:
         GIMME 1!
     
     SAY fibonacci(num-2) ADD fibonacci(num-1)!
