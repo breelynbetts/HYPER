@@ -1,6 +1,6 @@
 # HYPER
 
-![Logo](./hyper.png)
+![Logo](./hyper.jpg)
 
 ## Example Programs
 
