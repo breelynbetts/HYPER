@@ -40,9 +40,9 @@ print('HELLO!')
 
 ```
 FUNC fibonacci( INT num ): 
-    TRY num EQUAL 0:
+    TRY num ISEQUAL 0:
         GIMME 0!
-    NO?TRY num EQUAL 1 OR num EQUAL 2:
+    NO?TRY num ISEQUAL 1 OR num ISEQUAL 2:
         GIMME 1!
     
     SAY fibonacci(num-2) ADD fibonacci(num-1)!
