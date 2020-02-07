@@ -148,3 +148,37 @@ for i in range (1,11):
   </tr>
 </table>
 
+
+
+<table>
+  <tr>
+  <th>HYPER!</th>
+  <th>Python</th>
+  </tr>
+
+  <tr>
+  <td>
+
+```
+arr IS ['Hi', 'I'm', 'Hyper']!
+arr.push('LOL')!
+
+SAY('element0: ', arr[0])!
+
+```
+
+  </td>
+
+  <td>
+
+```python
+List = ['Hi', 'I'm', 'Hyper']
+List.append('LOL')
+
+print "List[0]: ", List[0]
+```
+
+  </td>
+
+  </tr>
+</table>
