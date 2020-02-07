@@ -96,7 +96,6 @@ SAY("The largest number is", largest)!
   <td>
 
 ```python
-
 num1 = 10
 num2 = 14
 num3 = 12
@@ -109,10 +108,43 @@ else:
   largest = num3
  
 print("The largest number is", largest)
-
 ```
 
   </td>
 
   </tr>
 </table>
+
+<table>
+  <tr>
+  <th>HYPER!</th>
+  <th>Python</th>
+  </tr>
+
+  <tr>
+  <td>
+
+```
+num IS 12
+
+LOOKAT i IN range(1,11):
+  SAY(num, 'x', i, '=', num MULT i)!
+
+```
+
+  </td>
+
+  <td>
+
+```python
+num = 12
+
+for i in range (1,11):
+  print(num, 'x', i, '=', num*i)
+```
+
+  </td>
+
+  </tr>
+</table>
+
