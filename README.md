@@ -76,9 +76,10 @@ def fibonacci(num):
   <td>
 
 ```
-INT num1 IS 10
-INT num2 IS 14
-INT num3 IS 12
+INT num1 IS 10!
+INT num2 IS 14!
+INT num3 IS 12!
+INT largest!
 
 TRY (num1 GRTEQ num2) AND (num1 GRTEQ num3):
   largest IS num1!
@@ -125,7 +126,7 @@ print("The largest number is", largest)
   <td>
 
 ```
-INT num IS 12
+INT num IS 12!
 
 LOOKAT i IN range(1,11):
   SAY(num, '*', i, '=', num MULT i)!
