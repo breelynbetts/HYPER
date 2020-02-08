@@ -185,36 +185,3 @@ print "List[0]: ", List[0]
 </table>
 
 
-<table>
-  <tr>
-  <th>HYPER!</th>
-  <th>Python</th>
-  </tr>
-
-  <tr>
-  <td>
-
-```
-ARR arrary!
-array IS ['Hi', 'I'm', 'Hyper']!
-array.push('LOL')!
-
-SAY('element0: ', array[0])!
-
-```
-
-  </td>
-
-  <td>
-
-```python
-List = ['Hi', 'I'm', 'Hyper']
-List.append('LOL')
-
-print "List[0]: ", List[0]
-```
-
-  </td>
-
-  </tr>
-</table>
