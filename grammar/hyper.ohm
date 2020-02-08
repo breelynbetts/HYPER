@@ -82,3 +82,79 @@ HYPER {
     Method      = Function
     Paren_Exp   = "(" Exp ")"
 }
+
+// HYPER 2.0
+HYPER {
+	Program 	= Block   	--program 
+    Block		= Statement+
+    Suite 		= ":" SimpleStmt newline		--small
+    			| ":" newline indent Statement+ dedent	--complex
+    Statement	= SimpleStmt	--simple
+    			| Loop 
+                | Conditional 
+                | Function 
+   
+   	SimpleStmt 	= Type id "IS" Exp "!" 			-- assignment
+    			| Declaration "!"               -- declaration
+                | "SAY" Exp "!"                 -- print
+                | "GIMME" Exp "!"               -- return
+                | "LEAVE" "!"                   -- break
+                | Exp "!" 						-- Expression
+    
+    Exp 		= Exp "OR" Exp1			-- or
+    			| Exp "AND" Exp1 		-- and
+                | Exp1
+    Exp1		= Exp1 relop Exp2		-- binary
+    			| Exp2
+    Exp2		= Exp2 addop Exp3		-- binary
+    			| Exp3
+    Exp3		= Exp3 mulop Exp4		-- binary
+    			| Exp4
+    Exp4		= prefixop Exp5
+    			| Exp5
+    Exp5 		= Exp6 "**" Exp5		-- pow
+    			| Exp6
+    Exp6		= boollit
+    			| numlit
+                | strlit
+                | nonelit
+                | "(" Exp ")"
+                | Array
+                | Dictionary
+                | Tuple
+                | Range 
+                
+    Loop        = For | While
+                
+	For			= "LOOKAT" Type id "IN" Exp Suite 		-- for
+    While		= "GOOOO" "(" Exp ")" ":" Suite         -- while
+    Conditional = "TRY" Exp Suite
+    			  ("NO?TRY" Exp Suite)* 
+                  ("NO???" Exp Suite)?					-- if
+    Function 	= "FUNC" (Type | "void") id "(" Params ")" Suite  -- function
+    Params      =  ListOf<Param, ",">
+    Param 		= id ( "=" Exp )?					-- param
+                
+    logOp       = "OR" | "AND"
+    relOp       = relOp_adv
+                | relOp_sim
+    relOp_adv   = "LESSEQ"
+                | "ISEQ" 
+                | "NOTEQ" 
+                | "GRTEQ" 
+    relOp_sim   = "LESS" | "GRT"
+    mulOp       = "MULT" | "DIV" | "MOD"
+    newline		= "\n"+
+    indent 		= "⇨"
+    dedent		= "⇦"
+    
+	Type		= "BOO" | "INT" | "FLT" 
+    			| "STR" | "TUP" | "ARR" | "DICT"
+                | "FUNC" | "LITERALLYNOTHING" 
+                
+    space       += comment
+    comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
+                | "!?" (~"?!" any)* "!?"                             -- multiLine
+         
+   
+}
