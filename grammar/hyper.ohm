@@ -1,160 +1,99 @@
+⋮
 HYPER {
-    Program     = newline* Body newline*
-    Body        = newline* indent Body dedent
-    Statement   = id "IS" Exp "!"                                           -- assignment
-                | Declaration "!"                                    -- declaration
-                | "SAY" Exp "!"                                      -- print
-                | "GIMME" Exp "!"                                    -- return
-                | "LEAVE" "!"                                        -- break
-                | Function 										     -- function
-                | If  											     -- if statment
-                | Loop 						                         -- loop
-                | Exp "!"                                            -- Expression
-    Function    = "FUNC" id ListOf<Parameter, ","> ":" Block         -- declaration
-    If          = "TRY" "(" Exp ")" Block
-                  ("NO?TRY" "(" Exp ")" Block)*
-                  ("NO???" Block)?
-    Loop        = ("KEEPGOING" ListOf<Statement_assignment, ","> ":"
-                  (Exp) "!"
-                  (Statement_reassignment|Exp4_increment)")" Block)  -- for
-                | "GOOOO" "(" Exp ")" ":" Block                          -- while
-    Exp         = Exp logOp Exp1                                     -- logical
-                | Exp1
-    Exp1        = Exp1 relOp Exp1                                    -- relative
-                | Exp2
-    Exp2        = Exp2 addop Exp3                                    -- addition
-                | Exp3
-    Exp3        = Exp3 mulOp Exp4                                    -- multiplication
-                | Exp4
-    Exp4        = Exp6 sufixOp                                       -- increment
-                | Exp5
-    Exp5        = (PropAccess | id) "(" ListOf<Exp, ","> ")"         -- fCall
-                | PropAccess
-                | "[" ListOf<Exp, ","> "]"                           -- ArrayExpression
-                | Exp6
-    Exp6        = VarExp
-                | numlit
-                | stringlit
-                | boolean
-                | PropAccess
-                | Object
-                | null
-                | Paren_Exp
-    PropAccess  = VarExp "[" Exp "]"                                 -- brackets
-                | VarExp "." id                                      -- dot
-    comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
-                | "!?" (~"?!" any)* "!?"                             -- multiLine
-    logOp       = "OR" | "AND"
-    relOp       = relOp_adv
-                | relOp_sim
-    relOp_adv   = "LESSEQ"
-                | "ISEQ" 
-                | "NOTEQ" 
-                | "GRTEQ" 
-    relOp_sim   = "LESS" | "GRT"
-    mulOp       = "MULT" | "DIV" | "MOD"
-    sufixOp     = "++" | "--"
-    addop       = "ADD" | "SUB"
-    Type        =  ( IntType | FloatType | StringType | BooleanType | ArrayType | TupleType | NoneType )
-  	IntType     =  "INT"
-    FLoatType	=  "FLT"
-  	StringType  =  "STR"
-  	BooleanType =  "BOO"
-  	ArrayType   =  "ARR<" Type ">"
-  	TupleType   =  "TUP<" Type ">"
-  	NoneType    =  "LITERALLYNOTHING"
-  	keyword     =  ("GOOOO" | "TRY" | "NO?TRY" | "NO???" | "GIMME" | "LEAVE" | "AND" | "OR" | "IS"
-              	|  "NOT" | "TRUE" | "FALSE" | "KEEPGOING" | "from" | "to" | "by" | "equals") ~idrest
-    id          = ~keyword letter idrest*
-    idrest      = "_" | alnum
-    stringlit   = "\"" (~("\""|"\n") any)* "\""
-    intlit      = "-"? digit+
-    declit      = "-"? digit+ "." digit*
-    numlit      = declit | intlit
-    boolean     = "TRUE" | "FALSE"
-    null        = "temp"
-    space       += comment
-    access      = "CONSTANT_VARIABLE" | "LOCAL_VARIABLE" | "GLOBAL_VARIABLE"
-    Parameter   = Type "@" id
-    Object      = "#" ListOf<Property, ","> "#"
-    Property    = Field | Method
-    Field       = Type "@" id "~" Exp
-    Method      = Function
-    Paren_Exp   = "(" Exp ")"
-}
-
-// HYPER 2.0
-HYPER {
-	Program 	= Block   	--program 
-    Block		= Statement+
-    Suite 		= ":" SimpleStmt newline		--small
-    			| ":" newline indent Statement+ dedent	--complex
-    Statement	= SimpleStmt	--simple
-    			| Loop 
+    Program     = Block     --program 
+    Block       = Statement+
+    Suite       = ":" SimpleStmt newline        --small
+                | ":" newline indent Statement+ dedent  --complex
+    Statement   = SimpleStmt    --simple
+                | Loop 
                 | Conditional 
                 | Function 
    
-   	SimpleStmt 	= Type id "IS" Exp "!" 			-- assignment
-    			| Declaration "!"               -- declaration
+    SimpleStmt  = Assignment "!"                -- assignment
+                | Declaration "!"               -- declaration
                 | "SAY" Exp "!"                 -- print
-                | "GIMME" Exp "!"               -- return
+                | "GIMME" Exp? "!"               -- return
                 | "LEAVE" "!"                   -- break
-                | Exp "!" 						-- Expression
+                | Exp "!"                       -- Expression
     
-    Exp 		= Exp "OR" Exp1			-- or
-    			| Exp "AND" Exp1 		-- and
+    Exp         = Exp logop Exp1        -- logical
                 | Exp1
-    Exp1		= Exp1 relop Exp2		-- binary
-    			| Exp2
-    Exp2		= Exp2 addop Exp3		-- binary
-    			| Exp3
-    Exp3		= Exp3 mulop Exp4		-- binary
-    			| Exp4
-    Exp4		= prefixop Exp5
-    			| Exp5
-    Exp5 		= Exp6 "**" Exp5		-- pow
-    			| Exp6
-    Exp6		= boollit
-    			| numlit
+    Exp1        = Exp1 relop Exp2       -- binary
+                | Exp2
+    Exp2        = Exp2 addop Exp3       -- binary
+                | Exp3
+    Exp3        = Exp3 mulop Exp4       -- binary
+                | Exp4
+    Exp4        = prefixop Exp5         -- negate
+                | Exp5
+    Exp5        = Exp7 suffixop         -- increment
+                | Exp6
+    Exp6        = Exp7 "**" Exp6        -- pow
+                | Exp7
+    Exp7        = boollit
+                | numlit
                 | strlit
                 | nonelit
-                | "(" Exp ")"
                 | Array
                 | Dictionary
                 | Tuple
+                | Call
+                | VarExp
                 | Range 
+                | "(" Exp ")"           -- parens
                 
-    Loop        = For | While
                 
-	For			= "LOOKAT" Type id "IN" Exp Suite 		-- for
-    While		= "GOOOO" "(" Exp ")" ":" Suite         -- while
+    Loop        = For | While           
+    For         = "LOOKAT" type id "IN" Exp Suite       -- for
+    While       = "GOOOO" "(" Exp ")" ":" Suite         -- while
     Conditional = "TRY" Exp Suite
-    			  ("NO?TRY" Exp Suite)* 
-                  ("NO???" Exp Suite)?					-- if
-    Function 	= "FUNC" (Type | "void") id "(" Params ")" Suite  -- function
+                  ("NO?TRY" Exp Suite)* 
+                  ("NO???" Exp Suite)?                  -- if
+    Function 	= "FUNC" (type | "void") id "(" Params ")" Suite  -- function
+    Array		=
+    Dictionary	=
+    Tuple		= 
+    Call 		= 
+    VarExp		=
+    Range		= 
     Params      =  ListOf<Param, ",">
     Param 		= id ( "=" Exp )?					-- param
-                
-    logOp       = "OR" | "AND"
-    relOp       = relOp_adv
-                | relOp_sim
-    relOp_adv   = "LESSEQ"
+    Assignment  = type id "IS" Exp 					-- assign
+    Declaration	= type id 							-- decl
+    id 			= ~keyword (letter | "_") (alnum | "_")*
+    
+    
+    prefixop	= "-" | "!" 
+    suffixop	= "++" | "--"
+    logop       = "OR" | "AND"
+    relop       = relop_adv
+                | relop_sim
+    relop_adv   = "LESSEQ"
                 | "ISEQ" 
                 | "NOTEQ" 
                 | "GRTEQ" 
-    relOp_sim   = "LESS" | "GRT"
-    mulOp       = "MULT" | "DIV" | "MOD"
+    relop_sim   = "LESS" | "GRT"
+    mulop       = "MULT" | "DIV" | "MOD"
+    addop		= "ADD" | "SUB"
+    
+    boollit 	= 
+    numlit		=
+   	strlit		= 
+    nonelit		= 
+    
+   	keyword 	= (type | "GOOOO" | "TRY" | "NO?TRY" | "NO???"
+    			| "LOOKAT" | "SAY" | "GIMME" | "LEAVE")
+	type		= basicType | "TUP" | "ARR" | "DICT"
+                | "FUNC"  | "RANGE" 
+    basicType	= "BOO" 
+    			| "INT" 
+                | "FLT" 
+                | "STR" 
+                | "LITERALLYNOTHING"
     newline		= "\n"+
     indent 		= "⇨"
-    dedent		= "⇦"
-    
-	Type		= "BOO" | "INT" | "FLT" 
-    			| "STR" | "TUP" | "ARR" | "DICT"
-                | "FUNC" | "LITERALLYNOTHING" 
-                
+    dedent		= "⇦"        
     space       += comment
     comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
-                | "!?" (~"?!" any)* "!?"                             -- multiLine
-         
-   
+                | "!?" (~"?!" any)* "!?"                             -- multiLine  
 }
