@@ -128,7 +128,7 @@ print("The largest number is", largest)
 ```
 INT num IS 12!
 
-LOOKAT i IN range(1,11):
+LOOKAT INT i IN range(1,11):
   SAY(num, '*', i, '=', num MULT i)!
 
 ```
