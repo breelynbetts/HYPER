@@ -76,9 +76,9 @@ def fibonacci(num):
   <td>
 
 ```
-num1 IS 10
-num2 IS 14
-num3 IS 12
+INT num1 IS 10
+INT num2 IS 14
+INT num3 IS 12
 
 TRY (num1 GRTEQ num2) AND (num1 GRTEQ num3):
   largest IS num1!
@@ -125,7 +125,7 @@ print("The largest number is", largest)
   <td>
 
 ```
-num IS 12
+INT num IS 12
 
 LOOKAT i IN range(1,11):
   SAY(num, 'x', i, '=', num MULT i)!
@@ -160,10 +160,11 @@ for i in range (1,11):
   <td>
 
 ```
-arr IS ['Hi', 'I'm', 'Hyper']!
-arr.push('LOL')!
+ARR arrary!
+array IS ['Hi', 'I'm', 'Hyper']!
+array.push('LOL')!
 
-SAY('element0: ', arr[0])!
+SAY('element0: ', array[0])!
 
 ```
 
