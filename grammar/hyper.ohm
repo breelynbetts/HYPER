@@ -106,7 +106,7 @@ HYPER {
     escape      = "\\" ("\\" | "\"" | "n")                     -- simple
                 | "\\u{" hexDigit+ "}"                         -- codepoint
     newline		= "\n"+
-    indent 		= "⇨"
+    indent 		= "    "
     dedent		= "⇦"        
     space       += comment
     comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
