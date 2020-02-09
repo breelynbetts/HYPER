@@ -1,7 +1,7 @@
 HYPER {
-    Program 	        = Block   	--program 
+	Program 	= Block 					--program 
     Block		= Statement+
-    Suite 		= ":" SimpleStmt newline		--small
+    Suite 		= ":" SimpleStmt newline 		--small
     			| ":" newline indent Statement+ dedent	--complex
     Statement	= SimpleStmt	--simple
     			| Loop 
@@ -11,7 +11,7 @@ HYPER {
    	SimpleStmt 	= Assignment "!"  			    -- assignment
     			| Declaration "!"               -- declaration
                 | "SAY" Exp "!"                 -- print
-                | "GIMME" Exp? "!"               -- return
+                | "GIMME" Exp? "!"              -- return
                 | "LEAVE" "!"                   -- break
                 | Exp "!" 						-- Expression
     
@@ -41,21 +41,20 @@ HYPER {
                 | Range 
                 | "(" Exp ")"			-- parens
                 
-                
     Loop        = For | While           
 	For			= "LOOKAT" Type id "IN" Exp Suite 		-- for
-    While		= "GOUNTIL" "(" Exp ")" ":" Suite         -- while
+    While		= "UNTIL" "(" Exp ")" ":" Suite         -- while
     Conditional = "TRY" Exp Suite
     			  ("NO?TRY" Exp Suite)* 
                   ("NO???" Exp Suite)?					-- if
     Function 	= "FUNC" (Type | "void") id "(" Params ")" Suite  -- function
-    Array		=
-    Dictionary	=
-    Tuple		= 
-    Call 		= id "(" ListOf <Arg, ","> ")"
+    Array		= "[" Exps "]"
+    Dictionary	= "{" ListOf<KeyValue, ","> "}"
+    Tuple		= "(" NonemptyListOf<Exp5, ","> ")"
+    Call 		= (VarExp | id ) "(" ListOf <Arg, ","> ")"
     VarExp		= VarExp "[" Exp "]"                                 -- brackets
                 | VarExp "." id                                      -- dot
-                |  id                                        -- simple
+                | id                                                -- simple
     Range		= ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      =  ListOf<Param, ",">
     Param 		= id ( "=" Exp )?					-- param
@@ -82,6 +81,13 @@ HYPER {
    	strlit		= "\"" (~"\\" ~"\"" ~"\n" any | escape)* "\""
     nonelit		= "LITERALLYNOTHING"
     
+    Exps 		= ListOf<Exp, ",">
+    KeyValue	= Key ":" Exp
+    Key 		= boollit
+                |  numlit
+                |  strlit
+                |  nonelit
+                |  VarExp
    	keyword 	= (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
     			| "LOOKAT" | "SAY" | "GIMME" | "LEAVE" |"TUP" 
                 | "ARR" | "DICT"| "FUNC"  | "RANGE")
