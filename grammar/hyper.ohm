@@ -42,7 +42,7 @@ HYPER {
     While       = "UNTIL" "(" Exp ")" Suite                         -- while
     Conditional = "TRY" Exp Suite
                   ("NO?TRY" Exp Suite)* 
-                  ("NO???" Exp Suite)?                              -- if
+                  ("NO???" Suite)?                              -- if
     Function    = "FUNC" (Type | "void") id "(" Params ")" Suite    -- function
     Array       = "[" Exps "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
