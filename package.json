@@ -1,0 +1,19 @@
+{
+  "name": "hyper",
+  "version": "1.0.0",
+  "description": "This repository will write a compiler for the HYPER! language specified in our grammar.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --collect-coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breelynbetts/HYPER.git"
+  },
+  "author": "Breelyn Betts, Maya Dahlke, Lexi Weingardt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/breelynbetts/HYPER/issues"
+  },
+  "homepage": "https://github.com/breelynbetts/HYPER#readme"
+}
