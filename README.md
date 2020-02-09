@@ -155,10 +155,10 @@ print('Hello, World!')
   <td>
 
 ```
-FUNC fibonacci(INT num): 
-    TRY num ISEQUAL 0:
+FUNC INT fibonacci(INT num): 
+    TRY num EQUALS 0:
         GIMME 0!
-    NO?TRY num ISEQUAL 1 OR num ISEQUAL 2:
+    NO?TRY num EQUALS 1 OR num EQUALS 2:
         GIMME 1!
     GIMME fibonacci(num-2) ADD fibonacci(num-1)!
 ```
@@ -193,7 +193,7 @@ def fibonacci(num):
   <td>
 
 ```
-FUNC gcd(INT x, INT y):
+FUNC INT gcd(INT x, INT y):
     UNTIL(y):
         x, y = y, x % y!
     GIMME x!
@@ -315,7 +315,7 @@ for i in range(1, 11):
   <td>
 
 ```
-FUNC isEven(INT num):
+FUNC BOO isEven(INT num):
     TRY num MOD 2 ISEQUAL 0:
         GIMME TRUE!
     NO???:
