@@ -10,12 +10,13 @@ INT x!
 
 LOOKAT INT x IN range(0,10):
     SAY x!
+
 `;
 
 
-describe('Syntax Checker', () => {
-    test('accepts all syntactic forms', (done) => {
-        expect(syntaxCheck(program)).toBe(true);
-        done();
-    });
-})
+describe('The syntax checker', () => {
+  test('accepts the mega program with all syntactic forms', (done) => {
+    expect(syntaxCheck(program)).toBe(true);
+    done();
+  });
+});
