@@ -32,9 +32,9 @@ STR a IS "abc"!
 
 BOO b IS TRUE!
 
-ARR c IS = ["Hi", "I", "am", "hyper"]!
+ARR c IS ["Hi", "I", "am", "hyper"]!
 
-TUP d IS = (1, 2.5, "hello")!
+TUP d IS (1, 2.5, "hello")!
 ```
 
 ## Operators
