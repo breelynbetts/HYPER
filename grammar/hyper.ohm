@@ -1,5 +1,5 @@
 HYPER {
-	Program 	= Block   	--program 
+    Program 	        = Block   	--program 
     Block		= Statement+
     Suite 		= ":" SimpleStmt newline		--small
     			| ":" newline indent Statement+ dedent	--complex
