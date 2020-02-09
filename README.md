@@ -160,7 +160,7 @@ FUNC INT fibonacci(INT num):
         GIMME 0!
     NO?TRY num EQUALS 1 OR num EQUALS 2:
         GIMME 1!
-    GIMME fibonacci(num-2) ADD fibonacci(num-1)!
+    GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!
 ```
 
   </td>
@@ -195,7 +195,7 @@ def fibonacci(num):
 ```
 FUNC INT gcd(INT x, INT y):
     UNTIL(y):
-        x, y = y, x % y!
+        x, y = y, x MOD y!
     GIMME x!
 
 ```
@@ -316,7 +316,7 @@ for i in range(1, 11):
 
 ```
 FUNC BOO isEven(INT num):
-    TRY num MOD 2 ISEQUAL 0:
+    TRY num MOD 2 EQUALS 0:
         GIMME TRUE!
     NO???:
         GIMME FALSE!

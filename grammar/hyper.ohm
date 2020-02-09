@@ -1,33 +1,30 @@
 HYPER {
-    Program     = Block                                                 --program 
-    Block       = Statement+
-    Suite       = ":" SimpleStmt  newline                               --small
-                | ":"  indent Statement+ dedent                         --complex
-    Statement   = SimpleStmt                                            --simple
+    Program     = Statement+ newline*                               --program 
+    Statement   = SimpleStmt newline                                --simple
                 | Loop 
                 | Conditional 
                 | Function 
-   
-   SimpleStmt   = Assignment "!"                                        -- assignment
-                | Declaration "!"                                       -- declaration
-                | "SAY" Exp "!"                                         -- print
-                | "GIMME" Exp? "!"                                      -- return
-                | "LEAVE" "!"                                           -- break
-                | Exp "!"                                               -- Expression
-    
-    Exp         = Exp logop Exp1                                        -- logical
+    SimpleStmt  = Assignment "!"                                    -- assignment
+                | Declaration "!"                                   -- declaration
+                | "SAY" Exp "!"                                     -- print
+                | "GIMME" Exp? "!"                                  -- return
+                | "LEAVE" "!"                                       -- break
+                | Exp "!"                                           -- Expression
+    Suite       = ":" SimpleStmt newline                            --small
+                | ":" newline indent Statement+ dedent              --complex
+    Exp         = Exp logop Exp1                                    -- logical
                 | Exp1
-    Exp1        = Exp1 relop Exp2                                       -- binary
+    Exp1        = Exp1 relop Exp2                                   -- binary
                 | Exp2
-    Exp2        = Exp2 addop Exp3                                       -- binary
+    Exp2        = Exp2 addop Exp3                                   -- binary
                 | Exp3
-    Exp3        = Exp3 mulop Exp4                                       -- binary
+    Exp3        = Exp3 mulop Exp4                                   -- binary
                 | Exp4
-    Exp4        = prefixop Exp5                                         -- negate
+    Exp4        = prefixop Exp5                                     -- negate
                 | Exp5
-    Exp5        = Exp7 suffixop                                         -- increment
+    Exp5        = Exp7 suffixop                                     -- increment
                 | Exp6
-    Exp6        = Exp7 "**" Exp6                                        -- pow
+    Exp6        = Exp7 "**" Exp6                                    -- pow
                 | Exp7
     Exp7        = boollit
                 | numlit
@@ -39,38 +36,36 @@ HYPER {
                 | Call
                 | VarExp
                 | Range 
-                | "(" Exp ")"                                           -- parens
-                
+                | "(" Exp ")"                                       -- parens
     Loop        = For | While           
-    For         = "LOOKAT" Type id "IN" Exp Suite                       -- for
-    While       = "UNTIL" "(" Exp ")" ":" Suite                         -- while
+    For         = "LOOKAT" Type id "IN" Exp Suite                        -- for
+    While       = "UNTIL" "(" Exp ")" Suite                         -- while
     Conditional = "TRY" Exp Suite
                   ("NO?TRY" Exp Suite)* 
-                  ("NO???" Exp Suite)?                                  -- if
-    Function    = "FUNC" (Type | "void") id "(" Params ")" Suite        -- function
+                  ("NO???" Exp Suite)?                              -- if
+    Function    = "FUNC" (Type | "void") id "(" Params ")" Suite    -- function
     Array       = "[" Exps "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
     Call        = (VarExp | id ) "(" ListOf <Arg, ","> ")"
-    VarExp      = VarExp "[" Exp "]"                                    -- brackets
-                | VarExp "." id                                         -- dot
-                | id                                                    -- simple
+    VarExp      = VarExp "[" Exp "]"                                -- brackets
+                | VarExp "." id                                     -- dot
+                | id                                                -- simple
     Range       = "range" ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      =  ListOf<Param, ",">
-    Param       = Type id ( "=" Exp )?                                   -- param
-    Assignment  = Type id "IS" Exp                                       -- assign
-    Declaration = Type id                                                -- decl
+    Param       = Type id ( "=" Exp )?                              -- param
+    Assignment  = Type id "IS" Exp                                  -- assign
+    Declaration = Type id                                           -- decl
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum
-    Arg         = Exp
-    
+    Arg         = Exp 
     prefixop    = "-" | "!" 
     suffixop    = "++" | "--"
     logop       = "OR" | "AND"
     relop       = relop_adv
                 | relop_sim
     relop_adv   = "LESSEQ"
-                | "ISEQ" 
+                | "EQUALS" 
                 | "NOTEQ" 
                 | "GRTEQ" 
     relop_sim   = "LESS" | "GRT"
@@ -81,7 +76,6 @@ HYPER {
     numlit      = digit+ ("." digit+)?
     strlit      = "\"" (~"\\" ~"\"" ~"\n" any | escape)* "\""
     nonelit     = "LITERALLYNOTHING"
-    
     Exps        = ListOf<Exp, ",">
     KeyValue    = Key ":" Exp
     Key         = boollit
@@ -89,13 +83,12 @@ HYPER {
                 |  strlit
                 |  nonelit
                 |  VarExp
-   keyword      = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
+    keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
                 | "LOOKAT" | "SAY" | "GIMME" | "LEAVE" |"TUP" 
-                | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest
-                
-   Type         = basicType | "TUP" | "ARR" | "DICT"
+                | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest       
+    Type        = basicType | "TUP" | "ARR" | "DICT"
                 | "FUNC"  | "RANGE" 
-   basicType    = "BOO" 
+    basicType   = "BOO" 
                 | "INT" 
                 | "FLT" 
                 | "STR" 
@@ -103,12 +96,12 @@ HYPER {
     RangeType   = VarExp 
                 | Exp
                 
-    escape      = "\\" ("\\" | "\"" | "n")                              -- simple
-                | "\\u{" hexDigit+ "}"                                  -- codepoint
+    escape      = "\\" ("\\" | "\"" | "n")                           -- simple
+                | "\\u{" hexDigit+ "}"                               -- codepoint
     newline     = "\n"+
     indent      = "⇨"
     dedent      = "⇦"        
-    space       += comment
-    comment     = "!!!" (~"\n" any)* "\n"                               -- singleLine
-                | "!?" (~"?!" any)* "!?"                                -- multiLine  
+    space       := " " | "\t" | comment
+    comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
+                | "!?" (~"?!" any)* "!?"                             -- multiLine  
 }
