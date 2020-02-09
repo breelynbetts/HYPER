@@ -77,13 +77,13 @@ NO???:
 ```
 INT x!
 
-LOOKAT x IN range(0, 10):
+LOOKAT INT x IN range(0, 10):
   SAY(x)!
 
 ```
 
 ```
-UNTIL TRUE:
+UNTIL(TRUE):
   SAY("I am hyper!")!
 ```
 
@@ -195,7 +195,8 @@ def fibonacci(num):
 ```
 FUNC INT gcd(INT x, INT y):
     UNTIL(y):
-        x, y = y, x MOD y!
+        x IS y!
+        y IS x MOD Y!
     GIMME x!
 
 ```
@@ -283,7 +284,7 @@ print("The largest number is", largest)
 INT num IS 12!
 
 LOOKAT INT i IN range(1, 11):
-  SAY(num, '*', i, '=', num MULT i)!
+  SAY(num, "*", i, "=", num MULT i)!
 
 ```
 
