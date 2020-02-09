@@ -2,6 +2,58 @@
 
 ![Logo](./hyper.jpg)
 
+## Features
+
+## Types
+# Primitive Types
+
+int: INT
+float: FLT
+string: STR
+boolean: BOO
+array: ARR
+tuple: TUP
+nonetype: LITERALLYNOTHING
+
+## Variable Declaration and Assignment
+
+
+
+## Operators
+
+add: ADD
+subtract: SUB
+multiply: MULT
+divide: DIV
+modulus: MOD
+strict equality: EQUALS
+less than: LESS
+greater than: GRT
+less than or equal: LESSEQ
+greater than or equal: GRTEQ
+logical and: AND
+logical or: OR
+logical not: NOTEQ
+
+## Conditional
+
+```
+INT num IS 3!
+
+TRY num > 0:
+  print("Positive number")
+NO?TRY num == 0:
+  print("Zero")
+NO???:
+  print("Negative number")
+```
+
+## Loops
+
+
+
+## Semantic Errors
+
 ## Example Programs
 
 <table>
