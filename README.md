@@ -196,7 +196,7 @@ def fibonacci(num):
 FUNC INT gcd(INT x, INT y):
     UNTIL(y):
         x IS y!
-        y IS x MOD Y!
+        y IS x MOD y!
     GIMME x!
 
 ```
@@ -269,7 +269,7 @@ print("The largest number is", largest)
   </tr>
 </table>
 
-### Multiplying a Numbers in a Loop
+### Multiplying Numbers in a Loop
 
 <table>
   <tr>
@@ -284,7 +284,7 @@ print("The largest number is", largest)
 INT num IS 12!
 
 LOOKAT INT i IN range(1, 11):
-  SAY(num, "*", i, "=", num MULT i)!
+  SAY(num MULT i)!
 
 ```
 
