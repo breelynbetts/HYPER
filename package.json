@@ -4,6 +4,7 @@
   "description": "This repository will write a compiler for the HYPER! language specified in our grammar.",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "jest --collect-coverage"
   },
   "repository": {

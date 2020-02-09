@@ -1,7 +1,7 @@
 HYPER {
 	Program 	= Block 					--program 
     Block		= Statement+
-    Suite 		= ":" SimpleStmt  		--small
+    Suite 		= ":" SimpleStmt  newline		--small
     			| ":"  indent Statement+ dedent	--complex
     Statement	= SimpleStmt	--simple
     			| Loop 
