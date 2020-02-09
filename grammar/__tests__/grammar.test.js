@@ -6,9 +6,9 @@
 const syntaxCheck = require('../syntax-checker');
 
 const program = String.raw`
-SAY 1; 
-
+INT x!
 `;
+
 
 describe('Syntax Checker', () => {
     test('accepts all syntactic forms', (done) => {
