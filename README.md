@@ -4,35 +4,54 @@
 
 ## Features
 
+Scripting Language <br />
+Class based inheritance <br />
+Strongly typed <br />
+Statically typed <br />
+Higher Order Functions??? <br />
+Optional Parameters??? <br />
+
 ## Types
 
-int: INT
-float: FLT
-string: STR
-boolean: BOO
-array: ARR
-tuple: TUP
-nonetype: LITERALLYNOTHING
+int: INT <br />
+float: FLT <br />
+string: STR <br />
+boolean: BOO <br />
+array: ARR <br />
+tuple: TUP <br />
+nonetype: LITERALLYNOTHING <br />
 
-## Variable Declaration and Assignment
+## Variable Declaration
 
+```
+INT x IS 2!
 
+FLT y IS 3.56!
+
+STR a IS "abc"!
+
+BOO b IS TRUE!
+
+ARR c IS = ["Hi", "I", "am", "hyper"]!
+
+TUP d IS = (1, 2.5, "hello")!
+```
 
 ## Operators
 
-add: ADD
-subtract: SUB
-multiply: MULT
-divide: DIV
-modulus: MOD
-strict equality: EQUALS
-less than: LESS
-greater than: GRT
-less than or equal: LESSEQ
-greater than or equal: GRTEQ
-logical and: AND
-logical or: OR
-logical not: NOTEQ
+add: ADD <br />
+subtract: SUB <br />
+multiply: MULT <br />
+divide: DIV <br /> 
+modulus: MOD <br />
+strict equality: EQUALS <br />
+less than: LESS <br />
+greater than: GRT <br />
+less than or equal: LESSEQ <br />
+greater than or equal: GRTEQ <br />
+logical and: AND <br />
+logical or: OR <br />
+logical not: NOTEQ <br />
 
 ## Conditional
 
@@ -63,6 +82,8 @@ while TRUE:
 ```
 
 ## Semantic Errors
+
+
 
 ## Example Programs
 
