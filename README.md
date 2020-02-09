@@ -1,25 +1,31 @@
-# HYPER
+# HYPER!
 
 ![Logo](./hyper.jpg)
 
+
+## Introduction
+
+Hello there, and welcome to Hyper!, an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax and class-based inheritance for an easier, pragmatic experience.
+
+Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
+
 ## Features
 
-Scripting Language <br />
-Class based inheritance <br />
-Strongly typed <br />
-Statically typed <br />
-Higher Order Functions??? <br />
-Optional Parameters??? <br />
+- Scripting Language <br />
+- Class based inheritance <br />
+- Strongly typed <br />
+- Statically typed <br />
+- Higher Order Functions <br />
 
 ## Types
 
-int: INT <br />
-float: FLT <br />
-string: STR <br />
-boolean: BOO <br />
-array: ARR <br />
-tuple: TUP <br />
-nonetype: LITERALLYNOTHING <br />
+- int: INT <br />
+- float: FLT <br />
+- string: STR <br />
+- boolean: BOO <br />
+- array: ARR <br />
+- tuple: TUP <br />
+- nonetype: LITERALLYNOTHING <br />
 
 ## Variable Declaration
 
@@ -39,19 +45,19 @@ TUP d IS (1, 2.5, "hello")!
 
 ## Operators
 
-add: ADD <br />
-subtract: SUB <br />
-multiply: MULT <br />
-divide: DIV <br /> 
-modulus: MOD <br />
-strict equality: EQUALS <br />
-less than: LESS <br />
-greater than: GRT <br />
-less than or equal: LESSEQ <br />
-greater than or equal: GRTEQ <br />
-logical and: AND <br />
-logical or: OR <br />
-logical not: NOTEQ <br />
+- add: `ADD` <br />
+- subtract: `SUB` <br />
+- multiply: `MULT` <br />
+- divide: `DIV` <br /> 
+- modulus: `MOD` <br />
+- strict equality: `EQUALS` <br />
+- less than: `LESS` <br />
+- greater than: `GRT` <br />
+- less than or equal: `LESSEQ` <br />
+- greater than or equal: `GRTEQ` <br />
+- logical and: `AND` <br />
+- logical or: `OR` <br />
+- logical not: `NOTEQ` <br />
 
 ## Conditional
 
@@ -71,21 +77,47 @@ NO???:
 ```
 INT x!
 
-LOOKAT x IN range(0,10):
-  SAY(x)
+LOOKAT x IN range(0, 10):
+  SAY(x)!
 
 ```
 
 ```
-while TRUE:
+UNTIL TRUE:
   SAY("I am hyper!")!
 ```
 
-## Semantic Errors
+## Comments
 
+``` 
+!!! this is a single line commment
+
+!?
+this is a
+multi-line
+comment
+?!
+```
+
+## Static Semantic Errors
+
+- Undeclared variables 
+- Mismatching types
+- Incompatible types
+- Breaking or continuing outside of a loop 
+- Not declaring a function before calling it
+- Returning an incorrect function return type
+- Returning a statement outside of a function
+- Having return statements in a void function
+- Declaring object methods with the same name
+- Not declaring an object before initializing it
+- Using lowercase on keywords
+- Subscripting of non array and non tuple
 
 
 ## Example Programs
+
+### Hello, World!
 
 <table>
   <tr>
@@ -97,20 +129,21 @@ while TRUE:
   <td>
 
 ```
-SAY "HELLO!"!
+SAY "HELLO, WORLD!"!
 ```
 
   </td>
   <td>
 
 ```python
-print('HELLO!')
+print('Hello, World!')
 ```
 
   </td>
   </tr>
 </table>
 
+### Fibonacci
 
 <table>
   <tr>
@@ -122,13 +155,12 @@ print('HELLO!')
   <td>
 
 ```
-FUNC fibonacci( INT num ): 
+FUNC fibonacci(INT num): 
     TRY num ISEQUAL 0:
         GIMME 0!
     NO?TRY num ISEQUAL 1 OR num ISEQUAL 2:
         GIMME 1!
-    
-    SAY fibonacci(num-2) ADD fibonacci(num-1)!
+    GIMME fibonacci(num-2) ADD fibonacci(num-1)!
 ```
 
   </td>
@@ -148,6 +180,43 @@ def fibonacci(num):
 
   </tr>
 </table>
+
+### Greatest Common Divisor
+
+<table>
+  <tr>
+  <th>HYPER!</th>
+  <th>Python</th>
+  </tr>
+
+  <tr>
+  <td>
+
+```
+FUNC gcd(INT x, INT y):
+    UNTIL(y):
+        x, y = y, x % y!
+    GIMME x!
+
+```
+
+  </td>
+
+  <td>
+
+```python
+def gcd(x, y): 
+    while(y):
+        x, y = y, x % y
+    return x
+```
+
+  </td>
+
+  </tr>
+</table>
+
+### Finding the Largest of Three Numbers
 
 <table>
   <tr>
@@ -199,6 +268,8 @@ print("The largest number is", largest)
   </tr>
 </table>
 
+### Multiplying a Numbers in a Loop
+
 <table>
   <tr>
   <th>HYPER!</th>
@@ -211,7 +282,7 @@ print("The largest number is", largest)
 ```
 INT num IS 12!
 
-LOOKAT INT i IN range(1,11):
+LOOKAT INT i IN range(1, 11):
   SAY(num, '*', i, '=', num MULT i)!
 
 ```
@@ -223,7 +294,7 @@ LOOKAT INT i IN range(1,11):
 ```python
 num = 12
 
-for i in range (1,11):
+for i in range(1, 11):
   print(num, 'x', i, '=', num*i)
 ```
 
@@ -232,7 +303,7 @@ for i in range (1,11):
   </tr>
 </table>
 
-
+### Finding the Even Number
 
 <table>
   <tr>
@@ -244,8 +315,44 @@ for i in range (1,11):
   <td>
 
 ```
-ARR arrary!
-array IS ['Hi', 'I'm', 'Hyper']!
+FUNC isEven(INT num):
+    TRY num MOD 2 ISEQUAL 0:
+        GIMME TRUE!
+    NO???:
+        GIMME FALSE!
+
+```
+
+  </td>
+
+  <td>
+
+```python
+def is_even(num): 
+    if(num % 2 == 0):
+        return true
+    else:
+        return false
+```
+
+  </td>
+
+  </tr>
+</table>
+
+###  Appending a String to an Array
+
+<table>
+  <tr>
+  <th>HYPER!</th>
+  <th>Python</th>
+  </tr>
+
+  <tr>
+  <td>
+
+```
+ARR array IS ['Hi', 'I'm', 'Hyper']!
 array.push('LOL')!
 
 SAY('element0: ', array[0])!
