@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/breelynbetts/HYPER/issues"
   },
-  "homepage": "https://github.com/breelynbetts/HYPER#readme"
+  "homepage": "https://github.com/breelynbetts/HYPER#readme",
+  "dependencies": {
+    "ohm-js": "^0.14.0"
+  }
 }
