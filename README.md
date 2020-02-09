@@ -2,6 +2,89 @@
 
 ![Logo](./hyper.jpg)
 
+## Features
+
+Scripting Language <br />
+Class based inheritance <br />
+Strongly typed <br />
+Statically typed <br />
+Higher Order Functions??? <br />
+Optional Parameters??? <br />
+
+## Types
+
+int: INT <br />
+float: FLT <br />
+string: STR <br />
+boolean: BOO <br />
+array: ARR <br />
+tuple: TUP <br />
+nonetype: LITERALLYNOTHING <br />
+
+## Variable Declaration
+
+```
+INT x IS 2!
+
+FLT y IS 3.56!
+
+STR a IS "abc"!
+
+BOO b IS TRUE!
+
+ARR c IS ["Hi", "I", "am", "hyper"]!
+
+TUP d IS (1, 2.5, "hello")!
+```
+
+## Operators
+
+add: ADD <br />
+subtract: SUB <br />
+multiply: MULT <br />
+divide: DIV <br /> 
+modulus: MOD <br />
+strict equality: EQUALS <br />
+less than: LESS <br />
+greater than: GRT <br />
+less than or equal: LESSEQ <br />
+greater than or equal: GRTEQ <br />
+logical and: AND <br />
+logical or: OR <br />
+logical not: NOTEQ <br />
+
+## Conditional
+
+```
+INT num IS 3!
+
+TRY num GRT 0:
+  SAY("Positive number")!
+NO?TRY num EQUALS 0:
+  SAY("Zero")!
+NO???:
+  SAY("Negative number")!
+```
+
+## Loops
+
+```
+INT x!
+
+LOOKAT x IN range(0,10):
+  SAY(x)
+
+```
+
+```
+while TRUE:
+  SAY("I am hyper!")!
+```
+
+## Semantic Errors
+
+
+
 ## Example Programs
 
 <table>
