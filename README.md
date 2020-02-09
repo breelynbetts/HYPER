@@ -5,7 +5,6 @@
 ## Features
 
 ## Types
-# Primitive Types
 
 int: INT
 float: FLT
@@ -40,17 +39,28 @@ logical not: NOTEQ
 ```
 INT num IS 3!
 
-TRY num > 0:
-  print("Positive number")
-NO?TRY num == 0:
-  print("Zero")
+TRY num GRT 0:
+  SAY("Positive number")!
+NO?TRY num EQUALS 0:
+  SAY("Zero")!
 NO???:
-  print("Negative number")
+  SAY("Negative number")!
 ```
 
 ## Loops
 
+```
+INT x!
 
+LOOKAT x IN range(0,10):
+  SAY(x)
+
+```
+
+```
+while TRUE:
+  SAY("I am hyper!")!
+```
 
 ## Semantic Errors
 
