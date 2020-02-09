@@ -1,37 +1,36 @@
-⋮
 HYPER {
-    Program     = Block     --program 
-    Block       = Statement+
-    Suite       = ":" SimpleStmt newline        --small
-                | ":" newline indent Statement+ dedent  --complex
-    Statement   = SimpleStmt    --simple
-                | Loop 
+	Program 	= Block   	--program 
+    Block		= Statement+
+    Suite 		= ":" SimpleStmt newline		--small
+    			| ":" newline indent Statement+ dedent	--complex
+    Statement	= SimpleStmt	--simple
+    			| Loop 
                 | Conditional 
                 | Function 
    
-    SimpleStmt  = Assignment "!"                -- assignment
-                | Declaration "!"               -- declaration
+   	SimpleStmt 	= Assignment "!"  			    -- assignment
+    			| Declaration "!"               -- declaration
                 | "SAY" Exp "!"                 -- print
                 | "GIMME" Exp? "!"               -- return
                 | "LEAVE" "!"                   -- break
-                | Exp "!"                       -- Expression
+                | Exp "!" 						-- Expression
     
-    Exp         = Exp logop Exp1        -- logical
+    Exp 		= Exp logop Exp1		-- logical
                 | Exp1
-    Exp1        = Exp1 relop Exp2       -- binary
-                | Exp2
-    Exp2        = Exp2 addop Exp3       -- binary
-                | Exp3
-    Exp3        = Exp3 mulop Exp4       -- binary
-                | Exp4
-    Exp4        = prefixop Exp5         -- negate
-                | Exp5
-    Exp5        = Exp7 suffixop         -- increment
-                | Exp6
-    Exp6        = Exp7 "**" Exp6        -- pow
-                | Exp7
-    Exp7        = boollit
-                | numlit
+    Exp1		= Exp1 relop Exp2		-- binary
+    			| Exp2
+    Exp2		= Exp2 addop Exp3		-- binary
+    			| Exp3
+    Exp3		= Exp3 mulop Exp4		-- binary
+    			| Exp4
+    Exp4		= prefixop Exp5			-- negate
+    			| Exp5
+    Exp5 		= Exp7 suffixop			-- increment
+    			| Exp6
+    Exp6 		= Exp7 "**" Exp6		-- pow
+    			| Exp7
+    Exp7		= boollit
+    			| numlit
                 | strlit
                 | nonelit
                 | Array
@@ -40,28 +39,30 @@ HYPER {
                 | Call
                 | VarExp
                 | Range 
-                | "(" Exp ")"           -- parens
+                | "(" Exp ")"			-- parens
                 
                 
     Loop        = For | While           
-    For         = "LOOKAT" type id "IN" Exp Suite       -- for
-    While       = "GOOOO" "(" Exp ")" ":" Suite         -- while
+	For			= "LOOKAT" Type id "IN" Exp Suite 		-- for
+    While		= "GOUNTIL" "(" Exp ")" ":" Suite         -- while
     Conditional = "TRY" Exp Suite
-                  ("NO?TRY" Exp Suite)* 
-                  ("NO???" Exp Suite)?                  -- if
-    Function 	= "FUNC" (type | "void") id "(" Params ")" Suite  -- function
+    			  ("NO?TRY" Exp Suite)* 
+                  ("NO???" Exp Suite)?					-- if
+    Function 	= "FUNC" (Type | "void") id "(" Params ")" Suite  -- function
     Array		=
     Dictionary	=
     Tuple		= 
-    Call 		= 
-    VarExp		=
-    Range		= 
+    Call 		= id "(" ListOf <Arg, ","> ")"
+    VarExp		= VarExp "[" Exp "]"                                 -- brackets
+                | VarExp "." id                                      -- dot
+                |  id                                        -- simple
+    Range		= ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      =  ListOf<Param, ",">
     Param 		= id ( "=" Exp )?					-- param
-    Assignment  = type id "IS" Exp 					-- assign
-    Declaration	= type id 							-- decl
+    Assignment  = Type id "IS" Exp 					-- assign
+    Declaration	= Type id 							-- decl
     id 			= ~keyword (letter | "_") (alnum | "_")*
-    
+    Arg 		= Exp
     
     prefixop	= "-" | "!" 
     suffixop	= "++" | "--"
@@ -76,20 +77,27 @@ HYPER {
     mulop       = "MULT" | "DIV" | "MOD"
     addop		= "ADD" | "SUB"
     
-    boollit 	= 
-    numlit		=
-   	strlit		= 
-    nonelit		= 
+    boollit 	= "TRUE" | "FALSE"
+    numlit		= digit+ ("." digit+)?
+   	strlit		= "\"" (~"\\" ~"\"" ~"\n" any | escape)* "\""
+    nonelit		= "LITERALLYNOTHING"
     
-   	keyword 	= (type | "GOOOO" | "TRY" | "NO?TRY" | "NO???"
-    			| "LOOKAT" | "SAY" | "GIMME" | "LEAVE")
-	type		= basicType | "TUP" | "ARR" | "DICT"
+   	keyword 	= (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
+    			| "LOOKAT" | "SAY" | "GIMME" | "LEAVE" |"TUP" 
+                | "ARR" | "DICT"| "FUNC"  | "RANGE")
+                
+	Type		= basicType | "TUP" | "ARR" | "DICT"
                 | "FUNC"  | "RANGE" 
     basicType	= "BOO" 
     			| "INT" 
                 | "FLT" 
                 | "STR" 
                 | "LITERALLYNOTHING"
+    RangeType 	= VarExp 
+    			| Exp
+                
+    escape      = "\\" ("\\" | "\"" | "n")                     -- simple
+                | "\\u{" hexDigit+ "}"                         -- codepoint
     newline		= "\n"+
     indent 		= "⇨"
     dedent		= "⇦"        
