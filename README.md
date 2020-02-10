@@ -65,11 +65,11 @@ TUP d IS (1, 2.5, "hello")!
 INT num IS 3!
 
 TRY num GRT 0:
-  SAY("Positive number")!
+  SAY "Positive number"!
 NO?TRY num EQUALS 0:
-  SAY("Zero")!
+  SAY "Zero"!
 NO???:
-  SAY("Negative number")!
+  SAY "Negative number"!
 ```
 
 ## Loops
@@ -110,7 +110,6 @@ comment
 - Not declaring an object before initializing it
 - Using lowercase on keywords
 - Subscripting of non array and non tuple
-
 
 ## Example Programs
 
