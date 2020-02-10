@@ -25,6 +25,8 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 - boolean: BOO <br />
 - array: ARR <br />
 - tuple: TUP <br />
+- range: range <br />
+- dictionary: DICT <br />
 - nonetype: LITERALLYNOTHING <br />
 
 ## Variable Declaration
