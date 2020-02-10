@@ -39,7 +39,7 @@ HYPER {
                 | "(" Exp ")"                                       -- parens
     Loop        = For | While           
     For         = "LOOKAT" Type id "IN" Exp Suite                   -- for
-    While       = "UNTIL" Exp Suite                         -- while
+    While       = "UNTIL" Exp Suite                                 -- while
     Conditional = "TRY" Exp Suite
                   ("NO?TRY" Exp Suite)* 
                   ("NO???" Suite)?                                  -- if
@@ -47,7 +47,7 @@ HYPER {
     Array       = "[" Exps "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
-    Call        = (VarExp | id ) "(" ListOf <Arg, ","> ")"
+    Call        = VarExp "(" ListOf <Arg, ","> ")"
     VarExp      = VarExp "[" Exp "]"                                -- brackets
                 | VarExp "." id                                     -- dot
                 | id                                                -- simple
@@ -84,7 +84,7 @@ HYPER {
                 |  nonelit
                 |  VarExp
     keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
-                | "LOOKAT" | "SAY" | "GIMME" | "LEAVE" |"TUP" 
+                | "LOOKAT" | "GIMME" | "LEAVE" |"TUP" 
                 | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest       
     Type        = basicType | "TUP" | "ARR" | "DICT"
                 | "FUNC"  | "RANGE" 
