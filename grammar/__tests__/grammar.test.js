@@ -7,10 +7,9 @@ const syntaxCheck = require('../syntax-checker');
 
 const program = String.raw`
 INT x!
-
-LOOKAT INT x IN range(0,10):
-    SAY x!
-
+LOOKAT INT x IN range(0,10): 
+⇨ SAY x!
+⇦
 `;
 
 
