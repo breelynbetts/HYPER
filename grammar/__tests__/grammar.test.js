@@ -35,8 +35,6 @@ FUNC BOO isEven(INT num):
 ⇦ 
 `;
 
-
-
 describe('The syntax checker', () => {
     test('accepts the fibonacci function', (done) => {
         expect(syntaxCheck(program)).toBe(true);
