@@ -1,5 +1,5 @@
 HYPER {
-    Program     = Statement+ newline*                               --program 
+    Program     = newline* Statement+ newline*                      --program 
     Statement   = SimpleStmt newline                                --simple
                 | Loop 
                 | Conditional 
@@ -39,7 +39,7 @@ HYPER {
                 | "(" Exp ")"                                       -- parens
     Loop        = For | While           
     For         = "LOOKAT" Type id "IN" Exp Suite                   -- for
-    While       = "UNTIL" "(" Exp ")" Suite                         -- while
+    While       = "UNTIL" Exp Suite                         -- while
     Conditional = "TRY" Exp Suite
                   ("NO?TRY" Exp Suite)* 
                   ("NO???" Suite)?                                  -- if

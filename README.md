@@ -75,16 +75,13 @@ NO???:
 ## Loops
 
 ```
-INT x!
-
 LOOKAT INT x IN range(0, 10):
-  SAY(x)!
-
+  SAY x!
 ```
 
 ```
-UNTIL(TRUE):
-  SAY("I am hyper!")!
+UNTIL TRUE:
+  SAY "I am hyper!"!
 ```
 
 ## Comments
@@ -194,7 +191,7 @@ def fibonacci(num):
 
 ```
 FUNC INT gcd(INT x, INT y):
-    UNTIL(y):
+    UNTIL y:
         x IS y!
         y IS x MOD y!
     GIMME x!
@@ -240,8 +237,7 @@ NO?TRY (num2 GRTEQ num1) AND (num2 GRTEQ num3):
   largest IS num2!
 NO???:
   largest IS num3!
- 
-SAY("The largest number is", largest)!
+SAY("The largest number is ", largest)!
 
 ```
 
@@ -317,10 +313,7 @@ for i in range(1, 11):
 
 ```
 FUNC BOO isEven(INT num):
-    TRY num MOD 2 EQUALS 0:
-        GIMME TRUE!
-    NO???:
-        GIMME FALSE!
+    GIMME num MOD 2 EQUALS 0!
 
 ```
 
@@ -330,10 +323,7 @@ FUNC BOO isEven(INT num):
 
 ```python
 def is_even(num): 
-    if(num % 2 == 0):
-        return true
-    else:
-        return false
+    return num % 2 == 0
 ```
 
   </td>
@@ -353,10 +343,10 @@ def is_even(num):
   <td>
 
 ```
-ARR array IS ['Hi', 'I'm', 'Hyper']!
-array.push('LOL')!
+ARR array IS ["Hi", "I'm", "Hyper"]!
+array.push("LOL")!
 
-SAY('element0: ', array[0])!
+SAY("element0: ", array[0])!
 
 ```
 
