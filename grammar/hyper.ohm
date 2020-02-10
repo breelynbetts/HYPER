@@ -87,7 +87,7 @@ HYPER {
                 | "LOOKAT" | "GIMME" | "LEAVE" |"TUP" 
                 | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest       
     Type        = basicType | "TUP" | "ARR" | "DICT"
-                | "FUNC"  | "RANGE" 
+                | "FUNC"  | "range" 
     basicType   = "BOO" 
                 | "INT" 
                 | "FLT" 
