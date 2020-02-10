@@ -35,6 +35,14 @@ FUNC BOO isEven(INT num):
 ⇦ 
 `;
 
+const program4 = String.raw`
+ARR array IS ["Hi", "I'm", "Hyper"]!
+array.push("LOL")!
+
+SAY("element0: ", array[0])!
+
+`;
+
 describe('The syntax checker', () => {
     test('accepts the fibonacci function', (done) => {
         expect(syntaxCheck(program)).toBe(true);
@@ -43,15 +51,22 @@ describe('The syntax checker', () => {
 });
 
 describe('The syntax checker', () => {
-    test('accepts the returns greatest number function', (done) => {
+    test('accepts the finding the largest of three numbers function', (done) => {
         expect(syntaxCheck(program2)).toBe(true);
         done();
     });
   });
 
 describe('The syntax checker', () => {
-    test('accepts the returns greatest number function', (done) => {
+    test('accepts finding an even number', (done) => {
         expect(syntaxCheck(program3)).toBe(true);
         done();
     });
   });
+
+describe('The syntax checker', () => {
+  test('accepts appending a string to an array', (done) => {
+    expect(syntaxCheck(program4)).toBe(true);
+    done();
+    });
+});
