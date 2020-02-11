@@ -5,14 +5,13 @@
 
 ## Introduction
 
-Hello there, and welcome to Hyper!, an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax and class-based inheritance for an easier, pragmatic experience.
+Hello there, and welcome to Hyper!, an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax for an easier, pragmatic experience.
 
 Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 
 ## Features
 
 - Scripting Language <br />
-- Class based inheritance <br />
 - Strongly typed <br />
 - Statically typed <br />
 - Higher Order Functions <br />
