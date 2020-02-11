@@ -112,6 +112,10 @@ comment
 - Using lowercase on keywords
 - Subscripting of non array and non tuple
 
+## Grammar
+
+Check out our [grammar](./grammar/hyper.ohm)!
+
 ## Example Programs
 
 ### Hello, World!
