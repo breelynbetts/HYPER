@@ -12,7 +12,6 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 ## Features
 
 - Scripting Language <br />
-- Strongly typed <br />
 - Statically typed <br />
 - Higher Order Functions <br />
 
