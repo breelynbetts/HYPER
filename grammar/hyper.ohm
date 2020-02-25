@@ -10,8 +10,8 @@ HYPER {
                 | "GIMME" Exp? "!"                                  -- return
                 | "LEAVE" "!"                                       -- break
                 | Exp "!"                                           -- Expression
-    Suite       = ":" SimpleStmt newline                            --small
-                | ":" newline indent Statement+ dedent              --complex
+    Suite       = ":" SimpleStmt newline                            -- small
+                | ":" newline indent Statement+ dedent              -- complex
     Exp         = Exp logop Exp1                                    -- logical
                 | Exp1
     Exp1        = Exp1 relop Exp2                                   -- binary
@@ -51,10 +51,10 @@ HYPER {
     VarExp      = VarExp "[" Exp "]"                                -- brackets
                 | VarExp "." id                                     -- dot
                 | id                                                -- simple
-    Range       = "range" ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
+    Range       = "....." ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      =  ListOf<Param, ",">
     Param       = Type id ( "=" Exp )?                              -- param
-    Assignment  = Type? id "IS" Exp                                 -- assign
+    Assignment  = id "IS" Exp                                       -- assign
     Declaration = Type id                                           -- decl
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum
