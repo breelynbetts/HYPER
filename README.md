@@ -114,7 +114,6 @@ comment
 - Having return statements in a void function
 - Declaring object methods with the same name
 - Not declaring an object before initializing it
-- Using lowercase on keywords
 - Subscripting of non array and non tuple
 
 ## Grammar
