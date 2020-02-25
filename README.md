@@ -28,6 +28,12 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 - dictionary: DICT <br />
 - nonetype: LITERALLYNOTHING <br />
 
+| Types | Types in Hyper! | Example Uses |
+|---    |---              |---           |
+|int    | INT             | INT x IS 4!  |
+|float  | FLT             | FLT y IS 4.56! |
+|string | STR             | STR a IS "abc"! |
+
 ## Variable Declaration
 
 ```
