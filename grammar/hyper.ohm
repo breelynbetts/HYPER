@@ -14,7 +14,7 @@ HYPER {
                 | ":" newline indent Statement+ dedent              -- complex
     Exp         = Exp logop Exp1                                    -- logical
                 | Exp1
-    Exp1        = Exp1 relop Exp2                                   -- binary
+    Exp1        = Exp2 relop Exp2                                   -- binary
                 | Exp2
     Exp2        = Exp2 addop Exp3                                   -- binary
                 | Exp3
@@ -53,9 +53,9 @@ HYPER {
                 | id                                                -- simple
     Range       = "....." ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      =  ListOf<Param, ",">
-    Param       = Type id ( "=" Exp )?                              -- param
+    Param       = Type id ( "IS" Exp )?                              -- param
     Assignment  = id "IS" Exp                                       -- assign
-    Declaration = Type id  "=" Exp                                  -- decl
+    Declaration = Type id  ("IS" Exp)?                                 -- decl
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum
     Arg         = Exp 

@@ -15,12 +15,9 @@ FUNC INT fibonacci( INT number ):
 ⇦
 `;
 const program2 = String.raw`
-INT num1! 
-num1 IS 10!
-INT num2!
-num2 IS 14!
-INT num3!
-num3 IS 12!
+INT num1 IS 10!
+INT num2 IS 14!
+INT num3 IS 12!
 INT largest!
 
 TRY (num1 GRTEQ num2) AND (num1 GRTEQ num3):
@@ -39,8 +36,7 @@ FUNC BOO isEven(INT num):
 `;
 
 const program4 = String.raw`
-ARR array!
-array IS ["Hi", "I'm", "Hyper"]!
+ARR array IS ["Hi", "I'm", "Hyper"]!
 array.push("LOL")!
 
 SAY("element0: ", array[0])!
