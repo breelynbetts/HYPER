@@ -1,4 +1,4 @@
-![Logo](./hyperlogo)
+![Logo](./hyperlogo.png)
 
 # HYPER! 
 ## Introduction
