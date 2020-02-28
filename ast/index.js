@@ -82,35 +82,51 @@ class ArrayExp extends Expression {
 }
 
 class DictExp extends Expression {
-    //todo
+    constructor(values) {
+        Object.assign(this, {values});
+    }
 }
 
 class TupleExp extends Expression {
-    //todo
+    constructor(values) {
+        Object.assign(this, {values});
+    }
 }
 
 class CallExp extends Expression {
-    // todo 
+    constructor(callee, args) {
+        Object.assign(this, {callee, args})
+    }
 }
 
 class RangeExp extends Expression {
-    // todo 
+    constructor(open, start, end, step, close) {
+        Object.assign(this, {open, start, end, step, close });
+    }
 }
 
 class MemberExp extends Expression {
-    // todo
+    constructor(value, subscript) {
+        Object.assign(this, {value, subscript});
+    }
 }
 
 class SubscriptedExp extends Expression {
-    // todo
+    constructor(array, subscript) {
+        Object.assign(this, {array, subscript});
+    }
 }
 
-class Type {
-    // todo
+class IdExp extends Expression {
+    constructor(ref) {
+        Object.assign(this, {ref});
+    }
 }
 
 class Param {
-    // todo
+    constructor(id, type) {
+        Object.assign(this, {id, type});
+    }
 }
 
 class Literal {
