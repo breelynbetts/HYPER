@@ -8,5 +8,10 @@ const {
 } = require('../../ast');
 
 const fixture = {
-
+    hello: [
+        String.raw`SAY "hello!\n"`,
+        new CallExp('SAY', [new Literal('hello!\\n')]), 
+    ],
 } 
+
+describe();
