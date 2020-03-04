@@ -12,7 +12,7 @@ HYPER {
                 | Exp "!"                                           -- Expression
     Suite       = ":" SimpleStmt newline                            -- small
                 | ":" newline indent Statement+ dedent              -- complex
-    Exp         = Exp logop Exp1                                    -- logical
+    Exp         = Exp logop Exp1                                    -- binary
                 | Exp1
     Exp1        = Exp2 relop Exp2                                   -- binary
                 | Exp2

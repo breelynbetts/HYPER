@@ -35,5 +35,28 @@ function arrayToNullable(a) {
 }
 
 const astGenerator = grammar.createSemantics().addOperation('ast',{
-    
+    Program(_newline, stmts, _newline) {
+        return new Program(stmts.ast());
+    },
+    Statement_simple(stmts, _newline) {
+        return new 
+    },
+    Exp_binary(left, op, right) {
+        return new BinaryExp(left.ast(), op.ast(), right.ast());
+    },
+    Exp1_binary(left, op, right) {
+        return new BinaryExp(left.ast(), op.ast(), right.ast());
+    },
+    Exp2_binary(left, op, right) {
+        return new BinaryExp(left.ast(), op.ast(), right.ast());
+    },
+    Exp3_binary(left, op, right) {
+        return new BinaryExp(left.ast(), op.ast(), right.ast());
+    },
+    Exp4_negate(op, operand) {
+        return new UnaryExp(op.ast(), operand.ast());
+    },
+    Exp4_pow(left, op, right) {
+        return new BinaryExp(left.ast(), op.ast(), right.ast());
+    },
 })
