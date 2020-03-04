@@ -75,6 +75,9 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
         const alternate = arrayToNullable(endBlock.ast());
         return new IfStatement(t, consequents, alternate);
     },
+    Function(_func, type, id, _open, params, _close, body) {
+        return new Function();
+    },
     NonemptyListOf(first, _sep, rest) {
         return [first.ast(), ...rest.ast()];
     },
@@ -109,7 +112,7 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
         return new Literal(this.sourceString.slice(1,-1));
     },
     id(_firstChar, _restChar) {
-        return this.sourceString;
+        return new Identifier(this.sourceString);
     },
     
 })
