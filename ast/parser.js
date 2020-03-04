@@ -2,30 +2,10 @@ const fs = require('fs');
 const ohm = require('ohm-js');
 
 const {
-    Program,
-    ForStatement,
-    WhileStatement,
-    IfStatement,
-    Function,
-    Assignment,
-    Declaration,
-    PrintStatement,
-    ReturnStatement,
-    Break,
-    Block,
-    BinaryExp,
-    UnaryExp,
-    ArrayExp,
-    DictExp,
-    TupleExp,
-    CallExp,
-    RangeExp,
-    MemberExp,
-    SubscriptedExp,
-    IdExp,
-    Param,
-    Literal,
-    Identifier
+    Program, ForStatement, WhileStatement, IfStatement, Function,
+    Assignment, Declaration, PrintStatement, ReturnStatement, Break,
+    Block, BinaryExp, UnaryExp, ArrayExp, DictExp, TupleExp, CallExp,
+    RangeExp, MemberExp, SubscriptedExp, IdExp, Param, Literal, Identifier
 } = require('../ast');
 
 const grammar = ohm.grammar(fs.readFileSync('grammar/hyper.ohm')); 
@@ -116,6 +96,15 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
         const closeParen = close.primitiveValue;
         return new RangeExp(openParen, start.ast(), end.ast(), step.ast(), closeParen);
     },
+    VarExp_subscripted(arr, _open, e, _close) {
+        return new SubscriptedExp(arr.ast(), e.ast());
+    },
+    VarExp_field(record, _dot, id) {
+        return new MemberExp(record.ast(), id.ast());
+    },
+    VarExp_id(id) {
+        return new Identifier(id.ast());
+    },
     boollit(_) {
         return new Literal(this.sourceString === "true");
     },
@@ -134,6 +123,9 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
     id(_firstChar, _restChar) {
         return new Identifier(this.sourceString);
     },
+    _terminal() {
+        return this.sourceString;
+    }
     
 })
 
