@@ -7,8 +7,8 @@ HYPER {
     SimpleStmt  = Assignment "!"                                    -- assignment
                 | Declaration "!"                                   -- declaration
                 | sAY Exp "!"                                       -- print
-                | gIMME Exp? "!"                                  -- return
-                | lEAVE "!"                                       -- break
+                | gIMME Exp? "!"                                    -- return
+                | lEAVE "!"                                         -- break
                 | Exp "!"                                           -- Expression
     Suite       = ":" SimpleStmt newline                            -- small
                 | ":" newline indent Statement+ dedent              -- complex
@@ -21,7 +21,7 @@ HYPER {
     Exp3        = Exp3 mulop Exp4                                   -- binary
                 | Exp4
     Exp4        = prefixop Exp5                                     -- negate
-    			| Exp5 powop Exp4									-- pow
+                | Exp5 powop Exp4                                   -- pow
                 | Exp5
     Exp5        = boollit
                 | numlit
@@ -33,15 +33,15 @@ HYPER {
                 | Call
                 | VarExp
                 | Range 
-                | "(" Exp ")"                                       -- parens
+                | "(" Exp ")"                                     -- parens
                 
     Loop        = For | While           
-    For         = lOOKAT Type id in Exp Suite                   -- for
+    For         = lOOKAT Type id in Exp Suite                     -- for
     While       = uNTIL Exp Suite                                 -- while
     Conditional = tRY Exp Suite
                   (nOTRY Exp Suite)* 
                   (nOQQQ Suite)?                                  -- if
-    Function    = fUNC (Type | vOID) id "(" Params ")" Suite    -- function
+    Function    = fUNC (Type | vOID) id "(" Params ")" Suite      -- function
     Array       = "[" Exps "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
@@ -51,9 +51,9 @@ HYPER {
                 | id                                                -- simple
     Range       = "....." ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      =  ListOf<Param, ",">
-    Param       = Type id ( is Exp )?                              -- param
-    Assignment  = id is Exp                                       -- assign
-    Declaration = Type id  (is Exp)?                                 -- decl
+    Param       = Type id ( is Exp )?                               -- param
+    Assignment  = id is Exp                                         -- assign
+    Declaration = Type id  (is Exp)?                                -- decl
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum
     Arg         = Exp 
