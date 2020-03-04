@@ -27,8 +27,8 @@ HYPER {
                 | numlit
                 | strlit
                 | nonelit
-                | Array                                             -- array
-                | Dictionary                                        -- dict
+                | Array                                             
+                | Dictionary                                        
                 | Tuple                      
                 | Call                                              -- call
                 | VarExp
@@ -43,7 +43,7 @@ HYPER {
                   (notry Exp Suite)* 
                   (noqqq Suite)?                                    -- if
     Function    = func (Type | void) id "(" Params ")" Suite        
-    Array       = "[" Exps "]"
+    Array       = "[" ListOf<Exps, ","> "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
     Call        = VarExp "(" ListOf <Arg, ","> ")"

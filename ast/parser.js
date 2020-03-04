@@ -76,10 +76,7 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
         return new IfStatement(t, consequents, alternate);
     },
     Function(_func, type, id, _open, params, _close, body) {
-        return new Function();
-    },
-    NonemptyListOf(first, _sep, rest) {
-        return [first.ast(), ...rest.ast()];
+        return new Function(type.ast(), id.ast(), params.ast(), body.ast());
     },
     Exp_binary(left, op, right) {
         return new BinaryExp(left.ast(), op.ast(), right.ast());
@@ -102,6 +99,23 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
     Exp5_call(callee, _open, args, _close) {
         return new CallExp(callee.ast(), args.ast());
     },
+    Exp5_parens(_open, e, _close) {
+        return e.ast();
+    },
+    Array(_open, members, _close) {
+        return new ArrayExp(members.ast());
+    },
+    Dictionary(_open, values, _close ) {
+        return new DictExp(values.ast());
+    },
+    Tuple(_open, inner, _close) {
+        return new TupleExp(inner.ast());
+    },
+    Range(_dots, open, start, _sep, end, _sep, step, close) {
+        const openParen = open.primitiveValue;
+        const closeParen = close.primitiveValue;
+        return new RangeExp(openParen, start.ast(), end.ast(), step.ast(), closeParen);
+    },
     boollit(_) {
         return new Literal(this.sourceString === "true");
     },
@@ -110,6 +124,12 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
     },
     strlit(_open, chars, _close) {
         return new Literal(this.sourceString.slice(1,-1));
+    },
+    NonemptyListOf(first, _sep, rest) {
+        return [first.ast(), ...rest.ast()];
+    },
+    ListOf(args) {
+        return [...args.ast()];
     },
     id(_firstChar, _restChar) {
         return new Identifier(this.sourceString);
