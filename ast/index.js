@@ -52,10 +52,11 @@ class Assignment {
 }
 
 class Declaration {
-    constructor(id, type) {
+    constructor(id, type, exp) {
         Object.assign(this, {
             id,
-            type
+            type,
+            exp
         });
     }
 }

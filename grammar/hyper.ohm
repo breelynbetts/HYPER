@@ -9,7 +9,7 @@ HYPER {
                 | say Exp "!"                                       -- print
                 | gimme Exp? "!"                                    -- return
                 | leave "!"                                         -- break
-                | Exp "!"                                           -- Expression
+                | Exp                                            
     Suite       = ":" SimpleStmt newline                            -- small
                 | ":" newline indent Statement+ dedent              -- complex
     Exp         = Exp logop Exp1                                    -- binary
@@ -35,9 +35,10 @@ HYPER {
                 | Range 
                 | "(" Exp ")"                                       -- parens
                 
-    Loop        = For | While           
-    For         = lookat Type id in Exp Suite                       -- for
-    While       = until Exp Suite                                   -- while
+    Loop        = For                                               -- for
+                | While                                             -- while
+    For         = lookat Type id in Exp Suite                       
+    While       = until Exp Suite                                   
     Conditional = try Exp Suite
                   (notry Exp Suite)* 
                   (noqqq Suite)?                                    -- if
@@ -46,9 +47,9 @@ HYPER {
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
     Call        = VarExp "(" ListOf <Arg, ","> ")"
-    VarExp      = VarExp "[" Exp "]"                                -- brackets
-                | VarExp "." id                                     -- dot
-                | id                                                -- simple
+    VarExp      = VarExp "[" Exp "]"                                -- subscripted
+                | VarExp "." id                                     -- field
+                | id                                                -- id
     Range       = "...." ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      =  ListOf<Param, ",">
     Param       = Type id ( is Exp )?                               -- param
