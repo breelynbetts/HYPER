@@ -4,38 +4,59 @@ class Program {
     }
 }
 
-class ForStatement  {
+class ForStatement {
     constructor(test, body) {
-        Object.assign(this, {test, body});
+        Object.assign(this, {
+            test,
+            body
+        });
     }
 }
 
-class WhileStatement  {
+class WhileStatement {
     constructor(test, body) {
-        Object.assign(this, {test, body});
+        Object.assign(this, {
+            test,
+            body
+        });
     }
 }
 class IfStatement {
     constructor(test, consequent, alternate) {
-        Object.assign(this, {test, consequent, alternate});
+        Object.assign(this, {
+            test,
+            consequent,
+            alternate
+        });
     }
 }
 
 class Function {
     constructor(returnType, id, params, body) {
-        Object.assign(this, {returnType, id, params, body});
-    } 
+        Object.assign(this, {
+            returnType,
+            id,
+            params,
+            body
+        });
+    }
 }
 
 class Assignment {
     constructor(target, source) {
-        Object.assign(this, {target, source});
+        Object.assign(this, {
+            target,
+            source
+        });
     }
 }
 
 class Declaration {
     constructor(id, type) {
-        Object.assign(this, {id, type});
+        Object.assign(this, {
+            id,
+            type
+        });
     }
 }
 
@@ -51,8 +72,7 @@ class ReturnStatement {
     }
 }
 
-class Break {
-}
+class Break {}
 
 class Block {
     constructor(statements) {
@@ -64,68 +84,101 @@ class Expression {}
 class BinaryExp extends Expression {
     constructor(left, op, right) {
         super();
-        Object.assign(this, {left, op, right});
+        Object.assign(this, {
+            left,
+            op,
+            right
+        });
     }
 }
 
 class UnaryExp extends Expression {
     constructor(op, operand) {
         super();
-        Object.assign(this, {op, operand});
+        Object.assign(this, {
+            op,
+            operand
+        });
     }
 }
 class ArrayExp extends Expression {
     constructor(members) {
         super();
-        Object.assign(this, {members});
+        Object.assign(this, {
+            members
+        });
     }
 }
 
 class DictExp extends Expression {
     constructor(values) {
-        Object.assign(this, {values});
+        Object.assign(this, {
+            values
+        });
     }
 }
 
 class TupleExp extends Expression {
     constructor(values) {
-        Object.assign(this, {values});
+        Object.assign(this, {
+            values
+        });
     }
 }
 
 class CallExp extends Expression {
     constructor(callee, args) {
-        Object.assign(this, {callee, args})
+        Object.assign(this, {
+            callee,
+            args
+        })
     }
 }
 
 class RangeExp extends Expression {
     constructor(open, start, end, step, close) {
-        Object.assign(this, {open, start, end, step, close });
+        Object.assign(this, {
+            open,
+            start,
+            end,
+            step,
+            close
+        });
     }
 }
 
 class MemberExp extends Expression {
     constructor(value, subscript) {
-        Object.assign(this, {value, subscript});
+        Object.assign(this, {
+            value,
+            subscript
+        });
     }
 }
 
 class SubscriptedExp extends Expression {
     constructor(array, subscript) {
-        Object.assign(this, {array, subscript});
+        Object.assign(this, {
+            array,
+            subscript
+        });
     }
 }
 
 class IdExp extends Expression {
     constructor(ref) {
-        Object.assign(this, {ref});
+        Object.assign(this, {
+            ref
+        });
     }
 }
 
 class Param {
     constructor(id, type) {
-        Object.assign(this, {id, type});
+        Object.assign(this, {
+            id,
+            type
+        });
     }
 }
 

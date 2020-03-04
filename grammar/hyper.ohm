@@ -22,11 +22,10 @@ HYPER {
                 | Exp4
     Exp4        = prefixop Exp5                                     -- negate
                 | Exp5
-    Exp5        = Exp7 suffixop                                     -- increment
-                | Exp6
-    Exp6        = Exp7 "**" Exp6                                    -- pow
-                | Exp7
-    Exp7        = boollit
+    Exp4        = prefixop Exp5                                     -- negate
+    			| Exp5 powop Exp4									-- pow
+                | Exp5
+    Exp5        = boollit
                 | numlit
                 | strlit
                 | nonelit
@@ -59,8 +58,8 @@ HYPER {
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum
     Arg         = Exp 
-    prefixop    = "-" | "!" 
-    suffixop    = "++" | "--"
+    prefixop    = "-" | "~" 
+    powop		= "POW"
     logop       = "OR" | "AND"
     relop       = relop_adv
                 | relop_sim
