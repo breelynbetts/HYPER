@@ -1,5 +1,6 @@
 const fs = require('fs');
 const ohm = require('ohm-js');
+const withIndentsAndDedents = require('./preparser.js')
 
 const {
     Program, ForStatement, WhileStatement, IfStatement, Function,
@@ -130,7 +131,7 @@ const astGenerator = grammar.createSemantics().addOperation('ast',{
 })
 
 module.exports = (text) => {
-    const match = grammar.match(text);
+    const match = grammar.match(withIndentsAndDedents(text));
     if (!match.succeeded()) {
         throw new Error(`Syntax Error: ${match.message}`);
     }
