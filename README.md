@@ -65,7 +65,7 @@ NO???:
 #### `for` loop
 
 ```
-LOOKAT INT x IN RANGE(0, 10):
+LOOKAT INT x IN ....(0, 10):
   SAY x!
 ```
 
