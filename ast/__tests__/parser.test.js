@@ -31,8 +31,99 @@ const fixture = {
   hello: [
     String.raw`SAY "hello!\n"`,
     new CallExp("SAY", [new Literal("hello!\\n")])
-  ]
-};
+  ],
+
+  for: [
+    String.raw`LOOKAT INT x IN RANGE(0, 10):`,
+    new ForExp(
+      'i',
+      new Literal(0),
+      new Literal(9),
+      new IfExp(new IdExp('i'), new Assignment(new IdExp('i'), new Literal(100)), null),
+    ),
+  ],
+
+  while: [
+    String.raw`UNTIL TRUE:`,
+    new ForExp(
+      'i',
+      new Literal(0),
+      new Literal(9),
+      new IfExp(new IdExp('i'), new Assignment(new IdExp('i'), new Literal(100)), null),
+    ),
+  ],
+
+  if: [
+    String.raw`TRY 4 GRT 0:`,
+    new ForExp(
+      'i',
+      new Literal(0),
+      new Literal(9),
+      new IfExp(new IdExp('i'), new Assignment(new IdExp('i'), new Literal(100)), null),
+    ),
+  ],
+
+
+  arrays: [
+    String.raw`ARR c IS ["Hi", "I", "am", "hyper"]`,
+    new LetExp(
+      [
+        new TypeDec('list', new ArrayType('int')),
+        new Variable('x', 'list',
+          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+      ],
+      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
+    ),
+  ],
+
+  dict: [
+    String.raw`DICT e IS {1: "Hi", 2: "I", 3: "am", 4: "hyper"}`,
+    new LetExp(
+      [
+        new TypeDec('list', new ArrayType('int')),
+        new Variable('x', 'list',
+          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+      ],
+      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
+    ),
+  ],
+
+  tuple: [
+    String.raw`TUP d IS (1, 2.5, "hello")`,
+    new LetExp(
+      [
+        new TypeDec('list', new ArrayType('int')),
+        new Variable('x', 'list',
+          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+      ],
+      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
+    ),
+  ],
+
+  range: [
+    String.raw`INT x IN RANGE(0, 10):)`,
+    new LetExp(
+      [
+        new TypeDec('list', new ArrayType('int')),
+        new Variable('x', 'list',
+          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+      ],
+      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
+    ),
+  ],
+
+  simpleFunction: [
+    String.raw`FUNC BOO isEven(INT num):
+    GIMME num MOD 2 EQUALS 0!`,
+    new LetExp(
+      [new Func('addTwo', [new Param('x', 'int')], 'int',
+        new BinaryExp('+', new IdExp('x'), new Literal(2)))],
+      [new Call('addTwo', [new Call('ord', [new Literal('dog')])])],
+    ),
+  ],
+
+
+}
 
 describe("The parser", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
