@@ -49,7 +49,7 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 
 ## Control Flow
 
-### `if` statement
+#### `if` statement
 
 ```
 INT num IS 3!
@@ -62,14 +62,14 @@ NO???:
   SAY "Negative number"!
 ```
 
-### `for` loop
+#### `for` loop
 
 ```
 LOOKAT INT x IN RANGE(0, 10):
   SAY x!
 ```
 
-### `while` loop
+#### `while` loop
 
 ```
 UNTIL TRUE:
