@@ -17,7 +17,7 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 
 ## Types and Variable Declaration 
 
-| Types      | Types in Hyper!    | Variable Declaration |
+| Types      | Types in HYPER!    | Variable Declaration |
 |---         |---                 |---           |
 |int         | `INT`              | `INT x IS 4!`  |
 |float       | `FLT`              | `FLT y IS 4.56!` |
@@ -26,25 +26,30 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 |array       | `ARR`              | `ARR c IS ["Hi", "I", "am", "hyper"]!` |
 |tuple       | `TUP`              | `TUP d IS (1, 2.5, "hello")!` |
 |dictionary  | `DICT`             | `DICT e IS {1: "Hi", 2: "I", 3: "am", 4: "hyper"}!` |
+|range       | `RANGE`            | `RANGE(1, 5):` |   
 |nonetype    | `LITERALLYNOTHING` | `STR f IS LITERALLYNOTHING!` |
 
 ## Operators
 
-- add: `ADD` <br />
-- subtract: `SUB` <br />
-- multiply: `MULT` <br />
-- divide: `DIV` <br /> 
-- modulus: `MOD` <br />
-- strict equality: `EQUALS` <br />
-- less than: `LESS` <br />
-- greater than: `GRT` <br />
-- less than or equal: `LESSEQ` <br />
-- greater than or equal: `GRTEQ` <br />
-- logical and: `AND` <br />
-- logical or: `OR` <br />
-- logical not: `NOTEQ` <br />
+| Operation             | Operation in HYPER! | Variable Declaration |
+|---                    |---                  |---           |
+|add                    | `ADD`               | `sum IS 3 ADD 10` |
+|subtract               | `SUB`               | `diff IS 5 SUB 2` |
+|multipy                | `MULT`              | `product IS 20 MULT 5` |
+|divide                 | `DIV`               | `quotient IS 100 DIV 10` |
+|modulus                | `MOD`               | `modulus IS 101 MOD 2` |
+|strict equality        | `EQUALS`            | `3 EQUALS 3 MULT 1` |
+|less than              | `LESS`              | `5 LESS 10` |
+|greater than           | `GRT`               | `5 GRT 4` |   
+|less than or equal     | `LESSEQ`            | `num LESSEQ 0` |
+|greater than or equal  | `GRTEQ`             | `num GRTEQ 0` |
+|logical and            | `AND`               | `num GRT 0 AND num LESS 5` |
+|logical or             | `OR`                | `num GRT 0 OR num LESS 5` |
+|logical not            | `NOTEQ`             | `num NOTEQ 0` |
 
-## Conditional
+## Control Flow
+
+### `if` statement
 
 ```
 INT num IS 3!
@@ -57,12 +62,14 @@ NO???:
   SAY "Negative number"!
 ```
 
-## Loops
+### `for` loop
 
 ```
-LOOKAT INT x IN range(0, 10):
+LOOKAT INT x IN RANGE(0, 10):
   SAY x!
 ```
+
+### `while` loop
 
 ```
 UNTIL TRUE:
@@ -269,7 +276,7 @@ print("The largest number is", largest)
 ```
 INT num IS 12!
 
-LOOKAT INT i IN range(1, 11):
+LOOKAT INT i IN RANGE(1, 11):
   SAY(num, "x", i, "=", num MULT i)!
 
 ```
