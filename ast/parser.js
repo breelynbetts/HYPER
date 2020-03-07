@@ -24,55 +24,14 @@ const {
   SubscriptedExp,
   IdExp,
   Param,
+  Arg,
+  KeyValue,
   Literal,
   Identifier
 } = require("../ast");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
 
-//   Params      =  ListOf<Param, ",">
-//   Param       = Type id ( is Exp )?                              -- param
-//   Assignment  = id is Exp "!"
-//   Declaration = Type id  (is Exp)? "!"
-//   id          = ~keyword (letter | "_") idrest*
-//   idrest      =  "_" | alnum
-//   Arg         = Exp
-//   prefixop    = "-" | "~"
-//   powop		= "POW"
-//   logop       = "OR" | "AND"
-//   relop       = relop_adv
-//               | relop_sim
-//   relop_adv   = "LESSEQ"
-//               | "EQUALS"
-//               | "NOTEQ"
-//               | "GRTEQ"
-//   relop_sim   = "LESS" | "GRT"
-//   mulop       = "MULT" | "DIV" | "MOD"
-//   addop       = "ADD" | "SUB"
-//   boollit     = "TRUE" | "FALSE"
-//   numlit      = digit+ ("." digit+)?
-//   strlit      = "\"" (~"\\" ~"\"" ~"\n" any | escape)* "\""
-//   nonelit     = "LITERALLYNOTHING"
-//   Exps        = ListOf<Exp, ",">
-//   KeyValue    = Key ":" Exp
-//   Key         = boollit
-//               |  numlit
-//               |  strlit
-//               |  nonelit
-//               |  VarExp
-//   say         = "SAY" ~alnum
-//   gimme       = "GIMME" ~alnum
-//   leave       = "LEAVE" ~alnum
-//   lookat      = "LOOKAT" ~alnum
-//   until       = "UNTIL" ~alnum
-//   try         = "TRY" ~alnum
-//   notry       = "NO?TRY" ~alnum
-//   noqqq       = "NO???" ~alnum
-//   in          = "IN" ~alnum
-//   func        = "FUNC" ~alnum
-//   void        = "VOID" ~alnum
-//   is          = "IS" ~alnum
-//   range       = "RANGE" ~alnum
 //   keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
 //               | "LOOKAT" | "GIMME" | "LEAVE" |"TUP"
 //               | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest
@@ -85,14 +44,6 @@ const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
 //               | "LITERALLYNOTHING"
 //   RangeType   = VarExp
 //               | Exp
-//   escape      = "\\" ("\\" | "\"" | "n")                           -- simple
-//               | "\\u{" hexDigit+ "}"                               -- codepoint
-//   newline     = "\n"+
-//   indent      = "⇨"
-//   dedent      = "⇦"
-//   space       := " " | "\t" | comment
-//   comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
-//               | "!?" (~"?!" any)* "!?"                             -- multiLine
 //
 
 function arrayToNullable(a) {
@@ -205,6 +156,15 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   },
   VarExp_id(id) {
     return new Identifier(id.ast());
+  },
+  Param(type, id, _open, _is, exp, _close) {
+    return new Param(type.ast(), id.ast(), arrayToNullable(exp.ast()));
+  },
+  Arg(exp) {
+    return new Arg(exp.ast());
+  },
+  KeyValue(id, _colon, exp) {
+    return new KeyValue(id.ast(), exp.ast());
   },
   boollit(_) {
     return new Literal(this.sourceString === "true");

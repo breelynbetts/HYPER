@@ -184,11 +184,23 @@ class IdExp extends Expression {
 }
 
 class Param {
-  constructor(id, type) {
+  constructor(type, id) {
     Object.assign(this, {
-      id,
-      type
+      type,
+      id
     });
+  }
+}
+
+class Arg {
+  constructor(exp) {
+    Object.assign(this, { exp });
+  }
+}
+
+class KeyValue {
+  constructor(id, exp) {
+    Object.assign(this, { id, exp });
   }
 }
 
@@ -227,6 +239,8 @@ module.exports = {
   SubscriptedExp,
   IdExp,
   Param,
+  Arg,
+  KeyValue,
   Literal,
   Identifier
 };

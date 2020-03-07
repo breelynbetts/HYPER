@@ -49,8 +49,8 @@ HYPER {
                 | VarExp "." id                                     -- field
                 | id                                                -- id
     Range       = range ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
-    Params      =  ListOf<Param, ",">
-    Param       = Type id ( is Exp )?                              -- param
+    Params      = ListOf<Param, ",">
+    Param       = Type id ( is Exp )?                              
     Assignment  = id is Exp "!"                                      
     Declaration = Type id  (is Exp)? "!"                                
     id          = ~keyword (letter | "_") idrest*
