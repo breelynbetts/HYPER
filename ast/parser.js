@@ -31,10 +31,6 @@ const {
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
 
-//   VarExp      = VarExp "[" Exp "]"                                -- subscripted
-//               | VarExp "." id                                     -- field
-//               | id                                                -- id
-//   Range       = range ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
 //   Params      =  ListOf<Param, ",">
 //   Param       = Type id ( is Exp )?                              -- param
 //   Assignment  = id is Exp "!"
@@ -111,6 +107,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Statement_simple(stmts, _newline) {
     return stmts.ast();
   },
+  //   Assignment  = id is Exp "!"
   Assignment(id, _is, exp, _exc) {
     return new Assignment(id.ast(), exp.ast());
   },
@@ -120,10 +117,10 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   SimpleStmt_print(_print, e, _exclamation) {
     return new PrintStatement(e.ast());
   },
-  SimpleStmt_return(_return, e) {
+  SimpleStmt_return(_return, e, _exc) {
     return new ReturnStatement(arrayToNullable(e.ast()));
   },
-  SimpleStmt_break(_break) {
+  SimpleStmt_break(_break, _exc) {
     return new Break();
   },
   Suite_small(_colon, stmt, _newline) {
@@ -132,7 +129,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Suite_complex(_colon, _newline, _indent, stmts, _dedent) {
     return stmts.ast();
   },
-  Loop_for(_for, type, id, _in, exp, _do, body) {
+  Loop_for(_for, type, id, _in, exp, body) {
     const idExp = new Identifier(id.ast());
     return new ForStatement(type.ast(), idExp, exp.ast(), body.ast());
   },
@@ -175,7 +172,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Exp4_pow(left, op, right) {
     return new BinaryExp(left.ast(), op.ast(), right.ast());
   },
-  Exp5_call(callee, _open, args, _close) {
+  Call(callee, _open, args, _close) {
     return new CallExp(callee.ast(), args.ast());
   },
   Exp5_parens(_open, e, _close) {
@@ -190,7 +187,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Tuple(_open, inner, _close) {
     return new TupleExp(inner.ast());
   },
-  Range(_dots, open, start, _sep, end, _sep2, step, close) {
+  Range(_range, open, start, _sep, end, _sep2, step, close) {
     const openParen = open.primitiveValue;
     const closeParen = close.primitiveValue;
     return new RangeExp(
@@ -213,7 +210,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   boollit(_) {
     return new Literal(this.sourceString === "true");
   },
-  numlit(digits) {
+  numlit(_digits, _dot, _digit) {
     return new Literal(+this.sourceString);
   },
   strlit(_open, chars, _close) {

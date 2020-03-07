@@ -115,6 +115,7 @@ class ArrayExp extends Expression {
 
 class DictExp extends Expression {
   constructor(values) {
+    super();
     Object.assign(this, {
       values
     });
@@ -123,6 +124,7 @@ class DictExp extends Expression {
 
 class TupleExp extends Expression {
   constructor(values) {
+    super();
     Object.assign(this, {
       values
     });
@@ -131,6 +133,7 @@ class TupleExp extends Expression {
 
 class CallExp extends Expression {
   constructor(callee, args) {
+    super();
     Object.assign(this, {
       callee,
       args
@@ -140,6 +143,7 @@ class CallExp extends Expression {
 
 class RangeExp extends Expression {
   constructor(open, start, end, step, close) {
+    super();
     Object.assign(this, {
       open,
       start,
@@ -152,6 +156,7 @@ class RangeExp extends Expression {
 
 class MemberExp extends Expression {
   constructor(value, subscript) {
+    super();
     Object.assign(this, {
       value,
       subscript
@@ -161,6 +166,7 @@ class MemberExp extends Expression {
 
 class SubscriptedExp extends Expression {
   constructor(array, subscript) {
+    super();
     Object.assign(this, {
       array,
       subscript
@@ -170,6 +176,7 @@ class SubscriptedExp extends Expression {
 
 class IdExp extends Expression {
   constructor(ref) {
+    super();
     Object.assign(this, {
       ref
     });
