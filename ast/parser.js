@@ -31,6 +31,85 @@ const {
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
 
+//   Suite       = ":" SimpleStmt newline                            -- small
+//               | ":" newline indent Statement+ dedent              -- complex
+//   Conditional = try Exp Suite
+//                 (notry Exp Suite)*
+//                 (noqqq Suite)?                                  -- if
+//   Function    = func (Type | void) id "(" Params ")" Suite
+//   Array       = "[" ListOf<Exps, ","> "]"
+//   Dictionary  = "{" ListOf<KeyValue, ","> "}"
+//   Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
+//   Call        = VarExp "(" ListOf <Arg, ","> ")"
+//   VarExp      = VarExp "[" Exp "]"                                -- subscripted
+//               | VarExp "." id                                     -- field
+//               | id                                                -- id
+//   Range       = range ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
+//   Params      =  ListOf<Param, ",">
+//   Param       = Type id ( is Exp )?                              -- param
+//   Assignment  = id is Exp "!"
+//   Declaration = Type id  (is Exp)? "!"
+//   id          = ~keyword (letter | "_") idrest*
+//   idrest      =  "_" | alnum
+//   Arg         = Exp
+//   prefixop    = "-" | "~"
+//   powop		= "POW"
+//   logop       = "OR" | "AND"
+//   relop       = relop_adv
+//               | relop_sim
+//   relop_adv   = "LESSEQ"
+//               | "EQUALS"
+//               | "NOTEQ"
+//               | "GRTEQ"
+//   relop_sim   = "LESS" | "GRT"
+//   mulop       = "MULT" | "DIV" | "MOD"
+//   addop       = "ADD" | "SUB"
+//   boollit     = "TRUE" | "FALSE"
+//   numlit      = digit+ ("." digit+)?
+//   strlit      = "\"" (~"\\" ~"\"" ~"\n" any | escape)* "\""
+//   nonelit     = "LITERALLYNOTHING"
+//   Exps        = ListOf<Exp, ",">
+//   KeyValue    = Key ":" Exp
+//   Key         = boollit
+//               |  numlit
+//               |  strlit
+//               |  nonelit
+//               |  VarExp
+//   say         = "SAY" ~alnum
+//   gimme       = "GIMME" ~alnum
+//   leave       = "LEAVE" ~alnum
+//   lookat      = "LOOKAT" ~alnum
+//   until       = "UNTIL" ~alnum
+//   try         = "TRY" ~alnum
+//   notry       = "NO?TRY" ~alnum
+//   noqqq       = "NO???" ~alnum
+//   in          = "IN" ~alnum
+//   func        = "FUNC" ~alnum
+//   void        = "VOID" ~alnum
+//   is          = "IS" ~alnum
+//   range       = "RANGE" ~alnum
+//   keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
+//               | "LOOKAT" | "GIMME" | "LEAVE" |"TUP"
+//               | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest
+//   Type        = basicType | "TUP" | "ARR" | "DICT"
+//               | "FUNC"  | "range"
+//   basicType   = "BOO"
+//               | "INT"
+//               | "FLT"
+//               | "STR"
+//               | "LITERALLYNOTHING"
+//   RangeType   = VarExp
+//               | Exp
+//   escape      = "\\" ("\\" | "\"" | "n")                           -- simple
+//               | "\\u{" hexDigit+ "}"                               -- codepoint
+//   newline     = "\n"+
+//   indent      = "⇨"
+//   dedent      = "⇦"
+//   space       := " " | "\t" | comment
+//   comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
+//               | "!?" (~"?!" any)* "!?"                             -- multiLine
+//
+
 function arrayToNullable(a) {
   return a.length === 0 ? null : a[0];
 }
@@ -42,10 +121,10 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Statement_simple(stmts, _newline) {
     return stmts.ast();
   },
-  Assignment_assign(id, _is, exp) {
+  Assignment(id, _is, exp, _exc) {
     return new Assignment(id.ast(), exp.ast());
   },
-  SimpleStmt_declaration(type, id, _is, exp) {
+  Declaration(type, id, _is, exp, _exc) {
     return new Declaration(type.ast(), id.ast(), exp.ast());
   },
   SimpleStmt_print(_print, e, _exclamation) {
@@ -64,8 +143,9 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return stmts.ast();
   },
   // TODO : figure out right structure for this guy
-  Loop_for(_for, type, id, _in, types, _do, body) {
-    return new ForStatement();
+  Loop_for(_for, type, id, _in, exp, _do, body) {
+    const idExp = new Identifier(id.ast());
+    return new ForStatement(type.ast(), idExp, exp.ast(), body.ast());
   },
   Loop_while(_while, test, body) {
     return new WhileStatement(test.ast(), body.ast());
