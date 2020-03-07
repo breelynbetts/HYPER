@@ -32,9 +32,6 @@ const {
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
 
-//   keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
-//               | "LOOKAT" | "GIMME" | "LEAVE" |"TUP"
-//               | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest
 //   Type        = basicType | "TUP" | "ARR" | "DICT"
 //               | "FUNC"  | "range"
 //   basicType   = "BOO"

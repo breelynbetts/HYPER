@@ -32,9 +32,9 @@ let fixture = {
     String.raw`SAY 3!
   `,
     new Program([new PrintStatement(new Literal(3))])
-  ]
+  ],
 
-    assignment: [
+  assignment: [
     String.raw`x IS x + 3`,
     new Assignment("SAY", [new Literal("hello!\\n")])
   ],
@@ -71,22 +71,30 @@ let fixture = {
     String.raw`LOOKAT INT x IN RANGE(0, 10):
     SAY x!`,
     new ForStatement(
-      'i',
+      "i",
       new Literal(0),
       new Literal(9),
-      new IfExp(new IdExp('i'), new Assignment(new IdExp('i'), new Literal(100)), null),
-    ),
+      new IfExp(
+        new IdExp("i"),
+        new Assignment(new IdExp("i"), new Literal(100)),
+        null
+      )
+    )
   ],
 
   while: [
     String.raw`UNTIL TRUE:
     SAY "I am hyper!"!`,
     new WhileStatement(
-      'i',
+      "i",
       new Literal(0),
       new Literal(9),
-      new IfExp(new IdExp('i'), new Assignment(new IdExp('i'), new Literal(100)), null),
-    ),
+      new IfExp(
+        new IdExp("i"),
+        new Assignment(new IdExp("i"), new Literal(100)),
+        null
+      )
+    )
   ],
 
   if: [
@@ -98,11 +106,15 @@ let fixture = {
     NO???:
       SAY "Negative number"!`,
     new IfStatement(
-      'i',
+      "i",
       new Literal(0),
       new Literal(9),
-      new IfExp(new IdExp('i'), new Assignment(new IdExp('i'), new Literal(100)), null),
-    ),
+      new IfExp(
+        new IdExp("i"),
+        new Assignment(new IdExp("i"), new Literal(100)),
+        null
+      )
+    )
   ],
 
   arrays: [
@@ -110,12 +122,15 @@ let fixture = {
     SAY c!`,
     new ArrayExp(
       [
-        new TypeDec('list', new ArrayType('int')),
-        new Variable('x', 'list',
-          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+        new TypeDec("list", new ArrayType("int")),
+        new Variable(
+          "x",
+          "list",
+          new ArrayExp("list", new Literal(1), new NegationExp(new Literal(9)))
+        )
       ],
-      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
-    ),
+      [new SubscriptedExp(new IdExp("x"), new Literal(0))]
+    )
   ],
 
   dict: [
@@ -123,12 +138,15 @@ let fixture = {
     SAY e!`,
     new DictExp(
       [
-        new TypeDec('list', new ArrayType('int')),
-        new Variable('x', 'list',
-          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+        new TypeDec("list", new ArrayType("int")),
+        new Variable(
+          "x",
+          "list",
+          new ArrayExp("list", new Literal(1), new NegationExp(new Literal(9)))
+        )
       ],
-      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
-    ),
+      [new SubscriptedExp(new IdExp("x"), new Literal(0))]
+    )
   ],
 
   tuple: [
@@ -136,12 +154,15 @@ let fixture = {
     SAY d!`,
     new TupleExp(
       [
-        new TypeDec('list', new ArrayType('int')),
-        new Variable('x', 'list',
-          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+        new TypeDec("list", new ArrayType("int")),
+        new Variable(
+          "x",
+          "list",
+          new ArrayExp("list", new Literal(1), new NegationExp(new Literal(9)))
+        )
       ],
-      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
-    ),
+      [new SubscriptedExp(new IdExp("x"), new Literal(0))]
+    )
   ],
 
   range: [
@@ -149,18 +170,18 @@ let fixture = {
     SAY x!`,
     new RangeExp(
       [
-        new TypeDec('list', new ArrayType('int')),
-        new Variable('x', 'list',
-          new ArrayExp('list', new Literal(1), new NegationExp(new Literal(9)))),
+        new TypeDec("list", new ArrayType("int")),
+        new Variable(
+          "x",
+          "list",
+          new ArrayExp("list", new Literal(1), new NegationExp(new Literal(9)))
+        )
       ],
-      [new SubscriptedExp(new IdExp('x'), new Literal(0))],
-    ),
+      [new SubscriptedExp(new IdExp("x"), new Literal(0))]
+    )
   ],
 
-  id: [
-    String.raw`INT x`,
-    new IdExp("SAY", [new Literal("Hello World!\\n")])
-  ],
+  id: [String.raw`INT x`, new IdExp("SAY", [new Literal("Hello World!\\n")])],
 
   parameters: [
     String.raw`FUNC INT gcd(INT x, INT y):
@@ -175,11 +196,17 @@ let fixture = {
     String.raw`FUNC BOO isEven(INT num):
     GIMME num MOD 2 EQUALS 0!`,
     new Function(
-      [new Func('isEven', [new Param('x', 'int')], 'int',
-        new BinaryExp('+', new IdExp('x'), new Literal(2)))],
-      [new Call('isEven', [new Call('ord', [new Literal('dog')])])],
-    ),
-  ],
+      [
+        new Func(
+          "isEven",
+          [new Param("x", "int")],
+          "int",
+          new BinaryExp("+", new IdExp("x"), new Literal(2))
+        )
+      ],
+      [new Call("isEven", [new Call("ord", [new Literal("dog")])])]
+    )
+  ]
 };
 
 describe("The parser", () => {
