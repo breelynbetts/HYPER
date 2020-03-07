@@ -1,0 +1,4 @@
+INT num IS 12!
+
+LOOKAT INT i IN RANGE(1, 11):
+  SAY(num, "x", i, "=", num MULT i)!

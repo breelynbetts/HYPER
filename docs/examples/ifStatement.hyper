@@ -1,0 +1,8 @@
+INT num IS 3!
+
+TRY num GRT 0:
+  SAY "Positive number"!
+NO?TRY num EQUALS 0:
+  SAY "Zero"!
+NO???:
+  SAY "Negative number"!

@@ -1,0 +1,4 @@
+ARR array IS ["Hi", "I'm", "Hyper"]!
+array.push("LOL")!
+
+SAY("element0: ", array[0])!

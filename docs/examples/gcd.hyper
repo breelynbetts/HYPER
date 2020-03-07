@@ -1,0 +1,5 @@
+FUNC INT gcd(INT x, INT y):
+    UNTIL y:
+        x IS y!
+        y IS x MOD y!
+    GIMME x!
