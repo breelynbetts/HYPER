@@ -1,6 +1,8 @@
 ![Logo](./hyperlogo.png)
 
-# HYPER! 
+<h1 align="center">
+  HYPER! 
+</h1>
 ## Introduction
 
 Hello there, and welcome to Hyper!, an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax for an easier, pragmatic experience.
