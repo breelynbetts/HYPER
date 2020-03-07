@@ -31,16 +31,6 @@ const {
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
 
-//   Suite       = ":" SimpleStmt newline                            -- small
-//               | ":" newline indent Statement+ dedent              -- complex
-//   Conditional = try Exp Suite
-//                 (notry Exp Suite)*
-//                 (noqqq Suite)?                                  -- if
-//   Function    = func (Type | void) id "(" Params ")" Suite
-//   Array       = "[" ListOf<Exps, ","> "]"
-//   Dictionary  = "{" ListOf<KeyValue, ","> "}"
-//   Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
-//   Call        = VarExp "(" ListOf <Arg, ","> ")"
 //   VarExp      = VarExp "[" Exp "]"                                -- subscripted
 //               | VarExp "." id                                     -- field
 //               | id                                                -- id
@@ -142,7 +132,6 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Suite_complex(_colon, _newline, _indent, stmts, _dedent) {
     return stmts.ast();
   },
-  // TODO : figure out right structure for this guy
   Loop_for(_for, type, id, _in, exp, _do, body) {
     const idExp = new Identifier(id.ast());
     return new ForStatement(type.ast(), idExp, exp.ast(), body.ast());
