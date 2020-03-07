@@ -157,6 +157,20 @@ let fixture = {
     ),
   ],
 
+  id: [
+    String.raw`INT x`,
+    new IdExp("SAY", [new Literal("Hello World!\\n")])
+  ],
+
+  parameters: [
+    String.raw`FUNC INT gcd(INT x, INT y):
+    UNTIL y:
+        x IS y!
+        y IS x MOD y!
+    GIMME x!`,
+    new Param("SAY", [new Literal("Hello World!\\n")])
+  ],
+
   simpleFunction: [
     String.raw`FUNC BOO isEven(INT num):
     GIMME num MOD 2 EQUALS 0!`,
