@@ -72,7 +72,7 @@ UNTIL TRUE:
 ## Function Declaration
 
 ```
-FUNC LITERALLYNOTHING helloWorld():
+FUNC VOID helloWorld():
   SAY "Hello, world"!
 ```
 
