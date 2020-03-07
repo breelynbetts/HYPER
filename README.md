@@ -5,6 +5,8 @@
 
 Hello there, and welcome to Hyper!, an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax for an easier, pragmatic experience.
 
+Check out our [grammar](./grammar/hyper.ohm)!
+
 Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 
 ## Features
@@ -13,39 +15,18 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 - Statically typed <br />
 - Higher Order Functions <br />
 
-## Types
+## Types and Variable Declaration 
 
-- int: INT <br />
-- float: FLT <br />
-- string: STR <br />
-- boolean: BOO <br />
-- array: ARR <br />
-- tuple: TUP <br />
-- range: range <br />
-- dictionary: DICT <br />
-- nonetype: LITERALLYNOTHING <br />
-
-| Types | Types in Hyper! | Example Uses |
-|---    |---              |---           |
-|int    | INT             | INT x IS 4!  |
-|float  | FLT             | FLT y IS 4.56! |
-|string | STR             | STR a IS "abc"! |
-
-## Variable Declaration
-
-```
-INT x IS 2!
-
-FLT y IS 3.56!
-
-STR a IS "abc"!
-
-BOO b IS TRUE!
-
-ARR c IS ["Hi", "I", "am", "hyper"]!
-
-TUP d IS (1, 2.5, "hello")!
-```
+| Types      | Types in Hyper!    | Variable Declaration |
+|---         |---                 |---           |
+|int         | `INT`              | `INT x IS 4!`  |
+|float       | `FLT`              | `FLT y IS 4.56!` |
+|string      | `STR`              | `STR a IS "abc"!` |
+|boolean     | `BOO`              | `BOO b IS TRUE!` |
+|array       | `ARR`              | `ARR c IS ["Hi", "I", "am", "hyper"]!` |
+|tuple       | `TUP`              | `TUP d IS (1, 2.5, "hello")!` |
+|dictionary  | `DICT`             | `DICT e IS {1: "Hi", 2: "I", 3: "am", 4: "hyper"}!` |
+|nonetype    | `LITERALLYNOTHING` | `STR f IS LITERALLYNOTHING!` |
 
 ## Operators
 
@@ -88,6 +69,13 @@ UNTIL TRUE:
   SAY "I am hyper!"!
 ```
 
+## Function Declaration
+
+```
+FUNC LITERALLYNOTHING helloWorld():
+  SAY "Hello, world"!
+```
+
 ## Comments
 
 ``` 
@@ -113,10 +101,6 @@ comment
 - Declaring object methods with the same name
 - Not declaring an object before initializing it
 - Subscripting of non array and non tuple
-
-## Grammar
-
-Check out our [grammar](./grammar/hyper.ohm)!
 
 ## Example Programs
 
