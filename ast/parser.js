@@ -13,7 +13,6 @@ const {
   PrintStatement,
   ReturnStatement,
   Break,
-  Block,
   BinaryExp,
   UnaryExp,
   ArrayExp,
