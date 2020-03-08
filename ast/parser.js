@@ -186,7 +186,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return [];
   },
   id(_firstChar, _restChar) {
-    return new Identifier(this.sourceString);
+    return this.sourceString;
   },
   _terminal() {
     return this.sourceString;
