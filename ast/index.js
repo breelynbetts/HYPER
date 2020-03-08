@@ -77,11 +77,6 @@ class ReturnStatement {
 
 class Break {}
 
-class Block {
-  constructor(statements) {
-    this.statements = statements;
-  }
-}
 class Expression {}
 
 class BinaryExp extends Expression {
@@ -218,7 +213,6 @@ module.exports = {
   PrintStatement,
   ReturnStatement,
   Break,
-  Block,
   BinaryExp,
   UnaryExp,
   ArrayExp,

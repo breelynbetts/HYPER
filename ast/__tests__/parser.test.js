@@ -1,3 +1,5 @@
+// THINGS TO WORK ON : couldn't figure out how to get coverage on parenthesis and tuple
+
 const parse = require("../parser");
 
 const {
@@ -59,7 +61,7 @@ let fixture = {
       new Function(
         "BOO",
         new Identifier("isEven"),
-        [new Param("INT", new Identifier("num"))],
+        new Param("INT", new Identifier("num")),
         [
           new ReturnStatement(
             new BinaryExp(
@@ -111,7 +113,7 @@ INT z IS x ADD y!
 
   for: [
     String.raw`LOOKAT INT x IN RANGE(0, 10):
-    SAY x!
+    SAY x POW x!
     `,
 
     new Program([
@@ -119,24 +121,27 @@ INT z IS x ADD y!
         "INT",
         new Identifier(new Identifier("x")),
         new RangeExp("(", new Literal(0), new Literal(10), null, ")"),
-        [new PrintStatement(new Identifier(new Identifier("x")))]
+        [
+          new PrintStatement(
+            new BinaryExp(
+              new Identifier(new Identifier("x")),
+              "POW",
+              new Identifier(new Identifier("x"))
+            )
+          )
+        ]
       )
     ])
   ],
 
   while: [
-    String.raw`UNTIL x EQUALS 0:
+    String.raw`UNTIL TRUE:
     GIMME "I am hyper!"!
     `,
     new Program([
-      new WhileStatement(
-        new BinaryExp(
-          new Identifier(new Identifier("x")),
-          "EQUALS",
-          new Literal(0)
-        ),
-        [new ReturnStatement(new Literal("I am hyper!"))]
-      )
+      new WhileStatement(new Literal(true), [
+        new ReturnStatement(new Literal("I am hyper!"))
+      ])
     ])
   ],
 
@@ -175,6 +180,7 @@ NO???:
 
   arrays: [
     String.raw`ARR c IS ["Hi", "I", "am", "hyper"]!
+SAY c[1]!
     `,
     new Program([
       new Declaration(
@@ -188,12 +194,16 @@ NO???:
             new Literal("hyper")
           ]
         ])
+      ),
+      new PrintStatement(
+        new SubscriptedExp(new Identifier(new Identifier("c")), new Literal(1))
       )
     ])
   ],
 
   dict: [
-    String.raw`DICT e IS {1: "Hi", 2: "I", 3: "am", 4: "hyper"}!
+    String.raw`DICT e IS {a: "Hi", b: "I", c: "am", d: "hyper"}!
+GIMME e.a!
 LEAVE!
 `,
     new Program([
@@ -201,77 +211,52 @@ LEAVE!
         "DICT",
         new Identifier("e"),
         new DictExp([
-          new KeyValue(new Literal(1), new Literal("Hi")),
-          new KeyValue(new Literal(2), new Literal("I")),
-          new KeyValue(new Literal(3), new Literal("am")),
-          new KeyValue(new Literal(4), new Literal("hyper"))
+          new KeyValue(new Identifier(new Identifier("a")), new Literal("Hi")),
+          new KeyValue(new Identifier(new Identifier("b")), new Literal("I")),
+          new KeyValue(new Identifier(new Identifier("c")), new Literal("am")),
+          new KeyValue(
+            new Identifier(new Identifier("d")),
+            new Literal("hyper")
+          )
         ])
+      ),
+      new ReturnStatement(
+        new MemberExp(new Identifier(new Identifier("e")), new Identifier("a"))
       ),
       new Break()
     ])
+  ],
+
+  tuple: [
+    String.raw`TUP d IS (1, 2.5, "hello")!
+    `,
+    new Program([
+      new Declaration(
+        "TUP",
+        new Identifier("d"),
+        new TupleExp([new Literal(1), new Literal(2.5), new Literal("hello")])
+      )
+    ])
+  ],
+  simpleSuite: [
+    String.raw`FUNC VOID hey () : GIMME "HELLO" OR "HEY"!
+    `,
+    new Program([
+      new Function("VOID", new Identifier("hey"), null, [
+        new ReturnStatement(
+          new BinaryExp(new Literal("HELLO"), "OR", new Literal("HEY"))
+        )
+      ])
+    ])
+  ],
+  fibonacci: [
+    String.raw`FUNC INT fibonacci(INT num): 
+        TRY num LESS 2:
+            GIMME 1!
+        GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!
+  `,
+    new Program([])
   ]
-
-  // tuple: [
-  //   String.raw`TUP d IS (1, 2.5, "hello")
-  //   SAY d!`,
-  //   new TupleExp(
-  //     [
-  //       new TypeDec("list", new ArrayType("int")),
-  //       new Variable(
-  //         "x",
-  //         "list",
-  //         new ArrayExp("list", new Literal(1), new NegationExp(new Literal(9)))
-  //       )
-  //     ],
-  //     [new SubscriptedExp(new Identifier("x"), new Literal(0))]
-  //   )
-  // ],
-
-  // range: [
-  //   String.raw`LOOKAT INT x IN RANGE(0, 10):
-  //   SAY x!`,
-  //   new RangeExp(
-  //     [
-  //       new TypeDec("list", new ArrayType("int")),
-  //       new Variable(
-  //         "x",
-  //         "list",
-  //         new ArrayExp("list", new Literal(1), new NegationExp(new Literal(9)))
-  //       )
-  //     ],
-  //     [new SubscriptedExp(new Identifier("x"), new Literal(0))]
-  //   )
-  // ],
-
-  // id: [
-  //   String.raw`INT x`,
-  //   new Identifier("SAY", [new Literal("Hello World!\\n")])
-  // ],
-
-  // parameters: [
-  //   String.raw`FUNC INT gcd(INT x, INT y):
-  //   UNTIL y:
-  //       x IS y!
-  //       y IS x MOD y!
-  //   GIMME x!`,
-  //   new Param("SAY", [new Literal("Hello World!\\n")])
-  // ],
-
-  // simpleFunction: [
-  //   String.raw`FUNC BOO isEven(INT num):
-  //   GIMME num MOD 2 EQUALS 0!`,
-  //   new Function(
-  //     [
-  //       new Func(
-  //         "isEven",
-  //         [new Param("x", "int")],
-  //         "int",
-  //         new BinaryExp("+", new Identifier("x"), new Literal(2))
-  //       )
-  //     ],
-  //     [new Call("isEven", [new Call("ord", [new Literal("dog")])])]
-  //   )
-  // ]
 };
 
 describe("The parser", () => {

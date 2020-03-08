@@ -98,7 +98,12 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new IfStatement(t, consequents, alternate);
   },
   Function(_func, type, id, _open, params, _close, body) {
-    return new Function(type.ast(), id.ast(), params.ast(), body.ast());
+    return new Function(
+      type.ast(),
+      id.ast(),
+      arrayToNullable(params.ast()),
+      body.ast()
+    );
   },
   Exp_binary(left, op, right) {
     return new BinaryExp(left.ast(), op.ast(), right.ast());
@@ -163,7 +168,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new KeyValue(id.ast(), exp.ast());
   },
   boollit(_) {
-    return new Literal(this.sourceString === "true");
+    return new Literal(this.sourceString === "TRUE");
   },
   numlit(_digits, _dot, _digit) {
     return new Literal(+this.sourceString);
@@ -174,8 +179,11 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   NonemptyListOf(first, _sep, rest) {
     return [first.ast(), ...rest.ast()];
   },
-  ListOf(args) {
-    return [...args.ast()];
+  // ListOf(args) {
+  //   return [...args.ast()];
+  // },
+  EmptyListOf() {
+    return [];
   },
   id(_firstChar, _restChar) {
     return new Identifier(this.sourceString);
