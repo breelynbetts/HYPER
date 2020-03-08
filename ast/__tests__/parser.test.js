@@ -255,7 +255,49 @@ LEAVE!
             GIMME 1!
         GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!
   `,
-    new Program([])
+    new Program([
+      new Function(
+        "INT",
+        new Identifier("fibonacci"),
+        new Param("INT", new Identifier("num")),
+        [
+          new IfStatement(
+            [
+              new BinaryExp(
+                new Identifier(new Identifier("num")),
+                "LESS",
+                new Literal(2)
+              )
+            ],
+            [[new ReturnStatement(new Literal(1))]],
+            null
+          ),
+          new ReturnStatement(
+            new BinaryExp(
+              new CallExp(new Identifier(new Identifier("fibonacci")), [
+                new Arg(
+                  new BinaryExp(
+                    new Identifier(new Identifier("num")),
+                    "SUB",
+                    new Literal(2)
+                  )
+                )
+              ]),
+              "ADD",
+              new CallExp(new Identifier(new Identifier("fibonacci")), [
+                new Arg(
+                  new BinaryExp(
+                    new Identifier(new Identifier("num")),
+                    "SUB",
+                    new Literal(1)
+                  )
+                )
+              ])
+            )
+          )
+        ]
+      )
+    ])
   ]
 };
 
