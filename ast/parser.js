@@ -31,17 +31,6 @@ const {
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
 
-//   Type        = basicType | "TUP" | "ARR" | "DICT"
-//               | "FUNC"  | "range"
-//   basicType   = "BOO"
-//               | "INT"
-//               | "FLT"
-//               | "STR"
-//               | "LITERALLYNOTHING"
-//   RangeType   = VarExp
-//               | Exp
-//
-
 function arrayToNullable(a) {
   return a.length === 0 ? null : a[0];
 }
@@ -179,9 +168,6 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   NonemptyListOf(first, _sep, rest) {
     return [first.ast(), ...rest.ast()];
   },
-  // ListOf(args) {
-  //   return [...args.ast()];
-  // },
   EmptyListOf() {
     return [];
   },
