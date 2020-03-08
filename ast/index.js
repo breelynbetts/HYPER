@@ -54,10 +54,10 @@ class Assignment {
 }
 
 class Declaration {
-  constructor(id, type, exp) {
+  constructor(type, id, exp) {
     Object.assign(this, {
-      id,
       type,
+      id,
       exp
     });
   }
@@ -174,15 +174,6 @@ class SubscriptedExp extends Expression {
   }
 }
 
-class IdExp extends Expression {
-  constructor(ref) {
-    super();
-    Object.assign(this, {
-      ref
-    });
-  }
-}
-
 class Param {
   constructor(type, id) {
     Object.assign(this, {
@@ -237,7 +228,6 @@ module.exports = {
   RangeExp,
   MemberExp,
   SubscriptedExp,
-  IdExp,
   Param,
   Arg,
   KeyValue,

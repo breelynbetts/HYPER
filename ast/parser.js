@@ -22,7 +22,6 @@ const {
   RangeExp,
   MemberExp,
   SubscriptedExp,
-  IdExp,
   Param,
   Arg,
   KeyValue,
@@ -59,7 +58,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new Assignment(id.ast(), exp.ast());
   },
   Declaration(type, id, _is, exp, _exc) {
-    return new Declaration(type.ast(), id.ast(), exp.ast());
+    return new Declaration(type.ast(), id.ast(), arrayToNullable(exp.ast()));
   },
   SimpleStmt_print(_print, e, _exclamation) {
     return new PrintStatement(e.ast());
@@ -141,7 +140,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
       openParen,
       start.ast(),
       end.ast(),
-      step.ast(),
+      arrayToNullable(step.ast()),
       closeParen
     );
   },
@@ -154,7 +153,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   VarExp_id(id) {
     return new Identifier(id.ast());
   },
-  Param(type, id, _open, _is, exp, _close) {
+  Param(type, id, _is, exp) {
     return new Param(type.ast(), id.ast(), arrayToNullable(exp.ast()));
   },
   Arg(exp) {
