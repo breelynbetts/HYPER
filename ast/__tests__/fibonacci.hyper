@@ -1,0 +1,6 @@
+FUNC INT fibonacci(INT num): 
+    TRY num EQUALS 0:
+        GIMME 0!
+    NO?TRY num EQUALS 1 OR num EQUALS 2:
+        GIMME 1!
+    GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!
