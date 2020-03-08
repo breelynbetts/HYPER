@@ -1,5 +1,4 @@
 // THINGS TO WORK ON : couldn't figure out how to get coverage on parenthesis and tuple
-// DONT KNOW WHY NEED EXTRA IDENTIFIER IN NESTED IDENTIFIERS
 
 const parse = require("../parser");
 
