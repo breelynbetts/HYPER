@@ -63,6 +63,12 @@ class Declaration {
   }
 }
 
+class PrimitiveType {
+  constructor(id) {
+    Object.assign(this, { id });
+  }
+}
+
 class PrintStatement {
   constructor(expression) {
     this.expression = expression;
@@ -211,6 +217,7 @@ module.exports = {
   Assignment,
   Declaration,
   PrintStatement,
+  PrimitiveType,
   ReturnStatement,
   Break,
   BinaryExp,
