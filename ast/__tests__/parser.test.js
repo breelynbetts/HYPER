@@ -10,6 +10,9 @@ const {
   Function,
   Assignment,
   Declaration,
+  ArrayType,
+  DictType,
+  TupleType,
   PrintStatement,
   ReturnStatement,
   Break,
@@ -151,7 +154,7 @@ SAY c[1]!
       `,
     new Program([
       new Declaration(
-        "ARR",
+        new ArrayType("STR"),
         "c",
         new ArrayExp([
           [
@@ -175,7 +178,7 @@ LEAVE!
   `,
     new Program([
       new Declaration(
-        "DICT",
+        new DictType("STR", "STR"),
         "e",
         new DictExp([
           new KeyValue(new Identifier("a"), new Literal("Hi")),
@@ -194,7 +197,7 @@ LEAVE!
       `,
     new Program([
       new Declaration(
-        "TUP",
+        new TupleType(["INT", "FLT", "STR"]),
         "d",
         new TupleExp([new Literal(1), new Literal(2.5), new Literal("hello")])
       )

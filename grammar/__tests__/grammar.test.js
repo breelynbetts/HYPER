@@ -35,7 +35,7 @@ FUNC BOO isEven(INT num):
 `;
 
 const program4 = String.raw`
-ARR array IS ["Hi", "I'm", "Hyper"]!
+ARR<STR> array IS ["Hi", "I'm", "Hyper"]!
 array IS array.push("LOL")!
 
 SAY("element0: ", array[0])!

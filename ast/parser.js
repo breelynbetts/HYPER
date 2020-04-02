@@ -10,6 +10,9 @@ const {
   Function,
   Assignment,
   Declaration,
+  ArrayType,
+  DictType,
+  TupleType,
   PrintStatement,
   ReturnStatement,
   Break,
@@ -48,6 +51,15 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   },
   Declaration(type, id, _is, exp, _exc) {
     return new Declaration(type.ast(), id.ast(), arrayToNullable(exp.ast()));
+  },
+  DictType(_dict, key, _semi, value, _close) {
+    return new DictType(key.ast(), value.ast());
+  },
+  TupleType(_tup, t, _close) {
+    return new TupleType(t.ast());
+  },
+  ArrayType(_arr, t, _close) {
+    return new ArrayType(t.ast());
   },
   SimpleStmt_print(_print, e, _exclamation) {
     return new PrintStatement(e.ast());
