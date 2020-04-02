@@ -33,7 +33,7 @@ class IfStatement {
   }
 }
 
-class Function {
+class Func {
   constructor(returnType, id, params, body) {
     Object.assign(this, {
       returnType,
@@ -231,7 +231,7 @@ module.exports = {
   ForStatement,
   WhileStatement,
   IfStatement,
-  Function,
+  Func,
   Assignment,
   Declaration,
   ArrayType,

@@ -56,5 +56,29 @@ module.exports = {
   },
   isBoolean(expression) {
     doCheck(expression.type === BoolType, "Not a boolean");
+  },
+  isFunction(value) {
+    doCheck(value.constructor === Func, "Not a function");
+  },
+  expressionsHaveSameType(e1, e2) {
+    doCheck(e1.type === e2.type, "Types must match exactly");
+  },
+  isAssignableTo(expression, type) {
+    doCheck();
+  },
+  inLoop(context, keyword) {
+    doCheck(context.inLoop, `${keyword} can only be used in a loop`);
+  },
+  legalArguments(args, params) {
+    doCheck(
+      args.length === params.length,
+      `Expected ${params.length} args in call, got ${args.length}`
+    );
+    args.forEach((arg, i) => {
+      if (params[i].type === StringType && arg.type !== StringType) {
+        arg.type = StringType;
+      }
+      this.isAssignableTo(arg, params[i].type);
+    });
   }
 };

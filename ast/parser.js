@@ -7,7 +7,7 @@ const {
   ForStatement,
   WhileStatement,
   IfStatement,
-  Function,
+  Func,
   Assignment,
   Declaration,
   ArrayType,
@@ -99,7 +99,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new IfStatement(t, consequents, alternate);
   },
   Function(_func, type, id, _open, params, _close, body) {
-    return new Function(
+    return new Func(
       type.ast(),
       id.ast(),
       arrayToNullable(params.ast()),

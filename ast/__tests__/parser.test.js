@@ -7,7 +7,7 @@ const {
   ForStatement,
   WhileStatement,
   IfStatement,
-  Function,
+  Func,
   Assignment,
   Declaration,
   ArrayType,
@@ -58,7 +58,7 @@ let fixture = {
           GIMME num MOD 2 EQUALS 0!
       `,
     new Program([
-      new Function("BOO", "isEven", new Param("INT", "num"), [
+      new Func("BOO", "isEven", new Param("INT", "num"), [
         new ReturnStatement(
           new BinaryExp(
             new BinaryExp(new Identifier("num"), "MOD", new Literal(2)),
@@ -207,7 +207,7 @@ LEAVE!
     String.raw`FUNC VOID hey () : GIMME "HELLO" OR "HEY"!
       `,
     new Program([
-      new Function("VOID", "hey", null, [
+      new Func("VOID", "hey", null, [
         new ReturnStatement(
           new BinaryExp(new Literal("HELLO"), "OR", new Literal("HEY"))
         )
@@ -222,7 +222,7 @@ LEAVE!
     GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!
     `,
     new Program([
-      new Function("INT", "fibonacci", new Param("INT", "num"), [
+      new Func("INT", "fibonacci", new Param("INT", "num"), [
         new IfStatement(
           [new BinaryExp(new Identifier("num"), "LESS", new Literal(2))],
           [[new ReturnStatement(new Literal(1))]],
