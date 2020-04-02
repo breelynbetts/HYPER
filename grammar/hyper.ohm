@@ -98,13 +98,16 @@ HYPER {
     keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
                 | "LOOKAT" | "GIMME" | "LEAVE" |"TUP" 
                 | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest       
-    Type        = basicType | "TUP" | "ARR" | "DICT"
+    Type        = basicType | TupleType | ArrayType | DictType
                 | "FUNC"  | "range" 
     basicType   = "BOO" 
                 | "INT" 
                 | "FLT" 
                 | "STR" 
                 | "LITERALLYNOTHING"
+    DictType    = "DICT<" basicType ":" basicType ">"
+    TupleType   = "TUP<" NonemptyListOf<Type, ","> ">"
+    ArrayType   = "ARR<" basicType ">"
     RangeType   = VarExp 
                 | Exp
                 

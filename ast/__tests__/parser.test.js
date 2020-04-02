@@ -146,7 +146,7 @@ NO???:
   ],
 
   arrays: [
-    String.raw`ARR c IS ["Hi", "I", "am", "hyper"]!
+    String.raw`ARR<STR> c IS ["Hi", "I", "am", "hyper"]!
 SAY c[1]!
       `,
     new Program([
@@ -169,7 +169,7 @@ SAY c[1]!
   ],
 
   dict: [
-    String.raw`DICT e IS {a: "Hi", b: "I", c: "am", d: "hyper"}!
+    String.raw`DICT<STR:STR> e IS {a: "Hi", b: "I", c: "am", d: "hyper"}!
 GIMME e.a!
 LEAVE!
   `,
@@ -190,7 +190,7 @@ LEAVE!
   ],
 
   tuple: [
-    String.raw`TUP d IS (1, 2.5, "hello")!
+    String.raw`TUP<INT,FLT,STR> d IS (1, 2.5, "hello")!
       `,
     new Program([
       new Declaration(

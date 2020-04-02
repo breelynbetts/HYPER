@@ -63,6 +63,24 @@ class Declaration {
   }
 }
 
+class ArrayType {
+  constructor(memberType) {
+    Object.assign(this, { memberType });
+  }
+}
+
+class DictType {
+  constructor(keyType, valueType) {
+    Object.assign(this, { keyType, valueType });
+  }
+}
+
+class TupleType {
+  constructor(memberType) {
+    Object.assign(this, { memberType });
+  }
+}
+
 class PrimitiveType {
   constructor(id) {
     Object.assign(this, { id });
@@ -216,6 +234,9 @@ module.exports = {
   Function,
   Assignment,
   Declaration,
+  ArrayType,
+  DictType,
+  TupleType,
   PrintStatement,
   PrimitiveType,
   ReturnStatement,
