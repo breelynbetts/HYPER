@@ -58,10 +58,10 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new ParameterizedType("DICT", [key.ast(), value.ast()]);
   },
   TupleType(_tup, t, _close) {
-    return new TupleType(t.ast());
+    return new ParameterizedType("TUP", t.ast());
   },
   ArrayType(_arr, t, _close) {
-    return new ArrayType(t.ast());
+    return new ParameterizedType("ARR", [t.ast()]);
   },
   SimpleStmt_print(_print, e, _exclamation) {
     return new PrintStatement(e.ast());

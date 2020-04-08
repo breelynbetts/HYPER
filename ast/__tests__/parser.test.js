@@ -155,7 +155,7 @@ SAY c[1]!
       `,
     new Program([
       new Declaration(
-        new ArrayType("STR"),
+        new ParameterizedType("ARR", ["STR"]),
         "c",
         new ArrayExp([
           [
@@ -198,7 +198,7 @@ LEAVE!
       `,
     new Program([
       new Declaration(
-        new TupleType(["INT", "FLT", "STR"]),
+        new ParameterizedType("TUP", ["INT", "FLT", "STR"]),
         "d",
         new TupleExp([new Literal(1), new Literal(2.5), new Literal("hello")])
       ),
