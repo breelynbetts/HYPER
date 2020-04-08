@@ -1,4 +1,4 @@
-const { Function, Param, PrimitiveType } = require("../ast");
+const { Func, Param, PrimitiveType, ParameterizedType } = require("../ast");
 
 const BoolType = new PrimitiveType("BOO");
 const FloatType = new PrimitiveType("FLT");
@@ -7,21 +7,22 @@ const NoneType = new PrimitiveType("LITERALLYNOTHING");
 const StringType = new PrimitiveType("STR");
 
 //  do we need to do other types here, such as dict, array, range ...?
+//      - if so, do we use a `ParameterizedType` class ??
 
 const StandardFunctions = [
   // TODO : ADD NEW FUNCS
-  new Function("LITERALLYNOTHING", "SAY", [new Param("LITERALLYNOTHING", "s")]),
-  new Function(IntType, "SIZE", [new Param("LITERALLYNOTHING", "s")]),
-  new Function("LITERALLYNOTHING", "EXIT", [new Param(IntType, "code")]),
-  new Function(StringType, "CONCAT", [
+  new Func(null, "SAY", [new Param("LITERALLYNOTHING", "s")]),
+  new Func(IntType, "SIZE", [new Param("LITERALLYNOTHING", "s")]),
+  new Func(null, "EXIT", [new Param(IntType, "code")]),
+  new Func(StringType, "CONCAT", [
     new Param(StringType, "s"),
-    new Param(StringType, "t")
+    new Param(StringType, "t"),
   ]),
-  new Function(StringType, "SUBSTRING", [
+  new Func(StringType, "SUBSTRING", [
     new Param(StringType, "s"),
     new Param(IntType, "start"),
-    new Param(IntType, "end")
-  ])
+    new Param(IntType, "end"),
+  ]),
 ];
 
 // later down the road =>
@@ -34,7 +35,7 @@ const StandardFunctions = [
 //       - tuple functions
 //       - range functions
 
-StandardFunctions.forEach(f => {
+StandardFunctions.forEach((f) => {
   f.builtin = true;
 });
 
@@ -44,5 +45,5 @@ module.exports = {
   IntType,
   NoneType,
   StringType,
-  StandardFunctions
+  StandardFunctions,
 };

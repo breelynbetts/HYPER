@@ -11,6 +11,7 @@ const {
   Assignment,
   Declaration,
   ArrayType,
+  ParameterizedType,
   DictType,
   TupleType,
   PrintStatement,
@@ -29,7 +30,7 @@ const {
   Arg,
   KeyValue,
   Literal,
-  Identifier
+  Identifier,
 } = require("../ast");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
@@ -52,8 +53,9 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Declaration(type, id, _is, exp, _exc) {
     return new Declaration(type.ast(), id.ast(), arrayToNullable(exp.ast()));
   },
+  // return new DictType(key.ast(), value.ast());
   DictType(_dict, key, _semi, value, _close) {
-    return new DictType(key.ast(), value.ast());
+    return new ParameterizedType("DICT", [key.ast(), value.ast()]);
   },
   TupleType(_tup, t, _close) {
     return new TupleType(t.ast());
@@ -188,10 +190,10 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   },
   _terminal() {
     return this.sourceString;
-  }
+  },
 });
 
-module.exports = text => {
+module.exports = (text) => {
   const match = grammar.match(withIndentsAndDedents(text));
   if (!match.succeeded()) {
     throw new Error(`Syntax Error: ${match.message}`);

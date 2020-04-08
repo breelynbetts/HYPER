@@ -10,6 +10,7 @@ const {
   Func,
   Assignment,
   Declaration,
+  ParameterizedType,
   ArrayType,
   DictType,
   TupleType,
@@ -29,28 +30,28 @@ const {
   Arg,
   KeyValue,
   Literal,
-  Identifier
+  Identifier,
 } = require("../../ast");
 
 let fixture = {
   hello: [
     String.raw`SAY 3!
   `,
-    new Program([new PrintStatement(new Literal(3))])
+    new Program([new PrintStatement(new Literal(3))]),
   ],
 
   assignment: [
     String.raw`x IS 4 ADD 3!
     `,
     new Program([
-      new Assignment("x", new BinaryExp(new Literal(4), "ADD", new Literal(3)))
-    ])
+      new Assignment("x", new BinaryExp(new Literal(4), "ADD", new Literal(3))),
+    ]),
   ],
 
   declaration: [
     String.raw`INT x IS 5!
       `,
-    new Program([new Declaration("INT", "x", new Literal(5))])
+    new Program([new Declaration("INT", "x", new Literal(5))]),
   ],
 
   returnStatement: [
@@ -65,9 +66,9 @@ let fixture = {
             "EQUALS",
             new Literal(0)
           )
-        )
-      ])
-    ])
+        ),
+      ]),
+    ]),
   ],
 
   binary: [
@@ -82,16 +83,16 @@ INT z IS x ADD y!
         "INT",
         "z",
         new BinaryExp(new Identifier("x"), "ADD", new Identifier("y"))
-      )
-    ])
+      ),
+    ]),
   ],
 
   unary: [
     String.raw`INT x IS -10!
       `,
     new Program([
-      new Declaration("INT", "x", new UnaryExp("-", new Literal(10)))
-    ])
+      new Declaration("INT", "x", new UnaryExp("-", new Literal(10))),
+    ]),
   ],
 
   for: [
@@ -106,10 +107,10 @@ INT z IS x ADD y!
         [
           new PrintStatement(
             new BinaryExp(new Identifier("x"), "POW", new Identifier("x"))
-          )
+          ),
         ]
-      )
-    ])
+      ),
+    ]),
   ],
 
   while: [
@@ -118,9 +119,9 @@ INT z IS x ADD y!
       `,
     new Program([
       new WhileStatement(new Literal(true), [
-        new ReturnStatement(new Literal("I am hyper!"))
-      ])
-    ])
+        new ReturnStatement(new Literal("I am hyper!")),
+      ]),
+    ]),
   ],
 
   if: [
@@ -137,15 +138,15 @@ NO???:
       new IfStatement(
         [
           new BinaryExp(new Identifier("num"), "GRT", new Literal(0)),
-          new BinaryExp(new Identifier("num"), "EQUALS", new Literal(0))
+          new BinaryExp(new Identifier("num"), "EQUALS", new Literal(0)),
         ],
         [
           [new PrintStatement(new Literal("Positive number"))],
-          [new PrintStatement(new Literal("Zero"))]
+          [new PrintStatement(new Literal("Zero"))],
         ],
         [new PrintStatement(new Literal("Negative number"))]
-      )
-    ])
+      ),
+    ]),
   ],
 
   arrays: [
@@ -161,14 +162,14 @@ SAY c[1]!
             new Literal("Hi"),
             new Literal("I"),
             new Literal("am"),
-            new Literal("hyper")
-          ]
+            new Literal("hyper"),
+          ],
         ])
       ),
       new PrintStatement(
         new SubscriptedExp(new Identifier("c"), new Literal(1))
-      )
-    ])
+      ),
+    ]),
   ],
 
   dict: [
@@ -178,18 +179,18 @@ LEAVE!
   `,
     new Program([
       new Declaration(
-        new DictType("STR", "STR"),
+        new ParameterizedType("DICT", ["STR", "STR"]),
         "e",
         new DictExp([
           new KeyValue(new Identifier("a"), new Literal("Hi")),
           new KeyValue(new Identifier("b"), new Literal("I")),
           new KeyValue(new Identifier("c"), new Literal("am")),
-          new KeyValue(new Identifier("d"), new Literal("hyper"))
+          new KeyValue(new Identifier("d"), new Literal("hyper")),
         ])
       ),
       new ReturnStatement(new MemberExp(new Identifier("e"), "a")),
-      new Break()
-    ])
+      new Break(),
+    ]),
   ],
 
   tuple: [
@@ -200,8 +201,8 @@ LEAVE!
         new TupleType(["INT", "FLT", "STR"]),
         "d",
         new TupleExp([new Literal(1), new Literal(2.5), new Literal("hello")])
-      )
-    ])
+      ),
+    ]),
   ],
   simpleSuite: [
     String.raw`FUNC VOID hey () : GIMME "HELLO" OR "HEY"!
@@ -210,9 +211,9 @@ LEAVE!
       new Func("VOID", "hey", null, [
         new ReturnStatement(
           new BinaryExp(new Literal("HELLO"), "OR", new Literal("HEY"))
-        )
-      ])
-    ])
+        ),
+      ]),
+    ]),
   ],
 
   fibonacci: [
@@ -233,29 +234,29 @@ LEAVE!
             new CallExp(new Identifier("fibonacci"), [
               new Arg(
                 new BinaryExp(new Identifier("num"), "SUB", new Literal(2))
-              )
+              ),
             ]),
             "ADD",
             new CallExp(new Identifier("fibonacci"), [
               new Arg(
                 new BinaryExp(new Identifier("num"), "SUB", new Literal(1))
-              )
+              ),
             ])
           )
-        )
-      ])
-    ])
-  ]
+        ),
+      ]),
+    ]),
+  ],
 };
 
 describe("The parser", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
-    test(`produces the correct AST for ${name}`, done => {
+    test(`produces the correct AST for ${name}`, (done) => {
       expect(parse(source)).toEqual(expected);
       done();
     });
   });
-  test("throws an exception on a syntax error", done => {
+  test("throws an exception on a syntax error", (done) => {
     expect(() => parse("as$df^&%*$&")).toThrow();
     done();
   });

@@ -10,7 +10,7 @@ class ForStatement {
       type,
       id,
       test,
-      body
+      body,
     });
   }
 }
@@ -19,7 +19,7 @@ class WhileStatement {
   constructor(test, body) {
     Object.assign(this, {
       test,
-      body
+      body,
     });
   }
 }
@@ -28,7 +28,7 @@ class IfStatement {
     Object.assign(this, {
       test,
       consequent,
-      alternate
+      alternate,
     });
   }
 }
@@ -39,7 +39,7 @@ class Func {
       returnType,
       id,
       params,
-      body
+      body,
     });
   }
 }
@@ -48,7 +48,7 @@ class Assignment {
   constructor(target, source) {
     Object.assign(this, {
       target,
-      source
+      source,
     });
   }
 }
@@ -58,7 +58,7 @@ class Declaration {
     Object.assign(this, {
       type,
       id,
-      exp
+      exp,
     });
   }
 }
@@ -87,6 +87,12 @@ class PrimitiveType {
   }
 }
 
+class ParameterizedType {
+  constructor(baseType, params) {
+    Object.assign(this, { baseType, params });
+  }
+}
+
 class PrintStatement {
   constructor(expression) {
     this.expression = expression;
@@ -109,7 +115,7 @@ class BinaryExp extends Expression {
     Object.assign(this, {
       left,
       op,
-      right
+      right,
     });
   }
 }
@@ -119,15 +125,16 @@ class UnaryExp extends Expression {
     super();
     Object.assign(this, {
       op,
-      operand
+      operand,
     });
   }
 }
+
 class ArrayExp extends Expression {
   constructor(members) {
     super();
     Object.assign(this, {
-      members
+      members,
     });
   }
 }
@@ -136,7 +143,7 @@ class DictExp extends Expression {
   constructor(values) {
     super();
     Object.assign(this, {
-      values
+      values,
     });
   }
 }
@@ -145,7 +152,7 @@ class TupleExp extends Expression {
   constructor(values) {
     super();
     Object.assign(this, {
-      values
+      values,
     });
   }
 }
@@ -155,7 +162,7 @@ class CallExp extends Expression {
     super();
     Object.assign(this, {
       callee,
-      args
+      args,
     });
   }
 }
@@ -168,7 +175,7 @@ class RangeExp extends Expression {
       start,
       end,
       step,
-      close
+      close,
     });
   }
 }
@@ -178,7 +185,7 @@ class MemberExp extends Expression {
     super();
     Object.assign(this, {
       value,
-      subscript
+      subscript,
     });
   }
 }
@@ -188,7 +195,7 @@ class SubscriptedExp extends Expression {
     super();
     Object.assign(this, {
       array,
-      subscript
+      subscript,
     });
   }
 }
@@ -197,7 +204,7 @@ class Param {
   constructor(type, id) {
     Object.assign(this, {
       type,
-      id
+      id,
     });
   }
 }
@@ -239,6 +246,7 @@ module.exports = {
   TupleType,
   PrintStatement,
   PrimitiveType,
+  ParameterizedType,
   ReturnStatement,
   Break,
   BinaryExp,
@@ -254,5 +262,5 @@ module.exports = {
   Arg,
   KeyValue,
   Literal,
-  Identifier
+  Identifier,
 };
