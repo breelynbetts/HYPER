@@ -1,11 +1,5 @@
 const util = require("util");
-const {
-  Function,
-  Identifier,
-  ArrayType, // Not really sure if need these or ParameterizedType instead
-  DictType,
-  TupleType,
-} = require("../ast");
+const { Function, Identifier, ParameterizedType } = require("../ast");
 
 //  DictType,
 //  TupleType,
@@ -74,6 +68,24 @@ module.exports = {
   },
   isFunction(value) {
     doCheck(value.constructor === Func, "Not a function");
+  },
+  equalTypes(type1, type2) {
+    if ((type1 === null) | (type2 === null)) {
+      return true;
+    }
+    // need to check for ArrayType, DictType, TupleType
+    if (type1.constructor === ArrayType && type2.constructor === ArrayType) {
+    } else if (
+      type1.constructor === DictType &&
+      type2.constructor === DictType
+    ) {
+    } else if (
+      type1.constructor === TupleType &&
+      type2.constructor === TupleType
+    ) {
+    } else {
+      return type1 === type2;
+    }
   },
   expressionsHaveSameType(e1, e2) {
     doCheck(e1.type === e2.type, "Types must match exactly");
