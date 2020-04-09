@@ -21,7 +21,7 @@ HYPER {
     Exp3        = Exp3 mulop Exp4                                   -- binary
                 | Exp4
     Exp4        = prefixop Exp5                                     -- negate
-    			| Exp5 powop Exp4									-- pow
+                | Exp5 powop Exp4                                   -- pow
                 | Exp5
     Exp5        = boollit
                 | numlit
