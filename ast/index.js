@@ -63,23 +63,23 @@ class Declaration {
   }
 }
 
-class ArrayType {
-  constructor(memberType) {
-    Object.assign(this, { memberType });
-  }
-}
+// class ArrayType {
+//   constructor(memberType) {
+//     Object.assign(this, { memberType });
+//   }
+// }
 
-class DictType {
-  constructor(keyType, valueType) {
-    Object.assign(this, { keyType, valueType });
-  }
-}
+// class DictType {
+//   constructor(keyType, valueType) {
+//     Object.assign(this, { keyType, valueType });
+//   }
+// }
 
-class TupleType {
-  constructor(memberType) {
-    Object.assign(this, { memberType });
-  }
-}
+// class TupleType {
+//   constructor(memberType) {
+//     Object.assign(this, { memberType });
+//   }
+// }
 
 class PrimitiveType {
   constructor(id) {
@@ -228,8 +228,8 @@ class KeyValue {
 }
 
 class Literal {
-  constructor(value) {
-    this.value = value;
+  constructor(type, value) {
+    Object.assign(this, { type, value });
   }
 }
 
@@ -247,9 +247,9 @@ module.exports = {
   Func,
   Assignment,
   Declaration,
-  ArrayType,
-  DictType,
-  TupleType,
+  // ArrayType,
+  // DictType,
+  // TupleType,
   PrintStatement,
   PrimitiveType,
   ParameterizedType,

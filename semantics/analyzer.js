@@ -1,5 +1,6 @@
 // The Semantic Analyzer for HYPER!
 const {
+  Program,
   ForStatement,
   WhileStatement,
   IfStatement,
@@ -54,3 +55,9 @@ function getParameterizedType(typeString) {
       return typeString;
   }
 }
+
+// ParameterizedType.params.forEach((type, index) => { !!! then need to check if the values are correct });
+
+Program.prototype.analyze = function() {
+  this.body.analyze(Context());
+};

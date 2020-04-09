@@ -6,7 +6,7 @@ HYPER {
                 | Function 
     SimpleStmt  = Assignment                                        
                 | Declaration                                    
-                | say Exp "!"                                       -- print
+                | say "(" Exps ")" "!"                              -- print
                 | gimme Exp? "!"                                    -- return
                 | leave "!"                                         -- break
                 | Exp                                               
@@ -43,7 +43,7 @@ HYPER {
     Function    = func (Type | void) id "(" Params ")" Suite      
     Array       = "[" ListOf<Exps, ","> "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
-    Tuple       = "(" NonemptyListOf<Exp5, ","> ")"
+    Tuple       = "(" NonemptyListOf<literals, ","> ")"
     Call        = VarExp "(" ListOf <Arg, ","> ")"
     VarExp      = VarExp "[" Exp "]"                                -- subscripted
                 | VarExp "." id                                     -- field
@@ -69,8 +69,11 @@ HYPER {
     mulop       = "MULT" | "DIV" | "MOD"
     addop       = "ADD" | "SUB"
     
+    literals    = boollit | numlit | strlit
     boollit     = "TRUE" | "FALSE"
-    numlit      = digit+ ("." digit+)?
+    numlit      = floatlit | intlit
+    intlit      = "-"? digit+
+    floatlit    = "-"? digit+ "." digit+
     strlit      = "\"" (~"\\" ~"\"" ~"\n" any | escape)* "\""
     nonelit     = "LITERALLYNOTHING"
     Exps        = ListOf<Exp, ",">

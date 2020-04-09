@@ -60,7 +60,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   ArrayType(_arr, t, _close) {
     return new ParameterizedType("ARR", [t.ast()]);
   },
-  SimpleStmt_print(_print, e, _exclamation) {
+  SimpleStmt_print(_print, _open, e, _close, _exclamation) {
     return new PrintStatement(e.ast());
   },
   SimpleStmt_return(_return, e, _exc) {
@@ -168,13 +168,16 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new KeyValue(id.ast(), exp.ast());
   },
   boollit(_) {
-    return new Literal(this.sourceString === "TRUE");
+    return new Literal("BOO", this.sourceString === "TRUE");
   },
-  numlit(_digits, _dot, _digit) {
-    return new Literal(+this.sourceString);
+  intlit(_neg, _digits) {
+    return new Literal("INT", +this.sourceString);
+  },
+  floatlit(_neg, _digits, _dot, _digit) {
+    return new Literal("FLT", +this.sourceString);
   },
   strlit(_open, chars, _close) {
-    return new Literal(this.sourceString.slice(1, -1));
+    return new Literal("STR", this.sourceString.slice(1, -1));
   },
   NonemptyListOf(first, _sep, rest) {
     return [first.ast(), ...rest.ast()];

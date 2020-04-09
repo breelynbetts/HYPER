@@ -30,6 +30,12 @@ module.exports = {
   //    - is Type.numParams == ParameterizedType.params ?
 
   //  how would we perform this check? - would the ArrayType be from the builtins?
+  isGeneric(type) {
+    doCheck(type.isGeneric, "Not a generic type");
+  },
+  isRightNumParams(numParams, type) {
+    doCheck(numParams === type.numParams);
+  },
   isArrayType(type) {
     doCheck(type.constructor === ArrayType, "Not an ArrayType");
   },

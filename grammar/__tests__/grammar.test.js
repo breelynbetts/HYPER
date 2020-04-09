@@ -10,7 +10,7 @@ FUNC INT fibonacci( INT number ):
 	⇨ GIMME 0! 
 ⇦ NO?TRY num EQUALS 1 OR num EQUALS 2:
 ⇨ GIMME 1!
-⇦ SAY fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!
+⇦ SAY(fibonacci(num SUB 2) ADD fibonacci(num SUB 1))!
 ⇦
 `;
 const program2 = String.raw`
@@ -42,28 +42,28 @@ SAY("element0: ", array[0])!
 `;
 
 describe("The syntax checker", () => {
-  test("accepts the fibonacci function", done => {
+  test("accepts the fibonacci function", (done) => {
     expect(syntaxCheck(program)).toBe(true);
     done();
   });
 });
 
 describe("The syntax checker", () => {
-  test("accepts the finding the largest of three numbers function", done => {
+  test("accepts the finding the largest of three numbers function", (done) => {
     expect(syntaxCheck(program2)).toBe(true);
     done();
   });
 });
 
 describe("The syntax checker", () => {
-  test("accepts finding an even number", done => {
+  test("accepts finding an even number", (done) => {
     expect(syntaxCheck(program3)).toBe(true);
     done();
   });
 });
 
 describe("The syntax checker", () => {
-  test("accepts appending a string to an array", done => {
+  test("accepts appending a string to an array", (done) => {
     expect(syntaxCheck(program4)).toBe(true);
     done();
   });
