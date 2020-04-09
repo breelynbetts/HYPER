@@ -1,5 +1,7 @@
 /*
- * Semantic Analysis Context
+ *  https://cs.lmu.edu/~ray/notes/writingacompiler/
+ *
+ *  Semantic Analysis Context
  *
  * A context object holds state for the semantic analysis phase.
  *
@@ -13,7 +15,7 @@ const {
   IntType,
   NoneType,
   StringType,
-  StandardFunctions
+  StandardFunctions,
 } = require("./builtins");
 
 require("./analyzer");
@@ -39,8 +41,42 @@ class Context {
       parent,
       currentFunction,
       inLoop,
-      declarations: new Map()
+      declarations: new Map(),
     });
+  }
+  createChildContextForFunctionBody(currentFunction) {
+    // When entering a new function, we're not in a loop anymore
+    return new Context({ parent: this, currentFunction, inLoop: false });
+  }
+  createChildContextForLoop() {
+    // When entering a loop body, just set the inLoop field, retain others
+    return new Context({
+      parent: this,
+      currentFunction: this.currentFunction,
+      inLoop: true,
+    });
+  }
+  createChildContextForBlock() {
+    // For a block, we have to retain both the function and loop settings.
+    return new Context({
+      parent: this,
+      currentFunction: this.currentFunction,
+      inLoop: this.inLoop,
+    });
+  }
+  add(id, entity) {
+    if (this.declarations.has(id)) {
+      throw new Error(`${id} already declared in this scope`);
+    }
+    this.declarations.set(id, entity);
+  }
+  lookup(id) {
+    for (let context = this; context !== null; context = context.parent) {
+      if (context.declarations.has(id)) {
+        return context.declarations.get(id);
+      }
+    }
+    throw new Error(`Identifier ${id} has not been declared`);
   }
 }
 
@@ -51,8 +87,8 @@ Context.INITIAL = new Context();
   IntType,
   NoneType,
   StringType,
-  ...StandardFunctions
-].forEach(entity => {
+  ...StandardFunctions,
+].forEach((entity) => {
   Context.INITIAL.add(entity);
 });
 

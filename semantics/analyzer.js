@@ -1,5 +1,31 @@
 // The Semantic Analyzer for HYPER!
-const {} = require("../ast");
+const {
+  Program,
+  ForStatement,
+  WhileStatement,
+  IfStatement,
+  Func,
+  Assignment,
+  Declaration,
+  ParameterizedType,
+  PrintStatement,
+  ReturnStatement,
+  Break,
+  BinaryExp,
+  UnaryExp,
+  ArrayExp,
+  DictExp,
+  TupleExp,
+  CallExp,
+  RangeExp,
+  MemberExp,
+  SubscriptedExp,
+  Param,
+  Arg,
+  KeyValue,
+  Literal,
+  Identifier,
+} = require("../ast");
 const {
   BoolType,
   FloatType,

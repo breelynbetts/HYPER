@@ -51,7 +51,7 @@ HYPER {
     Range       = range ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      = ListOf<Param, ",">
     Param       = Type id ( is Exp )?                              
-    Assignment  = id is Exp "!"                                      
+    Assignment  = VarExp is Exp "!"                                      
     Declaration = Type id  (is Exp)? "!"                                
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum

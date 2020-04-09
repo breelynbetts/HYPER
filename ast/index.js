@@ -93,6 +93,12 @@ class ParameterizedType {
   }
 }
 
+class Type {
+  constructor(name, isGeneric, numParams) {
+    Object.assign(this, { name, isGeneric, numParams });
+  }
+}
+
 class PrintStatement {
   constructor(expression) {
     this.expression = expression;
@@ -247,6 +253,7 @@ module.exports = {
   PrintStatement,
   PrimitiveType,
   ParameterizedType,
+  Type,
   ReturnStatement,
   Break,
   BinaryExp,

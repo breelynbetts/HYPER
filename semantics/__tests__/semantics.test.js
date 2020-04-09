@@ -9,13 +9,18 @@ const parse = require("../../ast/parser");
 const analyze = require("../analyzer");
 
 const program = String.raw`
-
-    #TODO: FILL IN SAMPLE TEST PROGRAM!!
-    
+DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!
+sizes["orange"] IS 3.56!
+TUP<STR,INT,FLT> tuple IS ("hello!", 2, 2.4)!
+FUNC INT getSum (STR a, STR b):
+⇨INT strA IS strToInt(a)!
+INT strB IS strToInt(b)!
+INT sum IS a MULT b!
+⇦
 `;
 
 describe("The semantic analyzer", () => {
-  test("accepts the mega program with all syntactic forms", done => {
+  test("accepts the mega program with all syntactic forms", (done) => {
     const astRoot = parse(program);
     expect(astRoot).toBeTruthy();
     analyze(astRoot);

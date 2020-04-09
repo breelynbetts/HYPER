@@ -11,9 +11,6 @@ const {
   Assignment,
   Declaration,
   ParameterizedType,
-  ArrayType,
-  DictType,
-  TupleType,
   PrintStatement,
   ReturnStatement,
   Break,
@@ -44,7 +41,10 @@ let fixture = {
     String.raw`x IS 4 ADD 3!
     `,
     new Program([
-      new Assignment("x", new BinaryExp(new Literal(4), "ADD", new Literal(3))),
+      new Assignment(
+        new Identifier("x"),
+        new BinaryExp(new Literal(4), "ADD", new Literal(3))
+      ),
     ]),
   ],
 

@@ -2,16 +2,20 @@ const util = require("util");
 const {
   Function,
   Identifier,
-  ArrayType,
+  ArrayType, // Not really sure if need these or ParameterizedType instead
   DictType,
-  TupleType
+  TupleType,
 } = require("../ast");
+
+//  DictType,
+//  TupleType,
+//  ArrayType,
 const {
   BoolType,
   FloatType,
   IntType,
   NoneType,
-  StringType
+  StringType,
 } = require("./builtins");
 
 function doCheck(condition, message) {
@@ -21,6 +25,11 @@ function doCheck(condition, message) {
 }
 
 module.exports = {
+  // TODO: FIX HOW TO CHECK TYPES
+  //    - isGeneric()
+  //    - is Type.numParams == ParameterizedType.params ?
+
+  //  how would we perform this check? - would the ArrayType be from the builtins?
   isArrayType(type) {
     doCheck(type.constructor === ArrayType, "Not an ArrayType");
   },
@@ -80,5 +89,5 @@ module.exports = {
       }
       this.isAssignableTo(arg, params[i].type);
     });
-  }
+  },
 };
