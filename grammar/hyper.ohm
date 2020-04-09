@@ -1,15 +1,15 @@
 HYPER {
-    Program     = newline* Statement+ newline*                      
+    Program     = newline* Statement+ newline*
     Statement   = SimpleStmt newline                                --simple
-                | Loop 
-                | Conditional 
-                | Function 
-    SimpleStmt  = Assignment                                        
-                | Declaration                                    
+                | Loop
+                | Conditional
+                | Function
+    SimpleStmt  = Assignment
+                | Declaration
                 | say "(" Exps ")" "!"                              -- print
                 | gimme Exp? "!"                                    -- return
                 | leave "!"                                         -- break
-                | Exp                                               
+                | Exp
     Suite       = ":" SimpleStmt newline                            -- small
                 | ":" newline indent Statement+ dedent              -- complex
     Exp         = Exp logop Exp1                                    -- binary
@@ -27,20 +27,20 @@ HYPER {
                 | numlit
                 | strlit
                 | nonelit
-                | Array                                             
-                | Dictionary                                        
-                | Tuple                      
-                | Call                                              
+                | Array
+                | Dictionary
+                | Tuple
+                | Call
                 | VarExp
-                | Range 
+                | Range
                 | "(" Exp ")"                                       -- parens
-                
+
     Loop        = lookat Type id in Exp Suite                       -- for
-                | until Exp Suite                                   -- while                                                     
+                | until Exp Suite                                   -- while
     Conditional = try Exp Suite
-                  (notry Exp Suite)* 
+                  (notry Exp Suite)*
                   (noqqq Suite)?                                    -- if
-    Function    = func (Type | void) id "(" Params ")" Suite      
+    Function    = func (Type | void) id "(" Params ")" Suite
     Array       = "[" ListOf<Exps, ","> "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<literals, ","> ")"
@@ -50,25 +50,25 @@ HYPER {
                 | id                                                -- id
     Range       = range ("(" | "[") RangeType "," RangeType ("," RangeType)? ("]" | ")")
     Params      = ListOf<Param, ",">
-    Param       = Type id ( is Exp )?                              
-    Assignment  = VarExp is Exp "!"                                      
-    Declaration = Type id  (is Exp)? "!"                                
+    Param       = Type id ( is Exp )?
+    Assignment  = VarExp is Exp "!"
+    Declaration = Type id  (is Exp)? "!"
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum
-    Arg         = Exp 
-    prefixop    = "-" | "~" 
+    Arg         = Exp
+    prefixop    = "-" | "~"
     powop		= "POW"
     logop       = "OR" | "AND"
     relop       = relop_adv
                 | relop_sim
     relop_adv   = "LESSEQ"
-                | "EQUALS" 
-                | "NOTEQ" 
-                | "GRTEQ" 
+                | "EQUALS"
+                | "NOTEQ"
+                | "GRTEQ"
     relop_sim   = "LESS" | "GRT"
     mulop       = "MULT" | "DIV" | "MOD"
     addop       = "ADD" | "SUB"
-    
+
     literals    = boollit | numlit | strlit
     boollit     = "TRUE" | "FALSE"
     numlit      = floatlit | intlit
@@ -79,11 +79,11 @@ HYPER {
     Exps        = ListOf<Exp, ",">
     KeyValue    = Key ":" Exp
     Key         = boollit
-                |  numlit
-                |  strlit
-                |  nonelit
-                |  VarExp
-                
+                | numlit
+                | strlit
+                | nonelit
+                | VarExp
+
     say         = "SAY" ~alnum
     gimme       = "GIMME" ~alnum
     leave       = "LEAVE" ~alnum
@@ -97,29 +97,29 @@ HYPER {
     void        = "VOID" ~alnum
     is          = "IS" ~alnum
     range       = "RANGE" ~alnum
-    
+
     keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
-                | "LOOKAT" | "GIMME" | "LEAVE" |"TUP" 
-                | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest       
+                | "LOOKAT" | "GIMME" | "LEAVE" |"TUP"
+                | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest
     Type        = basicType | TupleType | ArrayType | DictType
-                | "FUNC"  | "range" 
-    basicType   = "BOO" 
-                | "INT" 
-                | "FLT" 
-                | "STR" 
+                | "FUNC"  | "range"
+    basicType   = "BOO"
+                | "INT"
+                | "FLT"
+                | "STR"
                 | "LITERALLYNOTHING"
     DictType    = "DICT<" basicType ":" basicType ">"
     TupleType   = "TUP<" NonemptyListOf<Type, ","> ">"
     ArrayType   = "ARR<" basicType ">"
-    RangeType   = VarExp 
+    RangeType   = VarExp
                 | Exp
-                
+
     escape      = "\\" ("\\" | "\"" | "n")                           -- simple
                 | "\\u{" hexDigit+ "}"                               -- codepoint
     newline     = "\n"+
     indent      = "⇨"
-    dedent      = "⇦"        
+    dedent      = "⇦"
     space       := " " | "\t" | comment
     comment     = "!!!" (~"\n" any)* "\n"                            -- singleLine
-                | "!?" (~"?!" any)* "!?"                             -- multiLine  
+                | "!?" (~"?!" any)* "?!"                             -- multiLine
 }
