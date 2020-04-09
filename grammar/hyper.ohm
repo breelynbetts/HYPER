@@ -39,7 +39,7 @@ HYPER {
                 | until Exp Suite                                   -- while                                                     
     Conditional = try Exp Suite
                   (notry Exp Suite)* 
-                  (noqqq Suite)?                                  -- if
+                  (noqqq Suite)?                                    -- if
     Function    = func (Type | void) id "(" Params ")" Suite      
     Array       = "[" ListOf<Exps, ","> "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
