@@ -63,39 +63,49 @@ class Declaration {
   }
 }
 
-// class ArrayType {
-//   constructor(memberType) {
-//     Object.assign(this, { memberType });
-//   }
-// }
+class ArrayType {
+  constructor(memberType) {
+    Object.assign(this, { memberType });
+  }
+}
 
-// class DictType {
-//   constructor(keyType, valueType) {
-//     Object.assign(this, { keyType, valueType });
-//   }
-// }
+class DictType {
+  constructor(keyType, valueType) {
+    Object.assign(this, { keyType, valueType });
+  }
+}
 
-// class TupleType {
-//   constructor(memberType) {
-//     Object.assign(this, { memberType });
-//   }
-// }
+class TupleType {
+  constructor(memberTypes) {
+    Object.assign(this, { memberTypes });
+  }
+}
 
+// Semantics only - for bool type, int type, etc.
 class PrimitiveType {
   constructor(id) {
     Object.assign(this, { id });
   }
 }
 
-class ParameterizedType {
-  constructor(baseType, params) {
-    Object.assign(this, { baseType, params });
+// Semantics only - any expression can have this type
+class AnyType {
+  constructor(id) {
+    Object.assign(this, { id });
   }
 }
 
-class Type {
-  constructor(name, isGeneric, numParams) {
-    Object.assign(this, { name, isGeneric, numParams });
+// Semantics only - represents things like "Integer or String"
+class UnionType {
+  constructor(...types) {
+    Object.assign(this, { types });
+  }
+}
+
+// Semantics only - represents strings, arrays, tuples, anything with a size
+class SequenceType {
+  constructor(...types) {
+    Object.assign(this, { types });
   }
 }
 
@@ -247,13 +257,14 @@ module.exports = {
   Func,
   Assignment,
   Declaration,
-  // ArrayType,
-  // DictType,
-  // TupleType,
+  ArrayType,
+  DictType,
+  TupleType,
+  SequenceType,
   PrintStatement,
   PrimitiveType,
-  ParameterizedType,
-  Type,
+  AnyType,
+  UnionType,
   ReturnStatement,
   Break,
   BinaryExp,
