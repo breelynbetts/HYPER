@@ -86,10 +86,10 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
     return new WhileStatement(test.ast(), body.ast());
   },
   Conditional_if(_if, test1, block1, _elif, moreTests, moreBlocks, _else, endBlock) {
-    const t = [test1.ast(), ...moreTests.ast()];
+    const tests = [test1.ast(), ...moreTests.ast()];
     const consequents = [block1.ast(), ...moreBlocks.ast()];
     const alternate = arrayToNullable(endBlock.ast());
-    return new IfStatement(t, consequents, alternate);
+    return new IfStatement(tests, consequents, alternate);
   },
   Function(_func, type, id, _open, params, _close, body) {
     return new Func(type.ast(), id.ast(), arrayToNullable(params.ast()), body.ast());

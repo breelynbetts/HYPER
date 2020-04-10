@@ -1,16 +1,9 @@
-const util = require("util");
-const { Function, Identifier, ParameterizedType } = require("../ast");
+const { ArrayType, TupleType, DictType, SequenceType, NoneType, AnyType, Func } = require('../ast');
 
 //  DictType,
 //  TupleType,
 //  ArrayType,
-const {
-  BoolType,
-  FloatType,
-  IntType,
-  NoneType,
-  StringType,
-} = require("./builtins");
+const { BoolType, FloatType, IntType, StringType } = require('./builtins');
 
 function doCheck(condition, message) {
   if (!condition) {
@@ -24,74 +17,77 @@ module.exports = {
   //    - is Type.numParams == ParameterizedType.params ?
 
   //  how would we perform this check? - would the ArrayType be from the builtins?
-  isGeneric(type) {
-    doCheck(type.isGeneric, "Not a generic type");
-  },
-  isRightNumParams(numParams, type) {
-    doCheck(numParams === type.numParams);
-  },
+
   isArrayType(type) {
-    doCheck(type.constructor === ArrayType, "Not an ArrayType");
+    doCheck(type.constructor === ArrayType, 'Not an ArrayType');
   },
   isDictType(type) {
-    doCheck(type.constructor === DictType, "Not a DictType");
+    doCheck(type.constructor === DictType, 'Not a DictType');
   },
   isTupleType(type) {
-    doCheck(type.constructor === TupleType, "Not a TupleType");
+    doCheck(type.constructor === TupleType, 'Not a TupleType');
   },
   isArray(expression) {
-    doCheck(expression.type.constructor === ArrayType, "Not an array");
+    doCheck(expression.type.constructor === ArrayType, 'Not an array');
   },
   isDict(expression) {
-    doCheck(expression.type.constructor === DictType, "Not a dictionary");
+    doCheck(expression.type.constructor === DictType, 'Not a dictionary');
   },
   isTuple(expression) {
-    doCheck(expression.type.constructor === TupleType, "Not a tuple");
+    doCheck(expression.type.constructor === TupleType, 'Not a tuple');
   },
   isInteger(expression) {
-    doCheck(expression.type === IntType, "Not an integer");
+    doCheck(expression.type === IntType, 'Not an integer');
   },
   isFloat(expression) {
-    doCheck(expression.type === FloatType, "Not a float");
+    doCheck(expression.type === FloatType, 'Not a float');
   },
   isNumber(expression) {
-    doCheck(
-      expression.type === IntType || expression.type === FloatType,
-      "Not a number"
-    );
+    doCheck(expression.type === IntType || expression.type === FloatType, 'Not a number');
   },
   isString(expression) {
-    doCheck(expression.type === StringType, "Not an string");
+    doCheck(expression.type === StringType, 'Not an string');
+  },
+  isStringOrArray(expression) {
+    doCheck(expression.type === StringType || expression.type.constructor === ArrayType);
   },
   isBoolean(expression) {
-    doCheck(expression.type === BoolType, "Not a boolean");
+    doCheck(expression.type === BoolType, 'Not a boolean');
   },
   isFunction(value) {
-    doCheck(value.constructor === Func, "Not a function");
+    doCheck(value.constructor === Func, 'Not a function');
   },
-  equalTypes(type1, type2) {
-    if ((type1 === null) | (type2 === null)) {
-      return true;
-    }
-    // need to check for ArrayType, DictType, TupleType
-    if (type1.constructor === ArrayType && type2.constructor === ArrayType) {
-    } else if (
-      type1.constructor === DictType &&
-      type2.constructor === DictType
-    ) {
-    } else if (
-      type1.constructor === TupleType &&
-      type2.constructor === TupleType
-    ) {
-    } else {
-      return type1 === type2;
-    }
-  },
+
   expressionsHaveSameType(e1, e2) {
-    doCheck(e1.type === e2.type, "Types must match exactly");
+    doCheck(e1.type === e2.type, 'Types must match exactly');
   },
+
+  // ARR<FLT> target
+  // ARR<INT> source
+
+  // target = source
+
+  // type = the type of target, namely ARR<INT>
+  // expression = the actual value of source
+
   isAssignableTo(expression, type) {
-    doCheck();
+    doCheck(
+      expression.type === type ||
+        (expression.type === IntType && type === FloatType) ||
+        (expression.type === String && type === SequenceType) ||
+        (expression.constructor === ArrayType && type === SequenceType) ||
+        (this.isArray(expression) &&
+          this.isArrayType(type) &&
+          this.isAssignableTo(expression.type.memberType, type.memberType)) ||
+        (this.isDict(expression) &&
+          this.isDictType(type) &&
+          this.isAssignableTo(expression.type.keyType, type.keyType) &&
+          this.isAssignableTo(expression.type.valueType, type.valueType)) ||
+        (this.isTuple(expression) &&
+          this.isTupleType(type) &&
+          expression.type.memberTypes.every((t, i) => t === type.memberTypes[i])) ||
+        (expression.type !== NoneType && this.type === AnyType)
+    );
   },
   inLoop(context, keyword) {
     doCheck(context.inLoop, `${keyword} can only be used in a loop`);

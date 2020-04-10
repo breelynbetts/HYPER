@@ -23,11 +23,12 @@ class WhileStatement {
     });
   }
 }
+
 class IfStatement {
-  constructor(test, consequent, alternate) {
+  constructor(tests, consequents, alternate) {
     Object.assign(this, {
-      test,
-      consequent,
+      tests,
+      consequents,
       alternate,
     });
   }

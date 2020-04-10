@@ -7,9 +7,9 @@ const NoneType = new PrimitiveType('LITERALLYNOTHING');
 const StringType = new PrimitiveType('STR');
 
 const StandardFunctions = [
-  new Func(null, 'SAY', [new Param(AnyType, 's')]),
+  new Func(NoneType, 'SAY', [new Param(AnyType, 's')]),
   new Func(IntType, 'SIZE', [new Param(SequenceType, 's')]),
-  new Func(null, 'EXIT', [new Param(IntType, 'code')]),
+  new Func(NoneType, 'EXIT', [new Param(IntType, 'code')]),
   new Func(StringType, 'CONCAT', [new Param(StringType, 's'), new Param(StringType, 't')]),
   new Func(StringType, 'SUBSTRING', [
     new Param(StringType, 's'),
