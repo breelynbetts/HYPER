@@ -82,7 +82,7 @@ UNTIL TRUE:
 ## Function Declaration
 
 ```
-FUNC VOID helloWorld():
+FUNC LITERALLYNOTHING helloWorld():
   SAY "Hello, world"!
 ```
 
@@ -107,7 +107,7 @@ comment
 - Not declaring a function before calling it
 - Returning an incorrect function return type
 - Returning a statement outside of a function
-- Having return statements in a void function
+- Having return statements in a void(nonetype) function
 - Declaring object methods with the same name
 - Not declaring an object before initializing it
 - Subscripting of non array and non tuple
