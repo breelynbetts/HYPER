@@ -83,7 +83,7 @@ UNTIL TRUE:
 
 ```
 FUNC LITERALLYNOTHING helloWorld():
-  SAY "Hello, world"!
+  SAY("Hello, world")!
 ```
 
 ## Comments
