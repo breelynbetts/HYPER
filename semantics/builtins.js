@@ -1,20 +1,33 @@
-const { Func, Param, PrimitiveType, AnyType, SequenceType } = require('../ast');
+const {
+  Func,
+  Param,
+  PrimitiveType,
+  AnyType,
+  SequenceType,
+  UnionType,
+} = require("../ast");
 
-const BoolType = new PrimitiveType('BOO');
-const FloatType = new PrimitiveType('FLT');
-const IntType = new PrimitiveType('INT');
-const NoneType = new PrimitiveType('LITERALLYNOTHING');
-const StringType = new PrimitiveType('STR');
+const BoolType = new PrimitiveType("BOO");
+const FloatType = new PrimitiveType("FLT");
+const IntType = new PrimitiveType("INT");
+const NoneType = new PrimitiveType("LITERALLYNOTHING");
+const StringType = new PrimitiveType("STR");
 
 const StandardFunctions = [
-  new Func(NoneType, 'SAY', [new Param(AnyType, 's')]),
-  new Func(IntType, 'SIZE', [new Param(SequenceType, 's')]),
-  new Func(NoneType, 'EXIT', [new Param(IntType, 'code')]),
-  new Func(StringType, 'CONCAT', [new Param(StringType, 's'), new Param(StringType, 't')]),
-  new Func(StringType, 'SUBSTRING', [
-    new Param(StringType, 's'),
-    new Param(IntType, 'start'),
-    new Param(IntType, 'end'),
+  new Func(NoneType, "SAY", [new Param(AnyType, "s")]),
+  new Func(IntType, "SIZE", [new Param(SequenceType, "s")]),
+  new Func(NoneType, "EXIT", [new Param(IntType, "code")]),
+  new Func(StringType, "CONCAT", [
+    new Param(StringType, "s"),
+    new Param(StringType, "t"),
+  ]),
+  new Func(StringType, "SUBSTRING", [
+    new Param(StringType, "s"),
+    new Param(IntType, "start"),
+    new Param(IntType, "end"),
+  ]),
+  new Func(ArrayType, "PUSH", [
+    new Param(UnionType(BoolType, FloatType, IntType, StringType), "u"),
   ]),
   // later down the road =>
   //    split up builtin functions into
@@ -27,7 +40,7 @@ const StandardFunctions = [
   //       - range functions
 ];
 
-StandardFunctions.forEach(f => {
+StandardFunctions.forEach((f) => {
   f.builtin = true;
 });
 

@@ -5,11 +5,11 @@ class Program {
 }
 
 class ForStatement {
-  constructor(type, id, test, body) {
+  constructor(type, id, exp, body) {
     Object.assign(this, {
       type,
       id,
-      test,
+      exp,
       body,
     });
   }

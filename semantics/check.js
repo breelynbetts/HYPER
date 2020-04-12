@@ -1,3 +1,4 @@
+const util = require("util");
 const {
   ArrayType,
   TupleType,
@@ -7,10 +8,6 @@ const {
   AnyType,
   Func,
 } = require("../ast");
-const util = require("util");
-//  DictType,
-//  TupleType,
-//  ArrayType,
 const { BoolType, FloatType, IntType, StringType } = require("./builtins");
 
 function doCheck(condition, message) {
@@ -21,10 +18,7 @@ function doCheck(condition, message) {
 
 module.exports = {
   // TODO: FIX HOW TO CHECK TYPES
-  //    - isGeneric()
-  //    - is Type.numParams == ParameterizedType.params ?
-
-  //  how would we perform this check? - would the ArrayType be from the builtins?
+  //    - add isRange() test
 
   isArrayType(type) {
     doCheck(type.constructor === ArrayType, "Not an ArrayType");
@@ -75,14 +69,6 @@ module.exports = {
   expressionsHaveSameType(e1, e2) {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
-
-  // ARR<FLT> target
-  // ARR<INT> source
-
-  // target = source
-
-  // type = the type of target, namely ARR<INT>
-  // expression = the actual value of source
 
   isAssignableTo(expression, type) {
     doCheck(
