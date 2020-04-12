@@ -58,25 +58,25 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 INT num IS 3!
 
 TRY num GRT 0:
-  SAY "Positive number"!
+  SAY("Positive number")!
 NO?TRY num EQUALS 0:
-  SAY "Zero"!
+  SAY("Zero")!
 NO???:
-  SAY "Negative number"!
+  SAY("Negative number")!
 ```
 
 #### `for` loop
 
 ```
 LOOKAT INT x IN ....(0, 10):
-  SAY x!
+  SAY(x)!
 ```
 
 #### `while` loop
 
 ```
 UNTIL TRUE:
-  SAY "I am hyper!"!
+  SAY("I am hyper!")!
 ```
 
 ## Function Declaration
@@ -126,7 +126,7 @@ comment
   <td>
 
 ```
-SAY "HELLO, WORLD!"!
+SAY("HELLO, WORLD!")!
 ```
 
   </td>
