@@ -1,9 +1,17 @@
-const { ArrayType, TupleType, DictType, SequenceType, NoneType, AnyType, Func } = require('../ast');
-
+const {
+  ArrayType,
+  TupleType,
+  DictType,
+  SequenceType,
+  NoneType,
+  AnyType,
+  Func,
+} = require("../ast");
+const util = require("util");
 //  DictType,
 //  TupleType,
 //  ArrayType,
-const { BoolType, FloatType, IntType, StringType } = require('./builtins');
+const { BoolType, FloatType, IntType, StringType } = require("./builtins");
 
 function doCheck(condition, message) {
   if (!condition) {
@@ -19,47 +27,53 @@ module.exports = {
   //  how would we perform this check? - would the ArrayType be from the builtins?
 
   isArrayType(type) {
-    doCheck(type.constructor === ArrayType, 'Not an ArrayType');
+    doCheck(type.constructor === ArrayType, "Not an ArrayType");
   },
   isDictType(type) {
-    doCheck(type.constructor === DictType, 'Not a DictType');
+    doCheck(type.constructor === DictType, "Not a DictType");
   },
   isTupleType(type) {
-    doCheck(type.constructor === TupleType, 'Not a TupleType');
+    doCheck(type.constructor === TupleType, "Not a TupleType");
   },
   isArray(expression) {
-    doCheck(expression.type.constructor === ArrayType, 'Not an array');
+    doCheck(expression.type.constructor === ArrayType, "Not an array");
   },
   isDict(expression) {
-    doCheck(expression.type.constructor === DictType, 'Not a dictionary');
+    doCheck(expression.type.constructor === DictType, "Not a dictionary");
   },
   isTuple(expression) {
-    doCheck(expression.type.constructor === TupleType, 'Not a tuple');
+    doCheck(expression.type.constructor === TupleType, "Not a tuple");
   },
   isInteger(expression) {
-    doCheck(expression.type === IntType, 'Not an integer');
+    doCheck(expression.type === IntType, "Not an integer");
   },
   isFloat(expression) {
-    doCheck(expression.type === FloatType, 'Not a float');
+    doCheck(expression.type === FloatType, "Not a float");
   },
   isNumber(expression) {
-    doCheck(expression.type === IntType || expression.type === FloatType, 'Not a number');
+    doCheck(
+      expression.type === IntType || expression.type === FloatType,
+      "Not a number"
+    );
   },
   isString(expression) {
-    doCheck(expression.type === StringType, 'Not an string');
+    doCheck(expression.type === StringType, "Not an string");
   },
   isStringOrArray(expression) {
-    doCheck(expression.type === StringType || expression.type.constructor === ArrayType);
+    doCheck(
+      expression.type === StringType ||
+        expression.type.constructor === ArrayType
+    );
   },
   isBoolean(expression) {
-    doCheck(expression.type === BoolType, 'Not a boolean');
+    doCheck(expression.type === BoolType, "Not a boolean");
   },
   isFunction(value) {
-    doCheck(value.constructor === Func, 'Not a function');
+    doCheck(value.constructor === Func, "Not a function");
   },
 
   expressionsHaveSameType(e1, e2) {
-    doCheck(e1.type === e2.type, 'Types must match exactly');
+    doCheck(e1.type === e2.type, "Types must match exactly");
   },
 
   // ARR<FLT> target
@@ -85,8 +99,13 @@ module.exports = {
           this.isAssignableTo(expression.type.valueType, type.valueType)) ||
         (this.isTuple(expression) &&
           this.isTupleType(type) &&
-          expression.type.memberTypes.every((t, i) => t === type.memberTypes[i])) ||
-        (expression.type !== NoneType && this.type === AnyType)
+          expression.type.memberTypes.every(
+            (t, i) => t === type.memberTypes[i]
+          )) ||
+        (expression.type !== NoneType && this.type === AnyType),
+      `Expression of type ${util.format(
+        expression.type
+      )} not compatible with type ${util.format(type)}`
     );
   },
   inLoop(context, keyword) {

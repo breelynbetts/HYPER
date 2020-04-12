@@ -100,9 +100,9 @@ HYPER {
 
     keyword     = (basicType | "UNTIL" | "TRY" | "NO?TRY" | "NO???"
                 | "LOOKAT" | "GIMME" | "LEAVE" |"TUP"
-                | "ARR" | "DICT"| "FUNC"  | "RANGE" | "range") ~idrest
+                | "ARR" | "DICT"| "FUNC"  | "RANGE" ) ~idrest
     Type        = basicType | TupleType | ArrayType | DictType
-                | "FUNC"  | "range"
+                | "FUNC"  | "RANGE"
     basicType   = "BOO"
                 | "INT"
                 | "FLT"
