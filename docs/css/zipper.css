@@ -302,6 +302,19 @@ p {
 	border: #3a6ebd 7px solid;
 }
 
+#tm-blocks-developers {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.tm-block-developers {
+	margin: 10px;
+	width: 35%;
+	height: 200px;
+	padding: 20px;
+	border: #ffffff 7px solid;
+
 .tm-section-margin-top {
 	margin-top: 100px;
 }
