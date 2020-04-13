@@ -185,14 +185,14 @@ class CallExp extends Expression {
 }
 
 class RangeExp extends Expression {
-  constructor(open, start, end, step, close) {
+  constructor(isOpenInclusive, start, end, step, isCloseInclusive) {
     super();
     Object.assign(this, {
-      open,
+      isOpenInclusive,
       start,
       end,
       step,
-      close,
+      isCloseInclusive,
     });
   }
 }

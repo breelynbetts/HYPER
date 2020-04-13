@@ -65,7 +65,9 @@ module.exports = {
   isFunction(value) {
     doCheck(value.constructor === Func, "Not a function");
   },
-
+  inFunction(context) {
+    doCheck(context.currentFunction !== null, "Not a function");
+  },
   expressionsHaveSameType(e1, e2) {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
@@ -108,5 +110,15 @@ module.exports = {
       }
       this.isAssignableTo(arg, params[i].type);
     });
+  },
+  returnTypeMatchesFunctionReturnType(expression, func) {
+    const expType = expression.type;
+    const funcReturnType = func.returnType;
+    doCheck(
+      this.isAssignableTo(expType, funcReturnType),
+      `Expected function to return expression of type ${util.format(
+        funcReturnType
+      )}, received type ${util.format(expType)}`
+    );
   },
 };
