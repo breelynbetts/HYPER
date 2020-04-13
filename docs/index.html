@@ -15,11 +15,12 @@ http://www.tooplate.com/view/2084-zipper
 -->
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">  <!-- Google web font "Roboto Mono" -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro">  <!-- Google web font "Source Code Pro" -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arya:700bold">
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
     <link rel="stylesheet" href="css/zipper.min.css">                                      <!-- Bootstrap style -->
     <link rel="stylesheet" href="css/zipper.css">                                   <!-- Templatemo style -->
-
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -38,7 +39,7 @@ http://www.tooplate.com/view/2084-zipper
                     <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar"></button> <!-- &#9776; ☰ -->
                     <div class="collapse navbar-toggleable-sm text-xs-center tm-navbar" id="tmNavbar">
                         <ul class="nav navbar-nav">
-                            <li class="nav-item active selected">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#home">Home</a>
                             </li>
                             <li class="nav-item">
@@ -79,8 +80,8 @@ http://www.tooplate.com/view/2084-zipper
                     <div class="tm-bg-black-translucent tm-content-box tm-content-box-right tm-flex-center">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-section-title">About Hyper!</h2>
-                            <p>Hyper! is an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax for an easier, pragmatic experience.</p>
-                            <p>Hyper! is a scripting language that is statically typed. It also allows for higher order functions, in which a function is a parameter in another function or returns a function as an output. 
+                            <p class="tm-text" >Hyper! is an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax for an easier, pragmatic experience.</p>
+                            <p class="tm-text ">Hyper! is a scripting language that is statically typed. It also allows for higher order functions, in which a function is a parameter in another function or returns a function as an output. 
                             </p>   
                         </div>                        
                     </div>                    
@@ -96,37 +97,37 @@ http://www.tooplate.com/view/2084-zipper
                     <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Hello, World!</h2>
-                            <p>SAY("HELLO, WORLD!")!</p>
+                            <p class="tm-code">SAY("HELLO, WORLD!")!</p>
                         </div>                        
                     </div> 
                     <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Fibonacci</h2>
-                            <p>FUNC INT fibonacci(INT num):<br>TRY num EQUALS 0:<br>GIMME 0!<br>&emsp;NO?TRY num EQUALS 1 OR num EQUALS 2:<br>&emsp;GIMME 1!<br>GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!</p>
+                            <p class="tm-code">FUNC INT fibonacci(INT num):<br>TRY num EQUALS 0:<br>GIMME 0!<br>&emsp;NO?TRY num EQUALS 1 OR num EQUALS 2:<br>&emsp;GIMME 1!<br>GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!</p>
                         </div>                        
                     </div> 
                     <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Function</h2>
-                            <p>FUNC LITERALLYNOTHING helloWorld():<br>&emsp;SAY("Hello, world")!</p>
+                            <p class="tm-code">FUNC LITERALLYNOTHING helloWorld():<br>&emsp;SAY("Hello, world")!</p>
                         </div>                        
                     </div> 
                     <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">If</h2>
-                            <p>INT num IS 3!<br>TRY num GRT 0:<br>&emsp;SAY("Positive number")!<br>NO?TRY num EQUALS 0:<br>&emsp;SAY("Zero")!<br>NO???:<br>&emsp;SAY("Negative number")!</p>
+                            <p class="tm-code">INT num IS 3!<br>TRY num GRT 0:<br>&emsp;SAY("Positive number")!<br>NO?TRY num EQUALS 0:<br>&emsp;SAY("Zero")!<br>NO???:<br>&emsp;SAY("Negative number")!</p>
                         </div>                        
                     </div> 
                     <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">For</h2>
-                            <p>LOOKAT INT x IN ....(0, 10):<br>&emsp;SAY(x)!</p>
+                            <p class="tm-code">LOOKAT INT x IN ....(0, 10):<br>&emsp;SAY(x)!</p>
                         </div>                        
                     </div> 
                     <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">While</h2>
-                            <p>UNTIL TRUE:<br>&emsp;SAY("I am hyper!")!</p>
+                            <p class="tm-code">UNTIL TRUE:<br>&emsp;SAY("I am hyper!")!</p>
                         </div>                        
                     </div> 
                 </div>                

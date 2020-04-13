@@ -1,5 +1,6 @@
 body {
-	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-family: "Arya"; 
+	font-style: italic;
 	font-size: 18px;
 	font-weight: 300;
 	overflow-x: hidden;
@@ -53,7 +54,7 @@ p {
 .tm-section-title {
 	color: #fbc906;
 	font-size: 2.2rem;
-	margin-bottom: 30px;	
+	margin-bottom: 30px;
 }
 
 .tm-example-title { 
@@ -79,7 +80,12 @@ p {
     padding: 0;
 }
 
-.nav-link, .nav-link:focus { color: white; }
+.nav-link, .nav-link:focus {
+	color: white; 
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	font-size: 20px;
+}
 
 .nav-link:hover {
 	color: #fbc906; 
@@ -112,7 +118,7 @@ p {
 
 .tm-hero-title { 
 	font-size: 3rem; 
-	color: #484848;
+	color: #313131;
 }
 
 .tm-hero-subtitle { 
@@ -232,10 +238,21 @@ p {
 		width: 100%;
 	}
 
-	.tm-navbar { background-color: rgba(0,0,0,0.6); }
-	.navbar-nav .nav-item {	float: none; }
-	.navbar-nav .nav-item+.nav-item { margin-left: 0; }
-	.navbar { width: 100%; }
+	.tm-navbar { 
+		background-color: rgba(0,0,0,0.6); 
+	}
+
+	.navbar-nav .nav-item {
+		float: none; 
+	}
+
+	.navbar-nav .nav-item+.nav-item { 
+		margin-left: 0; 
+	}
+
+	.navbar { 
+		width: 100%; 
+	}
 
 	.navbar-toggleable-sm .navbar-nav {
 		margin-top: 0;
@@ -252,9 +269,9 @@ p {
 }
 
 .tm-section-home { background-image: url(../images/image-01.jpg); }
-.tm-section-abouthyper { background-image: url(../images/image-02.jpg); }
-.tm-section-codeexamples { background-image: url(../images/image-03.jpg); }
-.tm-section-developers { background-image: url(../images/image-04.jpg); }
+.tm-section-abouthyper { background: url(../images/image-02.jpg); }
+.tm-section-codeexamples { background-image: url(../images/image-03.jpg) }
+.tm-section-developers { background: url(../images/image-04.jpg); }
 
 .logo-img {
 	width: 500px;
@@ -264,8 +281,13 @@ p {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
-	font-family: "Roboto Mono";
+}
+
+.tm-code {
+	font-family: "Source Code Pro";
+	font-style: normal;
 	font-size: 15px;
+	color: white;
 }
 
 .tm-block-codeexamples {
@@ -273,6 +295,7 @@ p {
 	width: 45%;
 	height: 300px;
 	padding: 20px;
+	border: #3a6ebd 7px solid;
 }
 
 .tm-section-margin-top {
@@ -283,5 +306,10 @@ footer {
 	text-align: center;
 	padding: 10px;
 	background-color: #c2a27b;
+}
+
+.tm-text {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-style: normal;
 }
 
