@@ -27,10 +27,9 @@ a:focus {
 }
 
 .tm-section-home { background-image: url(../img/image-01.jpg); }
-.tm-section-about { background-image: url(../img/image-02.jpg); }
-.tm-section-services { background-image: url(../img/image-03.jpg); }
-.tm-section-testimonials { background-image: url(../img/image-04.jpg); }
-.tm-section-contact { background-image: url(../img/image-05.jpg); }
+.tm-section-abouthyper { background-image: url(../img/image-02.jpg); }
+.tm-section-codeexamples { background-image: url(../img/image-03.jpg); }
+.tm-section-developers { background-image: url(../img/image-04.jpg); }
 
 .navbar-toggler {
     background-color: rgba(0,0,0,0.3);
