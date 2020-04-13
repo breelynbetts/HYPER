@@ -1,6 +1,7 @@
 const {
   Func,
   Param,
+  ArrayType,
   PrimitiveType,
   AnyType,
   SequenceType,
@@ -27,7 +28,7 @@ const StandardFunctions = [
     new Param(IntType, "end"),
   ]),
   new Func(ArrayType, "PUSH", [
-    new Param(UnionType(BoolType, FloatType, IntType, StringType), "u"),
+    new Param(new UnionType(BoolType, FloatType, IntType, StringType), "u"),
   ]),
   // later down the road =>
   //    split up builtin functions into
