@@ -62,9 +62,9 @@ function getType(typeString) {
   }
 }
 
-// Program.prototype.analyze = function(context) {
-//   this.body.analyze(context);
-// };
+Program.prototype.analyze = function(context) {
+  this.body.analyze(context);
+};
 
 // class ForStatement {
 //   constructor(type, id, test, body) {
@@ -163,8 +163,50 @@ Break.prototype.analyze = function(context) {
 BinaryExp.prototype.analyze = function(context) {
   this.left.analyze(context);
   this.right.analyze(context);
-  if (["LESSEQ", "GRTEQ"].includes(this.op)) {
+  if (["LESSEQ", "GRTEQ", "LESS", "GRT"].includes(this.op)) {
+    check.isNumber(this.left);
+    check.isNumber(this.right);
     this.type = BoolType;
   } else if (["EQUALS", "NOTEQ"].includes(this.op)) {
+    check.expressionsHaveSameType(this.left, this.right);
+    this.type = BoolType;
+  } else if (["AND", "OR"].includes(this.op)) {
+    check.isBoolean(this.left);
+    check.isBoolean(this.right);
+    this.type = BoolType;
+  } else {
+    // All other binary operators are arithmetic
+    check.isNumber(this.left);
+    check.isNumber(this.right);
+    this.type = FltType;
   }
+};
+
+UnaryExp.prototype.analyze = function(context) {
+  this.operand.analyze(context);
+  if (this.op === "~") {
+    check.isBoolean(this.operand.type);
+    this.type = BoolType;
+  } else {
+    check.isNumber(this.operand.type);
+    if (this.operand.type === IntType) {
+      this.type = IntType;
+    } else this.type = FltType;
+  }
+};
+
+ArrayExp.prototype.analyze = function(context) {
+  this.type = context.lookup(this.type);
+  check.isArrayType(this.type);
+  this.size.analyze(context);
+  check.isInteger(this.size);
+  this.members.forEach((member) => {
+    member.analyze();
+    if (this.type.type === IntType && member.type === FloatType) {
+      this.type.type = FloatType;
+    } else if (this.type.type === FloatType && member.type === IntType) {
+      member.type = FloatType;
+    }
+    check.isAssignableTo(member, this.type.type);
+  });
 };

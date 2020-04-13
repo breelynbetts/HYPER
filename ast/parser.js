@@ -133,7 +133,9 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return e.ast();
   },
   Array(_open, members, _close) {
-    return new ArrayExp(members.ast());
+    const m = arrayToNullable(members.ast());
+    const type = new ArrayType(m.length === 0 ? "LITERALLYNOTHING" : m[0].type);
+    return new ArrayExp(m, new Literal("INT", m.length), type);
   },
   Dictionary(_open, values, _close) {
     return new DictExp(values.ast());

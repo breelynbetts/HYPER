@@ -169,14 +169,16 @@ SAY(c[1])!
       new Declaration(
         new ArrayType("STR"),
         "c",
-        new ArrayExp([
+        new ArrayExp(
           [
             new Literal("STR", "Hi"),
             new Literal("STR", "I"),
             new Literal("STR", "am"),
             new Literal("STR", "hyper"),
           ],
-        ])
+          new Literal("INT", 4),
+          new ArrayType("STR")
+        )
       ),
       new PrintStatement([
         new SubscriptedExp(new Identifier("c"), new Literal("INT", 1)),
