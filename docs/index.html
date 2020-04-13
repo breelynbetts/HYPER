@@ -15,6 +15,7 @@ http://www.tooplate.com/view/2084-zipper
 -->
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">  <!-- Google web font "Roboto Mono" -->
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
     <link rel="stylesheet" href="css/zipper.min.css">                                      <!-- Bootstrap style -->
     <link rel="stylesheet" href="css/zipper.css">                                   <!-- Templatemo style -->
@@ -38,10 +39,10 @@ http://www.tooplate.com/view/2084-zipper
                     <div class="collapse navbar-toggleable-sm text-xs-center tm-navbar" id="tmNavbar">
                         <ul class="nav navbar-nav">
                             <li class="nav-item active selected">
-                                <a class="nav-link current" href="#home">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="#home">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#abouthyper">About HYPER</a>
+                                <a class="nav-link" href="#abouthyper">About Hyper!</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#codeexamples">Code Examples</a>
@@ -62,8 +63,9 @@ http://www.tooplate.com/view/2084-zipper
                 <div class="tm-hero">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="text-uppercase tm-hero-title">HYPER</h1>
-                            <p class="tm-hero-subtitle">The Most Chaotic Programming Language Out There!</p>
+                            <h1 class="text-uppercase tm-hero-title">WELCOME TO HYPER!</h1>
+                            <img class="logo-img" src="./images/logo.png"/>
+                            <p class="tm-hero-title tm-hero-subtitle">The Most Chaotic Programming Language Out There!</p>
                         </div>
                     </div>
                 </div>                
@@ -76,9 +78,9 @@ http://www.tooplate.com/view/2084-zipper
                 <div class="tm-page-content-width">
                     <div class="tm-bg-black-translucent tm-content-box tm-content-box-right tm-flex-center">
                         <div class="tm-content-box-inner">
-                            <h2 class="tm-section-title">About HYPER</h2>
+                            <h2 class="tm-section-title">About Hyper!</h2>
                             <p>Hyper! is an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax for an easier, pragmatic experience.</p>
-                            <p>Hyper is a scripting language that is statically typed. It also allows for higher order functions, in which a function is a parameter in another function or returns a function as an output. 
+                            <p>Hyper! is a scripting language that is statically typed. It also allows for higher order functions, in which a function is a parameter in another function or returns a function as an output. 
                             </p>   
                         </div>                        
                     </div>                    
@@ -87,24 +89,53 @@ http://www.tooplate.com/view/2084-zipper
             </section>
             
             <!-- Section 3 -->
-            <section class="tm-section tm-section-codeexamples" id="codeexamples">
+            <section class="tm-section  tm-section-title-padding tm-section-codeexamples" id="codeexamples">
+                <h2 class="tm-section-title text-xs-center">Coding Examples</h2>
 
-                <div class="tm-page-content-width">
-                    <div class="tm-bg-black-translucent tm-content-box tm-flex-center">
+                <div class="tm-page-content-width" id="tm-blocks-codeexamples">
+                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
                         <div class="tm-content-box-inner">
-                            <h2 class="tm-section-title">Code Examples</h2>
-                            <p>Phasellus fringilla pharetra nunc sit amet fringilla. Vestibulum augue turpis, molestie sit amet odio eget, ornare mattis nisl.</p>
-                            <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo arcu. Nullam a semper odio. Nam et conque libero, et placerat est.</p>
-                            <p>Integer consectetur hendrerit dolor, quis scelerisque risus mattis quis. Pellentesque dapibus ornare nisl. Fusce facilisis pulvinar magna. Class aptent taciti sociosqu.</p>
+                            <h2 class="tm-example-title">Hello, World!</h2>
+                            <p>SAY("HELLO, WORLD!")!</p>
+                        </div>                        
+                    </div> 
+                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                        <div class="tm-content-box-inner">
+                            <h2 class="tm-example-title">Fibonacci</h2>
+                            <p>FUNC INT fibonacci(INT num):<br>TRY num EQUALS 0:<br>GIMME 0!<br>&emsp;NO?TRY num EQUALS 1 OR num EQUALS 2:<br>&emsp;GIMME 1!<br>GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!</p>
+                        </div>                        
+                    </div> 
+                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                        <div class="tm-content-box-inner">
+                            <h2 class="tm-example-title">Function</h2>
+                            <p>FUNC LITERALLYNOTHING helloWorld():<br>&emsp;SAY("Hello, world")!</p>
+                        </div>                        
+                    </div> 
+                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                        <div class="tm-content-box-inner">
+                            <h2 class="tm-example-title">If</h2>
+                            <p>INT num IS 3!<br>TRY num GRT 0:<br>&emsp;SAY("Positive number")!<br>NO?TRY num EQUALS 0:<br>&emsp;SAY("Zero")!<br>NO???:<br>&emsp;SAY("Negative number")!</p>
+                        </div>                        
+                    </div> 
+                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                        <div class="tm-content-box-inner">
+                            <h2 class="tm-example-title">For</h2>
+                            <p>LOOKAT INT x IN ....(0, 10):<br>&emsp;SAY(x)!</p>
+                        </div>                        
+                    </div> 
+                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                        <div class="tm-content-box-inner">
+                            <h2 class="tm-example-title">While</h2>
+                            <p>UNTIL TRUE:<br>&emsp;SAY("I am hyper!")!</p>
                         </div>                        
                     </div> 
                 </div>                
             </section>
 
             <!-- Section 4 -->
-            <section class="tm-section tm-section-developers" id="developers">
+            <section class="tm-section tm-section-developers tm-section-title-padding" id="developers">
                 <div class="tm-page-content-width">
-                    <h2 class="tm-section-title tm-section-title-big text-xs-center tm-text-black">Developers</h2>
+                    <h2 class="tm-section-title text-xs-center">Developers</h2>
                     <div class="row">
                         <div class="tm-3-col-container">                                        
                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 tm-3-col-textbox">
@@ -132,6 +163,9 @@ http://www.tooplate.com/view/2084-zipper
                     </div>
                 </div>                
             </section>
+
+            <!-- Footer --> 
+            <footer>HYPER! Copyright &copy; 2020</footer>
         
         <!-- load JS files -->
         <script src="js/jquery.min.js"></script>         <!-- jQuery (https://jquery.com/download/) -->
@@ -142,47 +176,47 @@ http://www.tooplate.com/view/2084-zipper
         <script>     
           
             // Check scroll position and add/remove background to navbar
-            function checkScrollPosition() {
+            // function checkScrollPosition() {
                 
-                if($(window).width() < 767) {
-                    $(".tm-nav").removeClass("scroll");
-                    return;
-                }
+            //     if($(window).width() < 767) {
+            //         $(".tm-nav").removeClass("scroll");
+            //         return;
+            //     }
 
-                if($(window).scrollTop() > 50) {
-                  $(".tm-nav").addClass("scroll");
-              } else {        
-                  $(".tm-nav").removeClass("scroll");
-              }
-            }
+            //     if($(window).scrollTop() > 50) {
+            //       $(".tm-nav").addClass("scroll");
+            //   } else {        
+            //       $(".tm-nav").removeClass("scroll");
+            //   }
+            // }
 
-            $(document).ready(function () {   
-                // Single page nav
-                $('.tm-nav').singlePageNav({
-                    offset: 57,
-                    filter: ':not(.external)',
-                    updateHash: true        
-                });
+            // $(document).ready(function () {   
+            //     // Single page nav
+            //     $('.tm-nav').singlePageNav({
+            //         offset: 57,
+            //         filter: ':not(.external)',
+            //         updateHash: true        
+            //     });
 
-                checkScrollPosition();
+            //     checkScrollPosition();
 
-                // navbar
-                $('.navbar-toggle').click(function(){
-                    $('.main-menu').toggleClass('show');
-                });
+            //     // navbar
+            //     $('.navbar-toggle').click(function(){
+            //         $('.main-menu').toggleClass('show');
+            //     });
 
-                $('.main-menu a').click(function(){
-                    $('.main-menu').removeClass('show');
-                });
-            });
+            //     $('.main-menu a').click(function(){
+            //         $('.main-menu').removeClass('show');
+            //     });
+            // });
 
-            $(window).on("scroll", function() {
-                checkScrollPosition();    
-            });
+            // $(window).on("scroll", function() {
+            //     checkScrollPosition();    
+            // });
 
-            $('#tmNavbar a').click(function(){
-                $('#tmNavbar').collapse('hide');
-            });
+            // $('#tmNavbar a').click(function(){
+            //     $('#tmNavbar').collapse('hide');
+            // });
 
         </script>             
 
