@@ -4,6 +4,7 @@ const withIndentsAndDedents = require("./preparser.js");
 
 const {
   Program,
+  Block,
   ForStatement,
   WhileStatement,
   IfStatement,
@@ -40,8 +41,11 @@ function arrayToNullable(a) {
 
 /* eslint-disable no-unused-vars */
 const astGenerator = grammar.createSemantics().addOperation("ast", {
-  Program(_new, stmts, _) {
-    return new Program(stmts.ast());
+  Program(b) {
+    return new Program(b.ast());
+  },
+  Block(_new, stmts, _) {
+    return new Block(stmts.ast());
   },
   Statement_simple(stmts, _newline) {
     return stmts.ast();
@@ -134,7 +138,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   },
   Array(_open, members, _close) {
     const m = arrayToNullable(members.ast());
-    const type = new ArrayType(m.length === 0 ? "LITERALLYNOTHING" : m[0].type);
+    const type = new ArrayType(m[0].type);
     return new ArrayExp(m, new Literal("INT", m.length), type);
   },
   Dictionary(_open, values, _close) {

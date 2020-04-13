@@ -1,6 +1,12 @@
 class Program {
-  constructor(body) {
-    this.body = body;
+  constructor(block) {
+    this.block = block;
+  }
+}
+
+class Block {
+  constructor(statements) {
+    this.statements = statements;
   }
 }
 
@@ -254,6 +260,7 @@ class Identifier {
 
 module.exports = {
   Program,
+  Block,
   ForStatement,
   WhileStatement,
   IfStatement,
