@@ -6,6 +6,10 @@ body {
 	overflow-x: hidden;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 button { cursor: pointer; }
 a, button { transition: all 0.3s ease; }
 a:hover,
