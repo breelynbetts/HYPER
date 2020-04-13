@@ -317,3 +317,17 @@ footer {
 	font-style: normal;
 }
 
+button {
+	font-style: normal;
+	background-color: #c5e2cf;
+	border: none;
+	padding: 10px;
+	margin: 5px;
+	border: #aad9ab 5px solid;
+	border-radius: 5px;
+}
+
+button:hover {
+	background-color: #aad9ab;
+	padding: 15px;
+}
