@@ -148,10 +148,12 @@ class UnaryExp extends Expression {
 }
 
 class ArrayExp extends Expression {
-  constructor(members) {
+  constructor(members, size, type) {
     super();
     Object.assign(this, {
       members,
+      size,
+      type,
     });
   }
 }
