@@ -1,6 +1,7 @@
 // The Semantic Analyzer for HYPER!
 const {
   Program,
+  Block,
   ForStatement,
   WhileStatement,
   IfStatement,
@@ -41,9 +42,7 @@ const {
 const check = require("./check");
 const Context = require("./context");
 
-module.exports = function(exp) {
-  exp.analyze(Context.INITIAL);
-};
+module.exports = (exp) => exp.analyze(Context.INITIAL);
 
 function getType(typeString) {
   switch (typeString) {
@@ -63,7 +62,12 @@ function getType(typeString) {
 }
 
 Program.prototype.analyze = function(context) {
-  this.body.analyze(context);
+  this.block.analyze(context);
+};
+
+Block.prototype.analyze = function(context) {
+  const localContext = context.createChildContextForBlock();
+  this.statements.forEach((s) => s.analyze(localContext));
 };
 
 // class ForStatement {
@@ -209,4 +213,10 @@ ArrayExp.prototype.analyze = function(context) {
     }
     check.isAssignableTo(member, this.type.type);
   });
+};
+
+DictExp.prototype.analyze = function(context) {};
+
+Literal.prototype.analyze = function() {
+  this.type = getType(this.type);
 };

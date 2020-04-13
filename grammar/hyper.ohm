@@ -1,5 +1,6 @@
 HYPER {
-    Program     = newline* Statement+ newline*
+    Program     = Block 
+    Block       = newline* Statement+ newline*
     Statement   = SimpleStmt newline                                --simple
                 | Loop
                 | Conditional
