@@ -163,8 +163,21 @@ Break.prototype.analyze = function(context) {
 BinaryExp.prototype.analyze = function(context) {
   this.left.analyze(context);
   this.right.analyze(context);
-  if (["LESSEQ", "GRTEQ"].includes(this.op)) {
+  if (["LESSEQ", "GRTEQ", "LESS", "GRT"].includes(this.op)) {
+    check.isNumber(this.left);
+    check.isNumber(this.right);
     this.type = BoolType;
   } else if (["EQUALS", "NOTEQ"].includes(this.op)) {
+    check.expressionsHaveSameType(this.left, this.right);
+    this.type = BoolType;
+  } else if (["AND", "OR"].includes(this.op)) {
+    check.isBoolean(this.left);
+    check.isBoolean(this.right);
+    this.type = BoolType;
+  } else {
+    // All other binary operators are arithmetic
+    check.isNumber(this.left);
+    check.isNumber(this.right);
+    this.type = FltType;
   }
 };
