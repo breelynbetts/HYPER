@@ -26,14 +26,14 @@ a:focus {
     min-height: 640px;
 }
 
-.tm-section-home { background-image: url(../img/image-01.jpg); }
-.tm-section-abouthyper { background-image: url(../img/image-02.jpg); }
-.tm-section-codeexamples { background-image: url(../img/image-03.jpg); }
-.tm-section-developers { background-image: url(../img/image-04.jpg); }
+.tm-section-home { background-image: url(../images/image-01.jpg); }
+.tm-section-abouthyper { background-image: url(../images/image-02.jpg); }
+.tm-section-codeexamples { background-image: url(../images/image-03.jpg); }
+.tm-section-developers { background-image: url(../images/image-04.jpg); }
 
 .navbar-toggler {
     background-color: rgba(0,0,0,0.3);
-    background-image: url(../img/tm-navbar.png);
+    background-image: url(../images/tm-navbar.png);
     border-radius: 0;
     border: none;
     color: rgb(255,255,255);
