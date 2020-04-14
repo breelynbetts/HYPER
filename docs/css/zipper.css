@@ -224,7 +224,7 @@ p {
 
 .tm-copyright-text { margin-bottom: 0; }
 
-@media screen and (max-width: 991px) {
+/*@media screen and (max-width: 991px) {
 	.tm-3-col-box {
 		width: 50%;
 		margin-bottom: 30px;
@@ -240,7 +240,7 @@ p {
 		margin-left: auto;
 		margin-right: auto;
 		width: 100%;
-	}
+	}*/
 
 	.tm-navbar { 
 		background-color: rgba(0,0,0,0.6); 
@@ -305,6 +305,7 @@ p {
 #tm-blocks-developers {
 	display: flex;
 	flex-flow: row wrap;
+	column-count: 3;
 	justify-content: center;
 }
 
