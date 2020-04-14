@@ -7,6 +7,7 @@ const {
   NoneType,
   AnyType,
   Func,
+  Identifier,
   PrimitiveType,
 } = require("../ast");
 const { BoolType, FloatType, IntType, StringType } = require("./builtins");
@@ -20,7 +21,6 @@ function doCheck(condition, message) {
 module.exports = {
   // TODO: FIX HOW TO CHECK TYPES
   //    - add isRange() test
-
   isArrayType(type) {
     doCheck(type.constructor === ArrayType, "Not an ArrayType");
   },
@@ -127,10 +127,16 @@ module.exports = {
     );
   },
   returnTypeMatchesFunctionReturnType(expression, func) {
-    const expType = expression.type;
     const funcReturnType = func.returnType;
+    let expType;
+    if (expression.constructor === Identifier) {
+      expType = expression.ref.type;
+    } else {
+      expType = expression.type;
+    }
+
     doCheck(
-      this.isAssignableTo(expType, funcReturnType),
+      this.identicalTypes(expType, funcReturnType),
       `Expected function to return expression of type ${util.format(
         funcReturnType
       )}, received type ${util.format(expType)}`
