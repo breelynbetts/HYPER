@@ -293,10 +293,20 @@ KeyValue.prototype.analyze = function(context) {
   this.value.analyze(context);
 };
 
-Literal.prototype.analyze = function(context) {
-  console.log("HERE");
-  this.type.analyze(context);
-  this.type = getType(this.type);
+Literal.prototype.analyze = function() {
+  console.log(this.type);
+  if (this.type === "STR") {
+    this.type = StringType;
+  } else if (this.type === "FLT") {
+    this.type = FloatType;
+  } else if (this.type === "BOO") {
+    this.type = BoolType;
+  } else if (this.type === "INT") {
+    this.type = IntType;
+  } else {
+    this.type = NoneType;
+  }
+  console.log(this.type);
 };
 
 Identifier.prototype.analyze = function(context) {
