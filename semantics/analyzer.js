@@ -154,8 +154,12 @@ Declaration.prototype.analyze = function(context) {
 
 ArrayType.prototype.analyze = function(context) {
   check.isArrayType(this);
-  // this.type = getType(this.memberType);
-  this.memberType = context.lookup(this.memberType);
+  if (typeof this.memberType === "string") {
+    this.memberType = context.lookup(this.memberType);
+  } else {
+    this.memberType.analyze(context);
+  }
+  // this.memberType = context.lookup(this.memberType);
 };
 
 DictType.prototype.analyze = function(context) {
@@ -173,7 +177,14 @@ DictType.prototype.analyze = function(context) {
 };
 
 TupleType.prototype.analyze = function(context) {
-  this.memberTypes.forEach((type) => type.analyze(context));
+  check.isTupleType(this);
+  for (let i = 0; i < this.memberTypes.length; i++) {
+    if (typeof this.memberTypes[i]) {
+      this.memberTypes[i] = context.lookup(this.memberTypes[i]);
+    } else {
+      this.memberTypes[i].analyze(this.memberTypes[i]);
+    }
+  }
 };
 
 PrintStatement.prototype.analyze = function(context) {
@@ -262,11 +273,12 @@ DictExp.prototype.analyze = function(context) {
 };
 
 TupleExp.prototype.analyze = function(context) {
-  this.values.forEach(value, (index) => {
+  this.values.forEach((value, index) => {
     value.analyze(context);
     check.expressionsHaveSameType(value.type, this.values[index].type);
   });
-  const [valueTypes] = this.values;
+  const valueTypes = [];
+  this.values.forEach((value) => valueTypes.push(value.type));
   this.type = new TupleType(valueTypes);
 };
 
