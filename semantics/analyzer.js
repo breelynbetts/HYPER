@@ -114,8 +114,10 @@ IfStatement.prototype.analyze = function(context) {
 };
 
 Func.prototype.analyzeSignature = function(context) {
-  this.bodyContext = context.createChildContextForFunctionBody();
-  this.params.forEach((p) => p.analyze(this.bodyContext));
+  this.bodyContext = context.createChildContextForFunctionBody(this);
+  if (this.params) {
+    this.params.forEach((p) => p.analyze(this.bodyContext));
+  }
   if (!this.returnType) {
     this.returnType = undefined;
   }
@@ -127,9 +129,8 @@ Func.prototype.analyzeSignature = function(context) {
 };
 
 Func.prototype.analyze = function() {
-  this.body.analyze(this.bodyContext);
-  check.isAssignableTo(this.body, this.returnType);
-  console.log("here");
+  this.body.forEach((b) => b.analyze(this.bodyContext));
+  // check.isAssignableTo(this.body, this.returnType);
   // delete this.bodyContext;
 };
 
@@ -149,7 +150,6 @@ Declaration.prototype.analyze = function(context) {
   }
   check.isAssignableTo(this.init, this.type);
   context.add(this.id, this);
-  // console.log("DECLARARTIONS", context.declarations);
 };
 
 ArrayType.prototype.analyze = function(context) {
@@ -222,9 +222,10 @@ BinaryExp.prototype.analyze = function(context) {
     this.type = BoolType;
   } else {
     // All other binary operators are arithmetic
-    check.isNumber(this.left);
-    check.isNumber(this.right);
-    this.type = FloatType;
+    check.isNumber(this.left.ref);
+    check.isNumber(this.right.ref);
+    // FIND A WAY TO GET THIS TYPE
+    this.type = IntType;
   }
 };
 
