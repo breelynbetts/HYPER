@@ -253,7 +253,6 @@ DictExp.prototype.analyze = function(context) {
     keyType = getType(this.keyValuePairs[0].key.type.id);
     valueType = getType(this.keyValuePairs[0].value.type.id);
   }
-
   this.type = new DictType(keyType, valueType);
 };
 

@@ -17,6 +17,7 @@ FUNC INT getSum (STR a, STR b):
 ⇨INT strA IS strToInt(a)!
 INT strB IS strToInt(b)!
 INT sum IS a MULT b!
+GIMME sum! 
 ⇦
 `;
 
