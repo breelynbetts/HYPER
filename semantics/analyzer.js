@@ -284,11 +284,11 @@ TupleExp.prototype.analyze = function(context) {
 };
 
 CallExp.prototype.analyze = function(context) {
-  this.callee = this.callee.analyze(context);
-  check.isFunction(this.callee);
+  this.callee.analyze(context);
+  check.isFunction(this.callee.ref);
   this.args.forEach((arg) => arg.analyze(context));
-  check.legalArguments(this.args, this.callee.params);
-  this.type = this.callee.returnType;
+  check.legalArguments(this.args, this.callee.ref.params);
+  this.type = this.callee.ref.returnType;
 };
 
 MemberExp.prototype.analyze = function(context) {
@@ -333,6 +333,5 @@ Literal.prototype.analyze = function() {
 
 Identifier.prototype.analyze = function(context) {
   this.ref = context.lookup(this.ref);
-
-  // this.type = this.ref.type;
+  this.type = this.ref.type;
 };
