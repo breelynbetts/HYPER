@@ -45,7 +45,7 @@ HYPER {
     Array       = "[" ListOf<Exps, ","> "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<literals, ","> ")"
-    Call        = VarExp "(" ListOf <Arg, ","> ")"
+    Call        = VarExp "(" ListOf <Exp, ","> ")"
     VarExp      = VarExp "[" Exp "]"                                -- subscripted
                 | VarExp "." id                                     -- field
                 | id                                                -- id
@@ -56,7 +56,6 @@ HYPER {
     Declaration = Type id  (is Exp)? "!"
     id          = ~keyword (letter | "_") idrest*
     idrest      =  "_" | alnum
-    Arg         = Exp
     prefixop    = "-" | "~"
     powop		= "POW"
     logop       = "OR" | "AND"

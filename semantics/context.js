@@ -41,7 +41,7 @@ class Context {
       parent,
       currentFunction,
       inLoop,
-      declarations: new Map(),
+      declarations: Object.create(null),
     });
   }
   createChildContextForFunctionBody(currentFunction) {
@@ -64,19 +64,25 @@ class Context {
       inLoop: this.inLoop,
     });
   }
-  add(id, entity) {
-    if (this.declarations.has(id)) {
-      throw new Error(`${id} already declared in this scope`);
+
+  variableMustNotBeDeclared(name) {
+    if (this.declarations[name]) {
+      throw `${id} already declared in this scope`;
     }
-    this.declarations.set(id, entity);
   }
+
+  add(id, entity) {
+    this.declarations[id] = entity;
+  }
+
   lookup(id) {
-    for (let context = this; context !== null; context = context.parent) {
-      if (context.declarations.has(id)) {
-        return context.declarations.get(id);
-      }
+    let variable = this.declarations[id];
+    if (variable) {
+      return variable;
+    } else if (!this.parent) {
+      throw `Variable ${id} not found`;
     }
-    throw new Error(`Identifier ${id} has not been declared`);
+    return this.parent.lookup(id);
   }
 }
 

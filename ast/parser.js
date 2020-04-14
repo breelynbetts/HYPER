@@ -27,7 +27,6 @@ const {
   MemberExp,
   SubscriptedExp,
   Param,
-  Arg,
   KeyValue,
   Literal,
   Identifier,
@@ -141,8 +140,8 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     const type = new ArrayType(m[0].type);
     return new ArrayExp(m, new Literal("INT", m.length), type);
   },
-  Dictionary(_open, values, _close) {
-    return new DictExp(values.ast());
+  Dictionary(_open, keyValues, _close) {
+    return new DictExp(keyValues.ast());
   },
   Tuple(_open, inner, _close) {
     return new TupleExp(inner.ast());
@@ -170,11 +169,11 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Param(type, id, _is, exp) {
     return new Param(type.ast(), id.ast(), arrayToNullable(exp.ast()));
   },
-  Arg(exp) {
-    return new Arg(exp.ast());
-  },
-  KeyValue(id, _colon, exp) {
-    return new KeyValue(id.ast(), exp.ast());
+  // Arg(exp) {
+  //   return new Arg(exp.ast());
+  // },
+  KeyValue(key, _colon, value) {
+    return new KeyValue(key.ast(), value.ast());
   },
   boollit(_) {
     return new Literal("BOO", this.sourceString === "TRUE");

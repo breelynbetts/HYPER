@@ -71,25 +71,27 @@ module.exports = {
   expressionsHaveSameType(e1, e2) {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
-
+  identicalTypes(t1, t2) {
+    doCheck(
+      t1 == t2 ||
+        (t1.constructor === ArrayType &&
+          t2.constructor === ArrayType &&
+          this.identicalTypes(t1.memberType, t2.memberType)) ||
+        (t1.constructor === TupleType &&
+          t2.constructor === TupleType &&
+          t1.memberTypes.every((t, i) => t === t2.memberTypes[i])) ||
+        (t1.constructor === DictType &&
+          t2.constructor === DictType &&
+          this.identicalTypes(t1.keyType, t2.keyType) &&
+          this.identicalTypes(t1.valueType, t2.valueType))
+    );
+  },
   isAssignableTo(expression, type) {
     doCheck(
-      expression.type === type ||
+      this.identicalTypes(expression.type, type) ||
         (expression.type === IntType && type === FloatType) ||
         (expression.type === String && type === SequenceType) ||
         (expression.constructor === ArrayType && type === SequenceType) ||
-        (this.isArray(expression) &&
-          this.isArrayType(type) &&
-          this.isAssignableTo(expression.type.memberType, type.memberType)) ||
-        (this.isDict(expression) &&
-          this.isDictType(type) &&
-          this.isAssignableTo(expression.type.keyType, type.keyType) &&
-          this.isAssignableTo(expression.type.valueType, type.valueType)) ||
-        (this.isTuple(expression) &&
-          this.isTupleType(type) &&
-          expression.type.memberTypes.every(
-            (t, i) => t === type.memberTypes[i]
-          )) ||
         (expression.type !== NoneType && this.type === AnyType),
       `Expression of type ${util.format(
         expression.type

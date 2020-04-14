@@ -27,7 +27,6 @@ const {
   MemberExp,
   SubscriptedExp,
   Param,
-  Arg,
   KeyValue,
   Literal,
   Identifier,
@@ -67,6 +66,7 @@ Program.prototype.analyze = function(context) {
 
 Block.prototype.analyze = function(context) {
   const localContext = context.createChildContextForBlock();
+  console.log("INITIAL CONTEXT + ", context);
   this.statements.forEach((s) => s.analyze(localContext));
 };
 
@@ -126,19 +126,29 @@ Assignment.prototype.analyze = function(context) {
 };
 
 Declaration.prototype.analyze = function(context) {
-  this.exp.analyze(context);
+  this.init.analyze(context);
+  context.variableMustNotBeDeclared(this.id);
+
   this.type = this.type.analyze(context);
-  check.isAssignableTo(this.exp, this.type);
+  check.isAssignableTo(this.init, this.type);
+
   context.add(this.id, this);
+  console.log("DECLARARTIONS", context.declarations);
 };
 
 ArrayType.prototype.analyze = function(context) {
-  this.memberType = context.lookup(this.memberType);
+  check.isArrayType(this);
+  this.type = getType(this.memberType);
+  // this.memberType = context.lookup(this.memberType);
 };
 
 DictType.prototype.analyze = function(context) {
-  this.keyType = context.lookup(this.keyType);
-  this.valueType = context.lookup(this.valueType);
+  // console.log("HERE");
+  // console.log(this);
+  // console.log("CONTEXT = ", context);
+  this.keyType = getType(this.keyType);
+  this.valueType = getType(this.valueType);
+  // this.type = new DictType(this.keyType, this.valueType);
 };
 
 TupleType.prototype.analyze = function(context) {
@@ -215,8 +225,78 @@ ArrayExp.prototype.analyze = function(context) {
   });
 };
 
-DictExp.prototype.analyze = function(context) {};
+DictExp.prototype.analyze = function(context) {
+  this.keyValuePairs.forEach((keyValue) => {
+    keyValue.analyze(context);
+    // console.log(keyValue.key.type.id === "STR");
+    // console.log(getType(keyValue.key.type.id));
+    // console.log(getType(this.keyValuePairs[0].key.type.id));
+    // check.expressionsHaveSameType(
+    //   getType(keyValue.key.type.id),
+    //   getType(this.keyValuePairs[0].key.type.id)
+    // );
+    // check.expressionsHaveSameType(
+    //   getType(keyValue.value.type.id),
+    //   getType(this.keyValuePairs[0].value.type.id)
+    // );
+  });
+  let keyType = null;
+  let valueType = null;
+  if (this.keyValuePairs.length > 0) {
+    keyType = getType(this.keyValuePairs[0].key.type.id);
+    valueType = getType(this.keyValuePairs[0].value.type.id);
+  }
+
+  this.type = new DictType(keyType, valueType);
+};
+
+TupleExp.prototype.analyze = function(context) {
+  this.values.forEach(value, (index) => {
+    value.analyze(context);
+    check.expressionsHaveSameType(value.type, this.values[index].type);
+  });
+  const [valueTypes] = this.values;
+  this.type = new TupleType(valueTypes);
+};
+// callee, args
+CallExp.prototype.analyze = function(context) {
+  this.callee = this.callee.analyze(context);
+  check.isFunction(this.callee);
+  this.args.forEach((arg) => arg.analyze(context));
+  check.legalArguments(this.args, this.callee.params);
+  this.type = this.callee.returnType;
+};
+
+// value, subscript
+MemberExp.prototype.analyze = function(context) {
+  this.record.analyze(context);
+};
+
+SubscriptedExp.prototype.analyze = function(context) {
+  this.array.analyze(context);
+  check.isArray(this.array);
+  this.subscript.analyze(context);
+  check.isInteger(this.subscript);
+  this.type = this.array.type.memberType;
+};
+
+Param.prototype.analyze = function(context) {
+  this.type = context.lookup(this.type);
+  context.add(this.id, this);
+  // console.log(context.declarations);
+};
+
+KeyValue.prototype.analyze = function(context) {
+  this.key.analyze(context);
+  this.value.analyze(context);
+};
 
 Literal.prototype.analyze = function() {
   this.type = getType(this.type);
+};
+
+Identifier.prototype.analyze = function(context) {
+  this.ref = context.lookup(this.ref);
+
+  // this.type = this.ref.type;
 };

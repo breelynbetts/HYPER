@@ -27,7 +27,6 @@ const {
   MemberExp,
   SubscriptedExp,
   Param,
-  Arg,
   KeyValue,
   Literal,
   Identifier,
@@ -214,7 +213,7 @@ SAY(c[1])!
   ],
 
   dict: [
-    String.raw`DICT<STR:STR> e IS {a: "Hi", b: "I", c: "am", d: "hyper"}!
+    String.raw`DICT<STR:STR> e IS {"a": "Hi", "b": "I", "c": "am", "d": "hyper"}!
 GIMME e.a!
 LEAVE!
   `,
@@ -224,10 +223,10 @@ LEAVE!
           new DictType("STR", "STR"),
           "e",
           new DictExp([
-            new KeyValue(new Identifier("a"), new Literal("STR", "Hi")),
-            new KeyValue(new Identifier("b"), new Literal("STR", "I")),
-            new KeyValue(new Identifier("c"), new Literal("STR", "am")),
-            new KeyValue(new Identifier("d"), new Literal("STR", "hyper")),
+            new KeyValue(new Literal("STR", "a"), new Literal("STR", "Hi")),
+            new KeyValue(new Literal("STR", "b"), new Literal("STR", "I")),
+            new KeyValue(new Literal("STR", "c"), new Literal("STR", "am")),
+            new KeyValue(new Literal("STR", "d"), new Literal("STR", "hyper")),
           ])
         ),
         new ReturnStatement(new MemberExp(new Identifier("e"), "a")),
@@ -294,22 +293,18 @@ LEAVE!
           new ReturnStatement(
             new BinaryExp(
               new CallExp(new Identifier("fibonacci"), [
-                new Arg(
-                  new BinaryExp(
-                    new Identifier("num"),
-                    "SUB",
-                    new Literal("INT", 2)
-                  )
+                new BinaryExp(
+                  new Identifier("num"),
+                  "SUB",
+                  new Literal("INT", 2)
                 ),
               ]),
               "ADD",
               new CallExp(new Identifier("fibonacci"), [
-                new Arg(
-                  new BinaryExp(
-                    new Identifier("num"),
-                    "SUB",
-                    new Literal("INT", 1)
-                  )
+                new BinaryExp(
+                  new Identifier("num"),
+                  "SUB",
+                  new Literal("INT", 1)
                 ),
               ])
             )
