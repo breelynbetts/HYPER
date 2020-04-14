@@ -91,7 +91,6 @@ module.exports = {
     }
   },
   isAssignableTo(expression, type) {
-    console.log(this.identicalTypes(expression.type, type));
     doCheck(
       (expression.type === IntType && type === FloatType) ||
         (expression.type === StringType && type === SequenceType) ||

@@ -138,13 +138,9 @@ Declaration.prototype.analyze = function(context) {
   context.variableMustNotBeDeclared(this.id);
   // console.log(this);
   this.init.analyze(context);
-  console.log(this.type.analyze(context));
+  // console.log(this.type.analyze(context));
   this.type.analyze(context);
-  console.log(this.type);
-  console.log(this.init.type.constructor);
-  console.log(this.type.constructor);
   check.isAssignableTo(this.init, this.type);
-
   context.add(this.id, this);
   // console.log("DECLARARTIONS", context.declarations);
 };
@@ -220,7 +216,7 @@ UnaryExp.prototype.analyze = function(context) {
 };
 
 ArrayExp.prototype.analyze = function(context) {
-  this.type = context.lookup(this.type);
+  // this.type = context.lookup(this.type);
   check.isArrayType(this.type);
   this.size.analyze(context);
   check.isInteger(this.size);
@@ -244,8 +240,10 @@ DictExp.prototype.analyze = function(context) {
   let keyType = null;
   let valueType = null;
   if (this.keyValuePairs.length > 0) {
-    keyType = getType(this.keyValuePairs[0].key.type.id);
-    valueType = getType(this.keyValuePairs[0].value.type.id);
+    keyType = this.keyValuePairs[0].key.type.id;
+    keyType = getType(keyType);
+    valueType = this.keyValuePairs[0].value.type.id;
+    valueType = getType(valueType);
   }
   this.type = new DictType(keyType, valueType);
 };
@@ -273,6 +271,8 @@ MemberExp.prototype.analyze = function(context) {
 
 SubscriptedExp.prototype.analyze = function(context) {
   this.array.analyze(context);
+  console.log(context);
+  console.log(this);
   check.isArray(this.array);
   this.subscript.analyze(context);
   check.isInteger(this.subscript);
@@ -286,7 +286,6 @@ Param.prototype.analyze = function(context) {
 
 KeyValue.prototype.analyze = function(context) {
   this.key.analyze(context);
-  console.log(this.key);
   this.value.analyze(context);
 };
 
