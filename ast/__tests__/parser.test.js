@@ -66,19 +66,24 @@ let fixture = {
       `,
     new Program(
       new Block([
-        new Func("BOO", "isEven", new Param("INT", "num"), [
-          new ReturnStatement(
-            new BinaryExp(
+        new Func(
+          "BOO",
+          "isEven",
+          [new Param("INT", "num")],
+          [
+            new ReturnStatement(
               new BinaryExp(
-                new Identifier("num"),
-                "MOD",
-                new Literal("INT", 2)
-              ),
-              "EQUALS",
-              new Literal("INT", 0)
-            )
-          ),
-        ]),
+                new BinaryExp(
+                  new Identifier("num"),
+                  "MOD",
+                  new Literal("INT", 2)
+                ),
+                "EQUALS",
+                new Literal("INT", 0)
+              )
+            ),
+          ]
+        ),
       ])
     ),
   ],
@@ -257,15 +262,20 @@ LEAVE!
       `,
     new Program(
       new Block([
-        new Func("LITERALLYNOTHING", "hey", null, [
-          new PrintStatement([
-            new BinaryExp(
-              new Literal("STR", "HELLO"),
-              "OR",
-              new Literal("STR", "HEY")
-            ),
-          ]),
-        ]),
+        new Func(
+          "LITERALLYNOTHING",
+          "hey",
+          [],
+          [
+            new PrintStatement([
+              new BinaryExp(
+                new Literal("STR", "HELLO"),
+                "OR",
+                new Literal("STR", "HEY")
+              ),
+            ]),
+          ]
+        ),
       ])
     ),
   ],
@@ -278,38 +288,43 @@ LEAVE!
     `,
     new Program(
       new Block([
-        new Func("INT", "fibonacci", new Param("INT", "num"), [
-          new IfStatement(
-            [
-              new BinaryExp(
-                new Identifier("num"),
-                "LESS",
-                new Literal("INT", 2)
-              ),
-            ],
-            [[new ReturnStatement(new Literal("INT", 1))]],
-            null
-          ),
-          new ReturnStatement(
-            new BinaryExp(
-              new CallExp(new Identifier("fibonacci"), [
+        new Func(
+          "INT",
+          "fibonacci",
+          [new Param("INT", "num")],
+          [
+            new IfStatement(
+              [
                 new BinaryExp(
                   new Identifier("num"),
-                  "SUB",
+                  "LESS",
                   new Literal("INT", 2)
                 ),
-              ]),
-              "ADD",
-              new CallExp(new Identifier("fibonacci"), [
-                new BinaryExp(
-                  new Identifier("num"),
-                  "SUB",
-                  new Literal("INT", 1)
-                ),
-              ])
-            )
-          ),
-        ]),
+              ],
+              [[new ReturnStatement(new Literal("INT", 1))]],
+              null
+            ),
+            new ReturnStatement(
+              new BinaryExp(
+                new CallExp(new Identifier("fibonacci"), [
+                  new BinaryExp(
+                    new Identifier("num"),
+                    "SUB",
+                    new Literal("INT", 2)
+                  ),
+                ]),
+                "ADD",
+                new CallExp(new Identifier("fibonacci"), [
+                  new BinaryExp(
+                    new Identifier("num"),
+                    "SUB",
+                    new Literal("INT", 1)
+                  ),
+                ])
+              )
+            ),
+          ]
+        ),
       ])
     ),
   ],

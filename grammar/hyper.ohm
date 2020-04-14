@@ -41,7 +41,7 @@ HYPER {
     Conditional = try Exp Suite
                   (notry Exp Suite)*
                   (noqqq Suite)?                                    -- if
-    Function    = func (Type | void) id "(" Params ")" Suite
+    Function    = func Type id "(" Params ")" Suite
     Array       = "[" ListOf<Exps, ","> "]"
     Dictionary  = "{" ListOf<KeyValue, ","> "}"
     Tuple       = "(" NonemptyListOf<literals, ","> ")"

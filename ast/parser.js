@@ -104,12 +104,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new IfStatement(tests, consequents, alternate);
   },
   Function(_func, type, id, _open, params, _close, body) {
-    return new Func(
-      type.ast(),
-      id.ast(),
-      arrayToNullable(params.ast()),
-      body.ast()
-    );
+    return new Func(type.ast(), id.ast(), params.ast(), body.ast());
   },
   Exp_binary(left, op, right) {
     return new BinaryExp(left.ast(), op.ast(), right.ast());

@@ -8,7 +8,7 @@
  *   const Context = require('./semantics/context');
  */
 
-const { Declaration } = require("../ast");
+const { Declaration, PrimitiveType, Func } = require("../ast");
 const {
   BoolType,
   FloatType,
@@ -41,7 +41,7 @@ class Context {
       parent,
       currentFunction,
       inLoop,
-      declarations: Object.create(null),
+      declarations: new Map(),
     });
   }
   createChildContextForFunctionBody(currentFunction) {
@@ -72,17 +72,16 @@ class Context {
   }
 
   add(id, entity) {
-    this.declarations[id] = entity;
+    this.declarations.set(id, entity);
   }
 
   lookup(id) {
-    let variable = this.declarations[id];
-    if (variable) {
-      return variable;
-    } else if (!this.parent) {
-      throw `Variable ${id} not found`;
+    for (let context = this; context !== null; context = context.parent) {
+      if (context.declarations.has(id)) {
+        return context.declarations.get(id);
+      }
     }
-    return this.parent.lookup(id);
+    throw new Error(`Identifier ${id} has not been declared`);
   }
 }
 
@@ -95,7 +94,12 @@ Context.INITIAL = new Context();
   StringType,
   ...StandardFunctions,
 ].forEach((entity) => {
-  Context.INITIAL.add(entity);
+  if (entity.constructor === Func) {
+    Context.INITIAL.add(entity.id, entity);
+  }
+  if (entity.constructor === PrimitiveType) {
+    Context.INITIAL.add(entity.id, entity);
+  }
 });
 
 module.exports = Context;

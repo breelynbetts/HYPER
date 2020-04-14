@@ -65,8 +65,17 @@ Program.prototype.analyze = function(context) {
 };
 
 Block.prototype.analyze = function(context) {
-  const localContext = context.createChildContextForBlock();
-  this.statements.forEach((s) => s.analyze(localContext));
+  const newContext = context.createChildContextForBlock();
+  // this.statements
+  //   .filter((s) => s.constructor === Declaration)
+  //   .map((s) => newContext.add());
+  this.statements
+    .filter((s) => s.constructor === Func)
+    .map((s) => s.analyzeSignature(newContext));
+  this.statements
+    .filter((s) => s.constructor === Func)
+    .map((s) => newContext.add(s.id, s));
+  this.statements.forEach((s) => s.analyze(newContext));
 };
 
 // class ForStatement {
@@ -115,7 +124,8 @@ Func.prototype.analyzeSignature = function(context) {
 Func.prototype.analyze = function() {
   this.body.analyze(this.bodyContext);
   check.isAssignableTo(this.body, this.returnType);
-  delete this.bodyContext;
+  console.log("here");
+  // delete this.bodyContext;
 };
 
 Assignment.prototype.analyze = function(context) {
@@ -126,31 +136,29 @@ Assignment.prototype.analyze = function(context) {
 
 Declaration.prototype.analyze = function(context) {
   context.variableMustNotBeDeclared(this.id);
-  console.log(this);
+  // console.log(this);
   this.init.analyze(context);
-  console.log(this);
-  this.type = this.type.analyze(context);
+  console.log(this.type.analyze(context));
+  this.type.analyze(context);
   console.log(this.type);
-  console.log(this.init);
+  console.log(this.init.type.constructor);
+  console.log(this.type.constructor);
   check.isAssignableTo(this.init, this.type);
 
   context.add(this.id, this);
-  console.log("DECLARARTIONS", context.declarations);
+  // console.log("DECLARARTIONS", context.declarations);
 };
 
 ArrayType.prototype.analyze = function(context) {
   check.isArrayType(this);
-  this.type = getType(this.memberType);
-  // this.memberType = context.lookup(this.memberType);
+  // this.type = getType(this.memberType);
+  this.memberType = context.lookup(this.memberType);
 };
 
 DictType.prototype.analyze = function(context) {
-  console.log("HERE");
-  console.log(this);
-  this.keyType.analyze(context);
-  console.log(this.keyType);
-  this.valueType.analyze(context);
-  console.log(this.valueType);
+  check.isDictType(this);
+  this.keyType = context.lookup(this.keyType);
+  this.valueType = context.lookup(this.valueType);
 };
 
 TupleType.prototype.analyze = function(context) {
@@ -230,17 +238,8 @@ ArrayExp.prototype.analyze = function(context) {
 DictExp.prototype.analyze = function(context) {
   this.keyValuePairs.forEach((keyValue) => {
     keyValue.analyze(context);
-    // console.log(keyValue.key.type.id === "STR");
-    // console.log(getType(keyValue.key.type.id));
-    // console.log(getType(this.keyValuePairs[0].key.type.id));
-    // check.expressionsHaveSameType(
-    //   getType(keyValue.key.type.id),
-    //   getType(this.keyValuePairs[0].key.type.id)
-    // );
-    // check.expressionsHaveSameType(
-    //   getType(keyValue.value.type.id),
-    //   getType(this.keyValuePairs[0].value.type.id)
-    // );
+    check.isAssignableTo(keyValue.key, this.keyValuePairs[0].key.type);
+    check.isAssignableTo(keyValue.value, this.keyValuePairs[0].value.type);
   });
   let keyType = null;
   let valueType = null;
@@ -260,7 +259,7 @@ TupleExp.prototype.analyze = function(context) {
   const [valueTypes] = this.values;
   this.type = new TupleType(valueTypes);
 };
-// callee, args
+
 CallExp.prototype.analyze = function(context) {
   this.callee = this.callee.analyze(context);
   check.isFunction(this.callee);
@@ -269,7 +268,6 @@ CallExp.prototype.analyze = function(context) {
   this.type = this.callee.returnType;
 };
 
-// value, subscript
 MemberExp.prototype.analyze = function(context) {
   this.record.analyze(context);
 };
@@ -285,7 +283,6 @@ SubscriptedExp.prototype.analyze = function(context) {
 Param.prototype.analyze = function(context) {
   this.type = context.lookup(this.type);
   context.add(this.id, this);
-  // console.log(context.declarations);
 };
 
 KeyValue.prototype.analyze = function(context) {
@@ -294,7 +291,6 @@ KeyValue.prototype.analyze = function(context) {
 };
 
 Literal.prototype.analyze = function() {
-  console.log(this.type);
   if (this.type === "STR") {
     this.type = StringType;
   } else if (this.type === "FLT") {
@@ -306,7 +302,6 @@ Literal.prototype.analyze = function() {
   } else {
     this.type = NoneType;
   }
-  console.log(this.type);
 };
 
 Identifier.prototype.analyze = function(context) {
