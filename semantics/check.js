@@ -118,6 +118,15 @@ module.exports = {
       this.isAssignableTo(arg, params[i].type);
     });
   },
+  functionHasReturnStatement(func) {
+    if (func.returnType === NoneType) {
+      return;
+    }
+    doCheck(
+      func.body.statements.some((s) => s.constructor === ReturnStatement),
+      "Expected function to have a return type"
+    );
+  },
   returnTypeMatchesFunctionReturnType(expression, func) {
     const expType = expression.type;
     const funcReturnType = func.returnType;
