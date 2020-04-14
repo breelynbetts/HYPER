@@ -73,29 +73,31 @@ module.exports = {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
   identicalTypes(t1, t2) {
-    console.log(t1 === t2);
-    doCheck(
-      t1 === t2 ||
-        (t1.constructor === ArrayType &&
-          t2.constructor === ArrayType &&
-          this.identicalTypes(t1.memberType, t2.memberType)) ||
-        (t1.constructor === TupleType &&
-          t2.constructor === TupleType &&
-          t1.memberTypes.every((t, i) => t === t2.memberTypes[i])) ||
-        (t1.constructor === DictType &&
-          t2.constructor === DictType &&
-          this.identicalTypes(t1.keyType, t2.keyType) &&
-          this.identicalTypes(t1.valueType, t2.valueType)),
-      `Not identical types`
-    );
+    if (t1.constructor === ArrayType && t2.constructor === ArrayType) {
+      return this.identicalTypes(t1.memberType, t2.memberType);
+    } else if (
+      t1.constructor === TupleType &&
+      t2.constructor === TupleType &&
+      t1.memberTypes.every((t, i) => t === t2.memberTypes[i])
+    ) {
+      return true;
+    } else if (t1.constructor === DictType && t2.constructor === DictType) {
+      return (
+        this.identicalTypes(t1.keyType, t2.keyType) &&
+        this.identicalTypes(t1.valueType, t2.valueType)
+      );
+    } else {
+      return t1 === t2;
+    }
   },
   isAssignableTo(expression, type) {
+    console.log(this.identicalTypes(expression.type, type));
     doCheck(
-      this.identicalTypes(expression.type, type) ||
-        (expression.type === IntType && type === FloatType) ||
+      (expression.type === IntType && type === FloatType) ||
         (expression.type === StringType && type === SequenceType) ||
         (expression.constructor === ArrayType && type === SequenceType) ||
-        (expression.type !== NoneType && this.type === AnyType),
+        (expression.type !== NoneType && this.type === AnyType) ||
+        this.identicalTypes(expression.type, type),
       `Expression of type ${util.format(
         expression.type
       )} not compatible with type ${util.format(type)}`
