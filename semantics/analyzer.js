@@ -66,7 +66,6 @@ Program.prototype.analyze = function(context) {
 
 Block.prototype.analyze = function(context) {
   const localContext = context.createChildContextForBlock();
-  console.log("INITIAL CONTEXT + ", context);
   this.statements.forEach((s) => s.analyze(localContext));
 };
 
@@ -126,10 +125,13 @@ Assignment.prototype.analyze = function(context) {
 };
 
 Declaration.prototype.analyze = function(context) {
-  this.init.analyze(context);
   context.variableMustNotBeDeclared(this.id);
-
+  console.log(this);
+  this.init.analyze(context);
+  console.log(this);
   this.type = this.type.analyze(context);
+  console.log(this.type);
+  console.log(this.init);
   check.isAssignableTo(this.init, this.type);
 
   context.add(this.id, this);
@@ -143,12 +145,12 @@ ArrayType.prototype.analyze = function(context) {
 };
 
 DictType.prototype.analyze = function(context) {
-  // console.log("HERE");
-  // console.log(this);
-  // console.log("CONTEXT = ", context);
-  this.keyType = getType(this.keyType);
-  this.valueType = getType(this.valueType);
-  // this.type = new DictType(this.keyType, this.valueType);
+  console.log("HERE");
+  console.log(this);
+  this.keyType.analyze(context);
+  console.log(this.keyType);
+  this.valueType.analyze(context);
+  console.log(this.valueType);
 };
 
 TupleType.prototype.analyze = function(context) {
@@ -291,7 +293,9 @@ KeyValue.prototype.analyze = function(context) {
   this.value.analyze(context);
 };
 
-Literal.prototype.analyze = function() {
+Literal.prototype.analyze = function(context) {
+  console.log("HERE");
+  this.type.analyze(context);
   this.type = getType(this.type);
 };
 
