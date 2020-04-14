@@ -8,7 +8,7 @@
  *   const Context = require('./semantics/context');
  */
 
-const { Declaration } = require("../ast");
+const { Declaration, PrimitiveType, Func } = require("../ast");
 const {
   BoolType,
   FloatType,
@@ -64,12 +64,17 @@ class Context {
       inLoop: this.inLoop,
     });
   }
-  add(id, entity) {
-    if (this.declarations.has(id)) {
-      throw new Error(`${id} already declared in this scope`);
+
+  variableMustNotBeDeclared(name) {
+    if (this.declarations[name]) {
+      throw `${id} already declared in this scope`;
     }
+  }
+
+  add(id, entity) {
     this.declarations.set(id, entity);
   }
+
   lookup(id) {
     for (let context = this; context !== null; context = context.parent) {
       if (context.declarations.has(id)) {
@@ -89,7 +94,12 @@ Context.INITIAL = new Context();
   StringType,
   ...StandardFunctions,
 ].forEach((entity) => {
-  Context.INITIAL.add(entity);
+  if (entity.constructor === Func) {
+    Context.INITIAL.add(entity.id, entity);
+  }
+  if (entity.constructor === PrimitiveType) {
+    Context.INITIAL.add(entity.id, entity);
+  }
 });
 
 module.exports = Context;

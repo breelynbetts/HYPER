@@ -61,11 +61,11 @@ class Assignment {
 }
 
 class Declaration {
-  constructor(type, id, exp) {
+  constructor(type, id, init) {
     Object.assign(this, {
       type,
       id,
-      exp,
+      init,
     });
   }
 }
@@ -165,10 +165,10 @@ class ArrayExp extends Expression {
 }
 
 class DictExp extends Expression {
-  constructor(values) {
+  constructor(keyValuePairs) {
     super();
     Object.assign(this, {
-      values,
+      keyValuePairs,
     });
   }
 }
@@ -234,15 +234,15 @@ class Param {
   }
 }
 
-class Arg {
-  constructor(exp) {
-    Object.assign(this, { exp });
-  }
-}
+// class Arg {
+//   constructor(exp) {
+//     Object.assign(this, { exp });
+//   }
+// }
 
 class KeyValue {
-  constructor(id, exp) {
-    Object.assign(this, { id, exp });
+  constructor(key, value) {
+    Object.assign(this, { key, value });
   }
 }
 
@@ -253,8 +253,8 @@ class Literal {
 }
 
 class Identifier {
-  constructor(value) {
-    this.value = value;
+  constructor(ref) {
+    this.ref = ref;
   }
 }
 
@@ -287,7 +287,6 @@ module.exports = {
   MemberExp,
   SubscriptedExp,
   Param,
-  Arg,
   KeyValue,
   Literal,
   Identifier,
