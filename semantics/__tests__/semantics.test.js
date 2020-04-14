@@ -9,9 +9,11 @@ const parse = require('../../ast/parser');
 const analyze = require('../analyzer');
 
 const program = String.raw`
-!?
+INT x IS 1!
+SAY(x)!
 DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!
 ARR<INT> evens IS [2, 4, 6, 8]!
+!?
 evens[3] IS 10!
 TUP<STR,INT,FLT> tuple IS ("hello!", 2, 2.4)!
 INT sum IS getSum("3","4")!
@@ -22,7 +24,6 @@ INT sum IS a MULT b!
 GIMME sum!
 ⇦
 ?!
-SAY(0)!
 `;
 
 describe('The semantic analyzer', () => {

@@ -25,7 +25,7 @@ const Context = require('../context');
 
 const errors = [
   ['type mismatch in assignment', 'INT x IS 5!\nx IS "blue"!\n'],
-  // ["use of an undeclared variable", 'SAY x!'],
+  ['use of an undeclared variable', 'SAY(x)!'],
   ['type mismatch in declaration', 'INT x IS "blue"!'],
   // ["too many function arguments", 'SIZE(x,y)!'],
   // ["too few function arguments", 'CONCAT(x)!'],
