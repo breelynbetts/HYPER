@@ -238,6 +238,12 @@ ArrayExp.prototype.analyze = function(context) {
 DictExp.prototype.analyze = function(context) {
   this.keyValuePairs.forEach((keyValue) => {
     keyValue.analyze(context);
+    console.log(
+      check.isAssignableTo(keyValue.key, this.keyValuePairs[0].key.type)
+    );
+    console.log(
+      check.identicalTypes(keyValue.key, this.keyValuePairs[0].key.type)
+    );
     check.isAssignableTo(keyValue.key, this.keyValuePairs[0].key.type);
     check.isAssignableTo(keyValue.value, this.keyValuePairs[0].value.type);
   });

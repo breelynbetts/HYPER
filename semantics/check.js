@@ -73,7 +73,7 @@ module.exports = {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
   identicalTypes(t1, t2) {
-    console.log(t1.id === t2.id);
+    console.log(t1 === t2);
     doCheck(
       t1 === t2 ||
         (t1.constructor === ArrayType &&
@@ -85,19 +85,17 @@ module.exports = {
         (t1.constructor === DictType &&
           t2.constructor === DictType &&
           this.identicalTypes(t1.keyType, t2.keyType) &&
-          this.identicalTypes(t1.valueType, t2.valueType)) ||
-        (t1.id === t2.id &&
-          t1.constructor === PrimitiveType &&
-          t2.constructor === PrimitiveType)
+          this.identicalTypes(t1.valueType, t2.valueType)),
+      `Not identical types`
     );
   },
   isAssignableTo(expression, type) {
     doCheck(
-      (expression.type === IntType && type === FloatType) ||
-        (expression.type === String && type === SequenceType) ||
+      this.identicalTypes(expression.type, type) ||
+        (expression.type === IntType && type === FloatType) ||
+        (expression.type === StringType && type === SequenceType) ||
         (expression.constructor === ArrayType && type === SequenceType) ||
-        (expression.type !== NoneType && this.type === AnyType) ||
-        this.identicalTypes(expression.type, type),
+        (expression.type !== NoneType && this.type === AnyType),
       `Expression of type ${util.format(
         expression.type
       )} not compatible with type ${util.format(type)}`
