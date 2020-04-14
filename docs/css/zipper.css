@@ -302,6 +302,12 @@ p {
 	border: #3a6ebd 7px solid;
 }
 
+.tm-codeexamples-section-title {
+	color: #3a6ebd;
+	font-size: 2.2rem;
+	margin-bottom: 30px;
+}
+
 #tm-blocks-developers {
 	display: flex;
 	flex-flow: row wrap;
@@ -315,6 +321,12 @@ p {
 	height: 350px;
 	padding: 20px;
 	border: #ffffff 7px solid;
+
+.tm-developers-section-title {
+	color: #ffffff;
+	font-size: 2.2rem;
+	margin-bottom: 30px;
+}
 
 .tm-section-margin-top {
 	margin-top: 100px;
