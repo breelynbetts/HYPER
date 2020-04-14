@@ -91,7 +91,6 @@ module.exports = {
     }
   },
   isAssignableTo(expression, type) {
-    console.log(this.identicalTypes(expression.type, type));
     doCheck(
       (expression.type === IntType && type === FloatType) ||
         (expression.type === StringType && type === SequenceType) ||
@@ -117,6 +116,15 @@ module.exports = {
       }
       this.isAssignableTo(arg, params[i].type);
     });
+  },
+  functionHasReturnStatement(func) {
+    if (func.returnType === NoneType) {
+      return;
+    }
+    doCheck(
+      func.body.statements.some((s) => s.constructor === ReturnStatement),
+      "Expected function to have a return type"
+    );
   },
   returnTypeMatchesFunctionReturnType(expression, func) {
     const expType = expression.type;
