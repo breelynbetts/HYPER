@@ -1,6 +1,6 @@
 // THINGS TO WORK ON : couldn't figure out how to get coverage on parenthesis and tuple
 
-const parse = require("../parser");
+const parse = require('../parser');
 
 const {
   Program,
@@ -30,13 +30,13 @@ const {
   KeyValue,
   Literal,
   Identifier,
-} = require("../../ast");
+} = require('../../ast');
 
 let fixture = {
   hello: [
     String.raw`SAY(3)!
   `,
-    new Program(new Block([new PrintStatement([new Literal("INT", 3)])])),
+    new Program(new Block([new PrintStatement(new Literal('INT', 3))])),
   ],
 
   assignment: [
@@ -45,8 +45,8 @@ let fixture = {
     new Program(
       new Block([
         new Assignment(
-          new Identifier("x"),
-          new BinaryExp(new Literal("INT", 4), "ADD", new Literal("INT", 3))
+          new Identifier('x'),
+          new BinaryExp(new Literal('INT', 4), 'ADD', new Literal('INT', 3))
         ),
       ])
     ),
@@ -55,9 +55,7 @@ let fixture = {
   declaration: [
     String.raw`INT x IS 5!
       `,
-    new Program(
-      new Block([new Declaration("INT", "x", new Literal("INT", 5))])
-    ),
+    new Program(new Block([new Declaration('INT', 'x', new Literal('INT', 5))])),
   ],
 
   returnStatement: [
@@ -67,19 +65,15 @@ let fixture = {
     new Program(
       new Block([
         new Func(
-          "BOO",
-          "isEven",
-          [new Param("INT", "num")],
+          'BOO',
+          'isEven',
+          [new Param('INT', 'num')],
           [
             new ReturnStatement(
               new BinaryExp(
-                new BinaryExp(
-                  new Identifier("num"),
-                  "MOD",
-                  new Literal("INT", 2)
-                ),
-                "EQUALS",
-                new Literal("INT", 0)
+                new BinaryExp(new Identifier('num'), 'MOD', new Literal('INT', 2)),
+                'EQUALS',
+                new Literal('INT', 0)
               )
             ),
           ]
@@ -95,13 +89,9 @@ INT z IS x ADD y!
       `,
     new Program(
       new Block([
-        new Declaration("INT", "x", new Literal("INT", 3)),
-        new Declaration("INT", "y", new Literal("INT", 5)),
-        new Declaration(
-          "INT",
-          "z",
-          new BinaryExp(new Identifier("x"), "ADD", new Identifier("y"))
-        ),
+        new Declaration('INT', 'x', new Literal('INT', 3)),
+        new Declaration('INT', 'y', new Literal('INT', 5)),
+        new Declaration('INT', 'z', new BinaryExp(new Identifier('x'), 'ADD', new Identifier('y'))),
       ])
     ),
   ],
@@ -110,9 +100,7 @@ INT z IS x ADD y!
     String.raw`INT x IS -10!
       `,
     new Program(
-      new Block([
-        new Declaration("INT", "x", new UnaryExp("-", new Literal("INT", 10))),
-      ])
+      new Block([new Declaration('INT', 'x', new UnaryExp('-', new Literal('INT', 10)))])
     ),
   ],
 
@@ -123,23 +111,17 @@ INT z IS x ADD y!
     new Program(
       new Block([
         new ForStatement(
-          "INT",
-          new Identifier("x"),
-          new RangeExp(
-            false,
-            new Literal("INT", 0),
-            new Literal("INT", 10),
-            null,
-            false
-          ),
+          'INT',
+          new Identifier('x'),
+          new RangeExp(false, new Literal('INT', 0), new Literal('INT', 10), null, false),
           [
-            new PrintStatement([
+            new PrintStatement(
               new BinaryExp(
-                new Identifier("x"),
-                "POW",
-                new BinaryExp(new Identifier("x"), "ADD", new Literal("INT", 2))
-              ),
-            ]),
+                new Identifier('x'),
+                'POW',
+                new BinaryExp(new Identifier('x'), 'ADD', new Literal('INT', 2))
+              )
+            ),
           ]
         ),
       ])
@@ -152,8 +134,8 @@ INT z IS x ADD y!
       `,
     new Program(
       new Block([
-        new WhileStatement(new Literal("BOO", true), [
-          new ReturnStatement(new Literal("STR", "I am hyper!")),
+        new WhileStatement(new Literal('BOO', true), [
+          new ReturnStatement(new Literal('STR', 'I am hyper!')),
         ]),
       ])
     ),
@@ -170,21 +152,17 @@ NO???:
     `,
     new Program(
       new Block([
-        new Declaration("INT", "num", new Literal("INT", 3)),
+        new Declaration('INT', 'num', new Literal('INT', 3)),
         new IfStatement(
           [
-            new BinaryExp(new Identifier("num"), "GRT", new Literal("INT", 0)),
-            new BinaryExp(
-              new Identifier("num"),
-              "EQUALS",
-              new Literal("INT", 0)
-            ),
+            new BinaryExp(new Identifier('num'), 'GRT', new Literal('INT', 0)),
+            new BinaryExp(new Identifier('num'), 'EQUALS', new Literal('INT', 0)),
           ],
           [
-            [new PrintStatement([new Literal("STR", "Positive number")])],
-            [new PrintStatement([new Literal("STR", "Zero")])],
+            [new PrintStatement(new Literal('STR', 'Positive number'))],
+            [new PrintStatement(new Literal('STR', 'Zero'))],
           ],
-          [new PrintStatement([new Literal("STR", "Negative number")])]
+          [new PrintStatement(new Literal('STR', 'Negative number'))]
         ),
       ])
     ),
@@ -197,22 +175,20 @@ SAY(c[1])!
     new Program(
       new Block([
         new Declaration(
-          new ArrayType("STR"),
-          "c",
+          new ArrayType('STR'),
+          'c',
           new ArrayExp(
             [
-              new Literal("STR", "Hi"),
-              new Literal("STR", "I"),
-              new Literal("STR", "am"),
-              new Literal("STR", "hyper"),
+              new Literal('STR', 'Hi'),
+              new Literal('STR', 'I'),
+              new Literal('STR', 'am'),
+              new Literal('STR', 'hyper'),
             ],
-            new Literal("INT", 4),
-            new ArrayType("STR")
+            new Literal('INT', 4),
+            new ArrayType('STR')
           )
         ),
-        new PrintStatement([
-          new SubscriptedExp(new Identifier("c"), new Literal("INT", 1)),
-        ]),
+        new PrintStatement(new SubscriptedExp(new Identifier('c'), new Literal('INT', 1))),
       ])
     ),
   ],
@@ -225,16 +201,16 @@ LEAVE!
     new Program(
       new Block([
         new Declaration(
-          new DictType("STR", "STR"),
-          "e",
+          new DictType('STR', 'STR'),
+          'e',
           new DictExp([
-            new KeyValue(new Literal("STR", "a"), new Literal("STR", "Hi")),
-            new KeyValue(new Literal("STR", "b"), new Literal("STR", "I")),
-            new KeyValue(new Literal("STR", "c"), new Literal("STR", "am")),
-            new KeyValue(new Literal("STR", "d"), new Literal("STR", "hyper")),
+            new KeyValue(new Literal('STR', 'a'), new Literal('STR', 'Hi')),
+            new KeyValue(new Literal('STR', 'b'), new Literal('STR', 'I')),
+            new KeyValue(new Literal('STR', 'c'), new Literal('STR', 'am')),
+            new KeyValue(new Literal('STR', 'd'), new Literal('STR', 'hyper')),
           ])
         ),
-        new ReturnStatement(new MemberExp(new Identifier("e"), "a")),
+        new ReturnStatement(new MemberExp(new Identifier('e'), 'a')),
         new Break(),
       ])
     ),
@@ -246,12 +222,12 @@ LEAVE!
     new Program(
       new Block([
         new Declaration(
-          new TupleType(["INT", "FLT", "STR"]),
-          "d",
+          new TupleType(['INT', 'FLT', 'STR']),
+          'd',
           new TupleExp([
-            new Literal("INT", 1),
-            new Literal("FLT", 2.5),
-            new Literal("STR", "hello"),
+            new Literal('INT', 1),
+            new Literal('FLT', 2.5),
+            new Literal('STR', 'hello'),
           ])
         ),
       ])
@@ -263,17 +239,13 @@ LEAVE!
     new Program(
       new Block([
         new Func(
-          "LITERALLYNOTHING",
-          "hey",
+          'LITERALLYNOTHING',
+          'hey',
           [],
           [
-            new PrintStatement([
-              new BinaryExp(
-                new Literal("STR", "HELLO"),
-                "OR",
-                new Literal("STR", "HEY")
-              ),
-            ]),
+            new PrintStatement(
+              new BinaryExp(new Literal('STR', 'HELLO'), 'OR', new Literal('STR', 'HEY'))
+            ),
           ]
         ),
       ])
@@ -289,37 +261,23 @@ LEAVE!
     new Program(
       new Block([
         new Func(
-          "INT",
-          "fibonacci",
-          [new Param("INT", "num")],
+          'INT',
+          'fibonacci',
+          [new Param('INT', 'num')],
           [
             new IfStatement(
-              [
-                new BinaryExp(
-                  new Identifier("num"),
-                  "LESS",
-                  new Literal("INT", 2)
-                ),
-              ],
-              [[new ReturnStatement(new Literal("INT", 1))]],
+              [new BinaryExp(new Identifier('num'), 'LESS', new Literal('INT', 2))],
+              [[new ReturnStatement(new Literal('INT', 1))]],
               null
             ),
             new ReturnStatement(
               new BinaryExp(
-                new CallExp(new Identifier("fibonacci"), [
-                  new BinaryExp(
-                    new Identifier("num"),
-                    "SUB",
-                    new Literal("INT", 2)
-                  ),
+                new CallExp(new Identifier('fibonacci'), [
+                  new BinaryExp(new Identifier('num'), 'SUB', new Literal('INT', 2)),
                 ]),
-                "ADD",
-                new CallExp(new Identifier("fibonacci"), [
-                  new BinaryExp(
-                    new Identifier("num"),
-                    "SUB",
-                    new Literal("INT", 1)
-                  ),
+                'ADD',
+                new CallExp(new Identifier('fibonacci'), [
+                  new BinaryExp(new Identifier('num'), 'SUB', new Literal('INT', 1)),
                 ])
               )
             ),
@@ -330,15 +288,15 @@ LEAVE!
   ],
 };
 
-describe("The parser", () => {
+describe('The parser', () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
-    test(`produces the correct AST for ${name}`, (done) => {
+    test(`produces the correct AST for ${name}`, done => {
       expect(parse(source)).toEqual(expected);
       done();
     });
   });
-  test("throws an exception on a syntax error", (done) => {
-    expect(() => parse("as$df^&%*$&")).toThrow();
+  test('throws an exception on a syntax error', done => {
+    expect(() => parse('as$df^&%*$&')).toThrow();
     done();
   });
 });

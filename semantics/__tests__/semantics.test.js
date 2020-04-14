@@ -5,10 +5,11 @@
  * all of semantic constraints specified by the language.
  */
 
-const parse = require("../../ast/parser");
-const analyze = require("../analyzer");
+const parse = require('../../ast/parser');
+const analyze = require('../analyzer');
 
 const program = String.raw`
+!?
 DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!
 ARR<INT> evens IS [2, 4, 6, 8]!
 evens[3] IS 10!
@@ -18,12 +19,14 @@ FUNC INT getSum (STR a, STR b):
 ⇨INT strA IS strToInt(a)!
 INT strB IS strToInt(b)!
 INT sum IS a MULT b!
-GIMME sum! 
+GIMME sum!
 ⇦
+?!
+SAY(0)!
 `;
 
-describe("The semantic analyzer", () => {
-  test("accepts the mega program with all syntactic forms", (done) => {
+describe('The semantic analyzer', () => {
+  test('accepts the mega program with all syntactic forms', done => {
     const astRoot = parse(program);
     expect(astRoot).toBeTruthy();
     analyze(astRoot);

@@ -1,6 +1,6 @@
-const fs = require("fs");
-const ohm = require("ohm-js");
-const withIndentsAndDedents = require("./preparser.js");
+const fs = require('fs');
+const ohm = require('ohm-js');
+const withIndentsAndDedents = require('./preparser.js');
 
 const {
   Program,
@@ -30,16 +30,16 @@ const {
   KeyValue,
   Literal,
   Identifier,
-} = require("../ast");
+} = require('../ast');
 
-const grammar = ohm.grammar(fs.readFileSync("grammar/hyper.ohm"));
+const grammar = ohm.grammar(fs.readFileSync('grammar/hyper.ohm'));
 
 function arrayToNullable(a) {
   return a.length === 0 ? null : a[0];
 }
 
 /* eslint-disable no-unused-vars */
-const astGenerator = grammar.createSemantics().addOperation("ast", {
+const astGenerator = grammar.createSemantics().addOperation('ast', {
   Program(b) {
     return new Program(b.ast());
   },
@@ -67,7 +67,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new ArrayType(t.ast());
   },
   SimpleStmt_print(_print, _open, e, _close, _exclamation) {
-    return new PrintStatement(e.ast());
+    return new PrintStatement(arrayToNullable(e.ast()));
   },
   SimpleStmt_return(_return, e, _exc) {
     return new ReturnStatement(arrayToNullable(e.ast()));
@@ -88,16 +88,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Loop_while(_while, test, body) {
     return new WhileStatement(test.ast(), body.ast());
   },
-  Conditional_if(
-    _if,
-    test1,
-    block1,
-    _elif,
-    moreTests,
-    moreBlocks,
-    _else,
-    endBlock
-  ) {
+  Conditional_if(_if, test1, block1, _elif, moreTests, moreBlocks, _else, endBlock) {
     const tests = [test1.ast(), ...moreTests.ast()];
     const consequents = [block1.ast(), ...moreBlocks.ast()];
     const alternate = arrayToNullable(endBlock.ast());
@@ -133,7 +124,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Array(_open, members, _close) {
     const m = arrayToNullable(members.ast());
     const type = new ArrayType(m[0].type);
-    return new ArrayExp(m, new Literal("INT", m.length), type);
+    return new ArrayExp(m, new Literal('INT', m.length), type);
   },
   Dictionary(_open, keyValues, _close) {
     return new DictExp(keyValues.ast());
@@ -142,8 +133,8 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new TupleExp(inner.ast());
   },
   Range(_range, open, start, _sep, end, _sep2, step, close) {
-    const isOpenInclusive = open === "[";
-    const isCloseInclusive = close === "]";
+    const isOpenInclusive = open === '[';
+    const isCloseInclusive = close === ']';
     return new RangeExp(
       isOpenInclusive,
       start.ast(),
@@ -171,16 +162,16 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new KeyValue(key.ast(), value.ast());
   },
   boollit(_) {
-    return new Literal("BOO", this.sourceString === "TRUE");
+    return new Literal('BOO', this.sourceString === 'TRUE');
   },
   intlit(_neg, _digits) {
-    return new Literal("INT", +this.sourceString);
+    return new Literal('INT', +this.sourceString);
   },
   floatlit(_neg, _digits, _dot, _digit) {
-    return new Literal("FLT", +this.sourceString);
+    return new Literal('FLT', +this.sourceString);
   },
   strlit(_open, chars, _close) {
-    return new Literal("STR", this.sourceString.slice(1, -1));
+    return new Literal('STR', this.sourceString.slice(1, -1));
   },
   NonemptyListOf(first, _sep, rest) {
     return [first.ast(), ...rest.ast()];
@@ -197,7 +188,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
 });
 /* eslint-enable no-unused-vars */
 
-module.exports = (text) => {
+module.exports = text => {
   const match = grammar.match(withIndentsAndDedents(text));
   if (!match.succeeded()) {
     throw new Error(`Syntax Error: ${match.message}`);
