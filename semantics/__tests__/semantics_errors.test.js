@@ -28,7 +28,19 @@ const errors = [
   ["use of an undeclared variable", "SAY(x)!"],
   ["type mismatch in declaration", 'INT x IS "blue"!'],
   ["variable already declared", 'STR s IS "bree"!\nSTR s IS "blue"!\n'],
-  // ["too many function arguments", 'SIZE(x,y)!'],
+  ["break outside of loop", "LEAVE!"],
+  [
+    "for loop doesn't use array or range",
+    'DICT<STR:BOO> a IS {"hey": TRUE}!\nLOOKAT INT x IN a:\n⇨SAY(x)!\n⇦',
+  ],
+  [
+    "mismatch in forloop types",
+    "ARR<INT> a IS [1,2,3]!\nLOOKAT STR x IN a:\n⇨SAY(x)!\n⇦",
+  ],
+  [
+    "too many function arguments",
+    'STR x IS "hey"!\nSTR y IS "there"!\nSIZE(x,y)\n',
+  ],
   // ["too few function arguments", 'CONCAT(x)!'],
   // ["redeclared field", '']
 ];

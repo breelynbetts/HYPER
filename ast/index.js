@@ -11,11 +11,11 @@ class Block {
 }
 
 class ForStatement {
-  constructor(type, id, exp, body) {
+  constructor(type, index, collection, body) {
     Object.assign(this, {
       type,
-      id,
-      exp,
+      index,
+      collection,
       body,
     });
   }
