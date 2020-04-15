@@ -140,12 +140,10 @@ module.exports = {
   },
   returnTypeMatchesFunctionReturnType(expression, func) {
     const funcReturnType = func.returnType;
-    let expType;
-    if (expression.constructor === Identifier) {
-      expType = expression.ref.type;
-    } else {
-      expType = expression.type;
-    }
+    let expType =
+      expression.constructor === Identifier
+        ? expression.ref.type
+        : expression.type;
 
     doCheck(
       this.identicalTypes(expType, funcReturnType),

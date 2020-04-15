@@ -37,6 +37,12 @@ FUNC INT getSum (INT a, INT b):
 GIMME sum!
 ⇦`,
   ],
+  funcCoercion: [
+    String.raw`STR b IS x(3)!
+FUNC STR x(STR y):
+⇨GIMME y!
+⇦`,
+  ],
 };
 
 // INT x IS 1!

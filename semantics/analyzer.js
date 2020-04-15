@@ -247,7 +247,6 @@ BinaryExp.prototype.analyze = function(context) {
 
 UnaryExp.prototype.analyze = function(context) {
   this.operand.analyze(context);
-  console.log(this);
   if (this.op === "~") {
     check.isBoolean(this.operand);
     this.type = BoolType;

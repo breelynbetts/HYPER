@@ -44,6 +44,7 @@ const errors = [
   ["function return type mismatch", "FUNC STR num(INT x):\n⇨GIMME x!\n⇦"],
   ["tuple type mismatch", 'TUP<STR,INT,FLT> tup IS (TRUE,"blue",2.3)!\n'],
   ["while loop test is not a boolean", "UNTIL 3 ADD 5:\n⇨SAY(TRUE)!\n⇦"],
+  ["no return statement in function", "FUNC INT x(INT y):\n⇨y IS y GRT 3!\n⇦"],
   // ["too few function arguments", 'CONCAT(x)!'],
   // ["redeclared field", '']
 ];
