@@ -59,12 +59,12 @@ http://www.tooplate.com/view/2084-zipper
                 </nav>
             </div>
             
-            <section class="tm-section tm-section-home tm-flex-center" id="home">                
+            <section class="tm-section tm-section-home" id="home">                
                 
                 <div class="tm-hero">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="text-uppercase tm-hero-title">WELCOME TO HYPER!</h1>
+                            <h1 class="text-uppercase tm-hero-title">WELCOME TO</h1>
                             <img class="logo-img" src="./images/logo.png"/>
                             <p class="tm-hero-title tm-hero-subtitle">The Most Chaotic Programming Language Out There!</p>
                         </div>
@@ -74,16 +74,18 @@ http://www.tooplate.com/view/2084-zipper
             </section>
             
             <!-- Section 2 -->
-            <section class="tm-section tm-section-abouthyper" id="abouthyper">
+            <section class="tm-section tm-section-title-padding tm-section-abouthyper" id="abouthyper">
 
                 <div class="tm-page-content-width">
-                    <div class="tm-bg-black-translucent tm-content-box tm-content-box-right tm-flex-center">
+                    <div class="tm-bg-black-translucent tm-content-box">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-section-title">About Hyper!</h2>
                             <p class="tm-text" >Hyper! is an exhilarating and quirky programming language designed for those who either want to express their limitless amount of energy or need stimulation while coding until late hours of the night. Inspired by HyperTalk and Python, Hyper! employs speech-like syntax for an easier, pragmatic experience.</p>
                             <p class="tm-text ">Hyper! is a scripting language that is statically typed. It also allows for higher order functions, in which a function is a parameter in another function or returns a function as an output.</p>
-                            <a href="https://github.com/breelynbetts/HYPER" target="_blank"><button>&#x1F4E5;View GitHub Repo</button></a>
-                            <a href="https://github.com/breelynbetts/HYPER/blob/master/grammar/hyper.ohm" target="_blank"><button>&#x1f4cb;View Grammer</button></a>
+                            <div id="buttons">
+                                <a href="https://github.com/breelynbetts/HYPER" target="_blank"><button class="btn btn-margin">&#x1F4E5;View GitHub Repo</button></a>
+                                <a href="https://github.com/breelynbetts/HYPER/blob/master/grammar/hyper.ohm" target="_blank"><button class="btn">&#x1f4cb;View Grammer</button></a>
+                            </div>
                         </div>                        
                     </div>                    
                 </div>
@@ -91,41 +93,41 @@ http://www.tooplate.com/view/2084-zipper
             </section>
             
             <!-- Section 3 -->
-            <section class="tm-section  tm-section-title-padding tm-section-codeexamples" id="codeexamples">
+            <section class="tm-section tm-section-title-padding tm-section-codeexamples" id="codeexamples">
                 <h2 class="tm-codeexamples-section-title text-xs-center">Coding Examples</h2>
 
                 <div class="tm-page-content-width" id="tm-blocks-codeexamples">
-                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                    <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Hello, World!</h2>
                             <p class="tm-code">SAY("HELLO, WORLD!")!</p>
                         </div>                        
                     </div> 
-                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                    <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Fibonacci</h2>
                             <p class="tm-code">FUNC INT fibonacci(INT num):<br>TRY num EQUALS 0:<br>GIMME 0!<br>&emsp;NO?TRY num EQUALS 1 OR num EQUALS 2:<br>&emsp;GIMME 1!<br>GIMME fibonacci(num SUB 2) ADD fibonacci(num SUB 1)!</p>
                         </div>                        
                     </div> 
-                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                    <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Function</h2>
                             <p class="tm-code">FUNC LITERALLYNOTHING helloWorld():<br>&emsp;SAY("Hello, world")!</p>
                         </div>                        
                     </div> 
-                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                    <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">If</h2>
                             <p class="tm-code">INT num IS 3!<br>TRY num GRT 0:<br>&emsp;SAY("Positive number")!<br>NO?TRY num EQUALS 0:<br>&emsp;SAY("Zero")!<br>NO???:<br>&emsp;SAY("Negative number")!</p>
                         </div>                        
                     </div> 
-                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                    <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">For</h2>
-                            <p class="tm-code">LOOKAT INT x IN ....(0, 10):<br>&emsp;SAY(x)!</p>
+                            <p class="tm-code">LOOKAT INT x IN RANGE(0, 10):<br>&emsp;SAY(x)!</p>
                         </div>                        
                     </div> 
-                    <div class="tm-bg-black-translucent tm-flex-center tm-block-codeexamples">
+                    <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">While</h2>
                             <p class="tm-code">UNTIL TRUE:<br>&emsp;SAY("I am hyper!")!</p>
@@ -140,26 +142,26 @@ http://www.tooplate.com/view/2084-zipper
                     <h2 class="tm-developers-section-title text-xs-center">Developers</h2>
                     <div class="row">
                         <div class="tm-page-content-width" id="tm-blocks-developers">                               
-                            <div class="tm-bg-black-translucent tm-flex-center tm-block-developers">
+                            <div class="tm-bg-black-translucent tm-block-developers">
                                 <div class="tm-content-box-inner">
                                     <figure>
-                                        <img src="images/lexi.jpg" alt="lexi" style="width:200px; height:250px;">
+                                        <img src="images/lexi.jpg" alt="lexi" class="profile-img">
                                         <figcaption color="white">Lexi Weingardt</figcaption>
                                     </figure>
                                 </div>
                             </div>
-                            <div class="tm-bg-black-translucent tm-flex-center tm-block-developers">
+                            <div class="tm-bg-black-translucent tm-block-developers">
                                 <div class="tm-content-box-inner">
                                     <figure>
-                                        <img src="images/breelyn.jpg" alt="breelyn" style="width:200px; height:250px;"">
+                                        <img src="images/breelyn.jpg" alt="breelyn" class="profile-img">
                                         <figcaption color="white">Breelyn Betts</figcaption>
                                     </figure>
                                 </div>          
                             </div>
-                            <div class="tm-bg-black-translucent tm-flex-center tm-block-developers">
+                            <div class="tm-bg-black-translucent tm-block-developers">
                                 <div class="tm-content-box-inner">
                                     <figure>
-                                        <img src="images/maya.jpg" alt="maya" style="width:200px; height:250px;">
+                                        <img src="images/maya.jpg" alt="maya" class="profile-img">
                                         <figcaption color="white">Maya Dahlke</figcaption>
                                     </figure>
                                 </div>          
