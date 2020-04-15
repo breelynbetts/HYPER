@@ -41,6 +41,8 @@ const errors = [
     "too many function arguments",
     'STR x IS "hey"!\nSTR y IS "there"!\nSIZE(x,y)\n',
   ],
+  ["function return type mismatch", "FUNC STR num(INT x):\n⇨GIMME x!\n⇦"],
+  ["tuple type mismatch", 'TUP<STR,INT,FLT> tup IS (TRUE,"blue",2.3)!\n'],
   // ["too few function arguments", 'CONCAT(x)!'],
   // ["redeclared field", '']
 ];

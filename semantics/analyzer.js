@@ -103,8 +103,10 @@ ForStatement.prototype.analyze = function(context) {
 
 WhileStatement.prototype.analyze = function(context) {
   this.test.analyze(context);
-  check.isBoolean(test);
-  this.body.analyze(context.createChildContextForLoop());
+  console.log(this);
+  check.isBoolean(this.test);
+  const newContext = context.createChildContextForLoop();
+  this.body.forEach((b) => b.analyze(newContext));
 };
 
 IfStatement.prototype.analyze = function(context) {
@@ -220,21 +222,26 @@ BinaryExp.prototype.analyze = function(context) {
   this.left.analyze(context);
   this.right.analyze(context);
   console.log(this);
+  console.log(this);
+  let left = this.left.constructor === Identifier ? this.left.ref : this.left;
+  let right =
+    this.right.constructor === Identifier ? this.right.ref : this.right;
+
   if (["LESSEQ", "GRTEQ", "LESS", "GRT"].includes(this.op)) {
-    check.isNumber(this.left);
-    check.isNumber(this.right);
+    check.isNumber(left);
+    check.isNumber(right);
     this.type = BoolType;
   } else if (["EQUALS", "NOTEQ"].includes(this.op)) {
-    check.expressionsHaveSameType(this.left, this.right);
+    check.expressionsHaveSameType(left, right);
     this.type = BoolType;
   } else if (["AND", "OR"].includes(this.op)) {
-    check.isBoolean(this.left);
-    check.isBoolean(this.right);
+    check.isBoolean(left);
+    check.isBoolean(right);
     this.type = BoolType;
   } else {
     // All other binary operators are arithmetic
-    check.isNumber(this.left.ref);
-    check.isNumber(this.right.ref);
+    check.isNumber(left);
+    check.isNumber(right);
     // FIND A WAY TO GET THIS TYPE
     this.type = IntType;
   }

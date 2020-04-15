@@ -9,11 +9,16 @@ const parse = require("../../ast/parser");
 const analyze = require("../analyzer");
 
 const program = String.raw`
+INT x IS 5!
+INT y IS 7!
+UNTIL x EQUALS y:
+⇨ x IS x ADD 1!
+⇦
+!?
 INT total!
 LOOKAT INT x IN RANGE(0, 10):
 ⇨total IS total ADD x!
 ⇦
-!?
 INT x IS 1!
 SAY(x)!
 DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!
