@@ -26,6 +26,7 @@ FUNC LITERALLYNOTHING hey():
   ],
   func: [
     String.raw`DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!
+FLT t IS 2!
 ARR<INT> evens IS [2, 4, 6, 8]!
 evens[3] IS 10!
 FLT c IS -3.4!
@@ -41,6 +42,22 @@ GIMME sum!
     String.raw`STR b IS x(3)!
 FUNC STR x(STR y):
 ⇨GIMME y!
+⇦`,
+  ],
+  for2: [
+    String.raw`ARR<STR> a IS ["hyper", "needs", "hype"]!
+LOOKAT STR s IN a:
+⇨CONCAT(s, "!!!")
+⇦`,
+  ],
+  if: [
+    String.raw`INT x IS 5!
+TRY x GRT 0:
+⇨GIMME "x > 0"!
+⇦NO?TRY x LESS 0:
+⇨GIMME "x < 0"!
+⇦NO???:
+⇨GIMME "x = 0"!
 ⇦`,
   ],
 };

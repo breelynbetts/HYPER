@@ -43,32 +43,12 @@ const Context = require("./context");
 
 module.exports = (exp) => exp.analyze(Context.INITIAL);
 
-function getType(typeString) {
-  switch (typeString) {
-    case "STR":
-      return StringType;
-    case "BOO":
-      return BoolType;
-    case "FLT":
-      return FloatType;
-    case "INT":
-      return IntType;
-    case "LITERALLYNOTHING":
-      return NoneType;
-    default:
-      return typeString;
-  }
-}
-
 Program.prototype.analyze = function(context) {
   this.block.analyze(context);
 };
 
 Block.prototype.analyze = function(context) {
   const newContext = context.createChildContextForBlock();
-  // this.statements
-  //   .filter((s) => s.constructor === Declaration)
-  //   .map((s) => newContext.add());
   this.statements
     .filter((s) => s.constructor === Func)
     .map((s) => s.analyzeSignature(newContext));
@@ -87,14 +67,13 @@ ForStatement.prototype.analyze = function(context) {
   } else {
     this.type.analyze(context);
   }
-
   check.isRangeOrArray(this.collection);
   const bodyContext = context.createChildContextForLoop();
 
   if (this.collection.constructor === RangeExp) {
     check.isInteger(this);
-  } else if (this.collection.constructor === ArrayType) {
-    check.isAssignableTo(this, this.collection.memberType);
+  } else if (this.collection.type.constructor === ArrayType) {
+    check.isAssignableTo(this, this.collection.type.memberType);
   }
   this.index = new Declaration(this.type, this.index.ref);
   bodyContext.add(this.index.id, this.index);
@@ -111,6 +90,7 @@ WhileStatement.prototype.analyze = function(context) {
 IfStatement.prototype.analyze = function(context) {
   this.tests.forEach((test) => test.analyze(context));
   this.tests.forEach((test) => check.isBoolean(test));
+  console.log(this.consequents);
   this.consequents.forEach((consequent) =>
     consequent.analyze(context.createChildContextForBlock())
   );
@@ -281,10 +261,8 @@ DictExp.prototype.analyze = function(context) {
   let keyType = null;
   let valueType = null;
   if (this.keyValuePairs.length > 0) {
-    keyType = this.keyValuePairs[0].key.type.id;
-    keyType = getType(keyType);
-    valueType = this.keyValuePairs[0].value.type.id;
-    valueType = getType(valueType);
+    keyType = this.keyValuePairs[0].key.type;
+    valueType = this.keyValuePairs[0].value.type;
   }
   this.type = new DictType(keyType, valueType);
 };

@@ -73,7 +73,7 @@ module.exports = {
   isRangeOrArray(expression) {
     doCheck(
       expression.constructor === RangeExp ||
-        expression.constructor === ArrayType,
+        expression.type.constructor === ArrayType,
       "Not an Array or Range Expression"
     );
   },
