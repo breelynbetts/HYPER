@@ -9,6 +9,11 @@ const parse = require("../../ast/parser");
 const analyze = require("../analyzer");
 
 const program = String.raw`
+INT total!
+LOOKAT INT x IN RANGE(0, 10):
+⇨total IS total ADD x!
+⇦
+!?
 INT x IS 1!
 SAY(x)!
 DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!
@@ -20,7 +25,7 @@ FUNC INT getSum (INT a, INT b):
 ⇨INT sum IS a MULT b!
 GIMME sum!
 ⇦
-!?
+
 INT sum IS getSum(3,4)!
 FUNC INT getSum (STR a, STR b):
 ⇨INT strA IS strToInt(a)!

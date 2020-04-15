@@ -78,24 +78,27 @@ Block.prototype.analyze = function(context) {
   this.statements.forEach((s) => s.analyze(newContext));
 };
 
-// class ForStatement {
-//   constructor(type, id, test, body) {
-//     Object.assign(this, {
-//       type,
-//       id,
-//       test,
-//       body,
-//     });
-//   }
-// }
+// TODO: make forloops compatible with DictTypes
+// type, index, collection, body
 ForStatement.prototype.analyze = function(context) {
+  this.collection.analyze(context);
+  if (typeof this.type === "string") {
+    this.type = context.lookup(this.type);
+  } else {
+    this.type.analyze(context);
+  }
+
+  check.isRangeOrArray(this.collection);
   const bodyContext = context.createChildContextForLoop();
-  // come back to this
-  // need to figure out how to check for something like:
-  //        ARR<STR> friends IS ["Lexi", "Maya", "Bree"]!
-  //        LOOKAT STR friend IN friends:
-  //    => check that test.type === type
-  //      => add id to context & make sure that test is in context if there
+
+  if (this.collection.constructor === RangeExp) {
+    check.isInteger(this);
+  } else if (this.collection.constructor === ArrayType) {
+    check.isAssignableTo(this, this.collection.memberType);
+  }
+  this.index = new Declaration(this.type, this.index.ref);
+  bodyContext.add(this.index.id, this.index);
+  this.body.forEach((b) => b.analyze(bodyContext));
 };
 
 WhileStatement.prototype.analyze = function(context) {
@@ -131,7 +134,7 @@ Func.prototype.analyzeSignature = function(context) {
 Func.prototype.analyze = function() {
   this.body.forEach((b) => b.analyze(this.bodyContext));
   // check.isAssignableTo(this.body, this.returnType);
-  // delete this.bodyContext;
+  delete this.bodyContext;
 };
 
 Assignment.prototype.analyze = function(context) {
@@ -140,15 +143,23 @@ Assignment.prototype.analyze = function(context) {
   check.isAssignableTo(this.source, this.target.type);
 };
 
+// TODO: initialize uninitialized values to default values!
+//         INT s!     =>    this.init = 0
+//         STR s!     =>    this.init = ""
+//         BOO b!     =>    this.init = FALSE
+//         DICT<KeyType:ValueType>  b!    =>  this.init.keyType = keyType, this.init.valueType = valueType
+
 Declaration.prototype.analyze = function(context) {
   context.variableMustNotBeDeclared(this.id);
-  this.init.analyze(context);
   if (typeof this.type === "string") {
     this.type = context.lookup(this.type);
   } else {
     this.type.analyze(context);
   }
-  check.isAssignableTo(this.init, this.type);
+  if (this.init) {
+    this.init.analyze(context);
+    check.isAssignableTo(this.init, this.type);
+  }
   context.add(this.id, this);
 };
 
@@ -159,7 +170,6 @@ ArrayType.prototype.analyze = function(context) {
   } else {
     this.memberType.analyze(context);
   }
-  // this.memberType = context.lookup(this.memberType);
 };
 
 DictType.prototype.analyze = function(context) {
@@ -209,6 +219,7 @@ Break.prototype.analyze = function(context) {
 BinaryExp.prototype.analyze = function(context) {
   this.left.analyze(context);
   this.right.analyze(context);
+  console.log(this);
   if (["LESSEQ", "GRTEQ", "LESS", "GRT"].includes(this.op)) {
     check.isNumber(this.left);
     check.isNumber(this.right);
@@ -289,6 +300,17 @@ CallExp.prototype.analyze = function(context) {
   this.args.forEach((arg) => arg.analyze(context));
   check.legalArguments(this.args, this.callee.ref.params);
   this.type = this.callee.ref.returnType;
+};
+
+RangeExp.prototype.analyze = function(context) {
+  this.start.analyze(context);
+  check.isInteger(this.start);
+  this.end.analyze(context);
+  check.isInteger(this.end);
+  if (this.step) {
+    this.step.analyze(context);
+    check.isInteger(this.step);
+  }
 };
 
 MemberExp.prototype.analyze = function(context) {

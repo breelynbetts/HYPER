@@ -8,6 +8,7 @@ const {
   AnyType,
   Func,
   Identifier,
+  RangeExp,
   PrimitiveType,
 } = require("../ast");
 const { BoolType, FloatType, IntType, StringType } = require("./builtins");
@@ -62,6 +63,13 @@ module.exports = {
   },
   isBoolean(expression) {
     doCheck(expression.type === BoolType, "Not a boolean");
+  },
+  isRangeOrArray(expression) {
+    doCheck(
+      expression.constructor === RangeExp ||
+        expression.constructor === ArrayType,
+      "Not an Array or Range Expression"
+    );
   },
   isFunction(value) {
     doCheck(value.constructor === Func, "Not a function");
