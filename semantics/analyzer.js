@@ -103,7 +103,6 @@ ForStatement.prototype.analyze = function(context) {
 
 WhileStatement.prototype.analyze = function(context) {
   this.test.analyze(context);
-  console.log(this);
   check.isBoolean(this.test);
   const newContext = context.createChildContextForLoop();
   this.body.forEach((b) => b.analyze(newContext));
@@ -135,6 +134,7 @@ Func.prototype.analyzeSignature = function(context) {
 
 Func.prototype.analyze = function() {
   this.body.forEach((b) => b.analyze(this.bodyContext));
+  check.functionHasReturnStatement(this);
   // check.isAssignableTo(this.body, this.returnType);
   delete this.bodyContext;
 };
@@ -221,8 +221,6 @@ Break.prototype.analyze = function(context) {
 BinaryExp.prototype.analyze = function(context) {
   this.left.analyze(context);
   this.right.analyze(context);
-  console.log(this);
-  console.log(this);
   let left = this.left.constructor === Identifier ? this.left.ref : this.left;
   let right =
     this.right.constructor === Identifier ? this.right.ref : this.right;
@@ -249,11 +247,12 @@ BinaryExp.prototype.analyze = function(context) {
 
 UnaryExp.prototype.analyze = function(context) {
   this.operand.analyze(context);
+  console.log(this);
   if (this.op === "~") {
-    check.isBoolean(this.operand.type);
+    check.isBoolean(this.operand);
     this.type = BoolType;
   } else {
-    check.isNumber(this.operand.type);
+    check.isNumber(this.operand);
     if (this.operand.type === IntType) {
       this.type = IntType;
     } else this.type = FloatType;

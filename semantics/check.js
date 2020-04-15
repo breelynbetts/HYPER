@@ -4,14 +4,20 @@ const {
   TupleType,
   DictType,
   SequenceType,
-  NoneType,
   AnyType,
   Func,
   Identifier,
   RangeExp,
+  ReturnStatement,
   PrimitiveType,
 } = require("../ast");
-const { BoolType, FloatType, IntType, StringType } = require("./builtins");
+const {
+  BoolType,
+  FloatType,
+  IntType,
+  StringType,
+  NoneType,
+} = require("./builtins");
 
 function doCheck(condition, message) {
   if (!condition) {
@@ -126,11 +132,9 @@ module.exports = {
     });
   },
   functionHasReturnStatement(func) {
-    if (func.returnType === NoneType) {
-      return;
-    }
     doCheck(
-      func.body.statements.some((s) => s.constructor === ReturnStatement),
+      func.body.some((s) => s.constructor === ReturnStatement) ||
+        func.returnType === NoneType,
       "Expected function to have a return type"
     );
   },
