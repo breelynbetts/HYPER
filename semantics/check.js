@@ -40,33 +40,33 @@ module.exports = {
   isArray(expression) {
     doCheck(expression.type.constructor === ArrayType, "Not an array");
   },
-  isDict(expression) {
-    doCheck(expression.type.constructor === DictType, "Not a dictionary");
-  },
-  isTuple(expression) {
-    doCheck(expression.type.constructor === TupleType, "Not a tuple");
-  },
+  // isDict(expression) {
+  //   doCheck(expression.type.constructor === DictType, "Not a dictionary");
+  // },
+  // isTuple(expression) {
+  //   doCheck(expression.type.constructor === TupleType, "Not a tuple");
+  // },
   isInteger(expression) {
     doCheck(expression.type === IntType, "Not an integer");
   },
-  isFloat(expression) {
-    doCheck(expression.type === FloatType, "Not a float");
-  },
+  // isFloat(expression) {
+  //   doCheck(expression.type === FloatType, "Not a float");
+  // },
   isNumber(expression) {
     doCheck(
       expression.type === IntType || expression.type === FloatType,
       "Not a number"
     );
   },
-  isString(expression) {
-    doCheck(expression.type === StringType, "Not an string");
-  },
-  isStringOrArray(expression) {
-    doCheck(
-      expression.type === StringType ||
-        expression.type.constructor === ArrayType
-    );
-  },
+  // isString(expression) {
+  //   doCheck(expression.type === StringType, "Not an string");
+  // },
+  // isStringOrArray(expression) {
+  //   doCheck(
+  //     expression.type === StringType ||
+  //       expression.type.constructor === ArrayType
+  //   );
+  // },
   isBoolean(expression) {
     doCheck(expression.type === BoolType, "Not a boolean");
   },
@@ -86,13 +86,24 @@ module.exports = {
   expressionsHaveSameType(e1, e2) {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
+  coercivelyAssignable(t1, t2) {
+    if (
+      (t1 === IntType && t2 === FloatType) ||
+      (t1 === StringType && t2 === SequenceType) ||
+      (t1 !== NoneType && t1 === AnyType)
+    ) {
+      return true;
+    } else return this.identicalTypes(t1, t2);
+  },
   identicalTypes(t1, t2) {
     if (t1.constructor === ArrayType && t2.constructor === ArrayType) {
       return this.identicalTypes(t1.memberType, t2.memberType);
     } else if (
       t1.constructor === TupleType &&
       t2.constructor === TupleType &&
-      t1.memberTypes.every((t, i) => t === t2.memberTypes[i])
+      t1.memberTypes.every((t, i) =>
+        this.coercivelyAssignable(t, t2.memberTypes[i])
+      )
     ) {
       return true;
     } else if (t1.constructor === DictType && t2.constructor === DictType) {
@@ -106,10 +117,8 @@ module.exports = {
   },
   isAssignableTo(expression, type) {
     doCheck(
-      (expression.type === IntType && type === FloatType) ||
-        (expression.type === StringType && type === SequenceType) ||
+      this.coercivelyAssignable(expression.type, type) ||
         (expression.constructor === ArrayType && type === SequenceType) ||
-        (expression.type !== NoneType && this.type === AnyType) ||
         this.identicalTypes(expression.type, type),
       `Expression of type ${util.format(
         expression.type

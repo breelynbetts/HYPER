@@ -30,7 +30,7 @@ ARR<INT> evens IS [2, 4, 6, 8]!
 evens[3] IS 10!
 FLT c IS -3.4!
 BOO s IS ~FALSE!
-TUP<STR,INT,FLT> tuple IS ("hello!", 2, 2.4)!
+TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 INT sum IS getSum(3,4)!
 FUNC INT getSum (INT a, INT b):
 ⇨INT sum IS a MULT b!
