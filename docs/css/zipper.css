@@ -323,3 +323,7 @@ footer {
 .hidden-md-up {
 	font-style: normal;
 }
+
+figcaption {
+	color: white;
+}
