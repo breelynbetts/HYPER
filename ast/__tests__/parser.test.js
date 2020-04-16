@@ -181,8 +181,8 @@ NO???:
             ),
           ],
           [
-            [new PrintStatement(new Literal("STR", "Positive number"))],
-            [new PrintStatement(new Literal("STR", "Zero"))],
+            new PrintStatement(new Literal("STR", "Positive number")),
+            new PrintStatement(new Literal("STR", "Zero")),
           ],
           [new PrintStatement(new Literal("STR", "Negative number"))]
         ),
@@ -301,7 +301,7 @@ LEAVE!
                   new Literal("INT", 2)
                 ),
               ],
-              [[new ReturnStatement(new Literal("INT", 1))]],
+              [new ReturnStatement(new Literal("INT", 1))],
               null
             ),
             new ReturnStatement(

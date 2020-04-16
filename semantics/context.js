@@ -69,7 +69,7 @@ class Context {
 
   variableMustNotBeDeclared(name) {
     if (this.declarations.has(name)) {
-      throw `${id} already declared in this scope`;
+      throw `${name} already declared in this scope`;
     }
   }
 

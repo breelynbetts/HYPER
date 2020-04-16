@@ -101,7 +101,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     const tests = [test1.ast(), ...moreTests.ast()];
     const consequents = [block1.ast(), ...moreBlocks.ast()];
     const alternate = arrayToNullable(endBlock.ast());
-    return new IfStatement(tests, consequents, alternate);
+    return new IfStatement(tests, consequents.flat(), alternate);
   },
   Function(_func, type, id, _open, params, _close, body) {
     return new Func(type.ast(), id.ast(), params.ast(), body.ast());

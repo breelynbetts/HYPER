@@ -45,6 +45,9 @@ const errors = [
   ["tuple type mismatch", 'TUP<STR,INT,FLT> tup IS (TRUE,"blue",2.3)!\n'],
   ["while loop test is not a boolean", "UNTIL 3 ADD 5:\n⇨SAY(TRUE)!\n⇦"],
   ["no return statement in function", "FUNC INT x(INT y):\n⇨y IS y GRT 3!\n⇦"],
+  ["unary expressions mismatch", "-TRUE\n"],
+  ["unary expressions mismatch 2", "~5.2\n"],
+  ["non-integer range type", "RANGE[0, TRUE, 1.0]"],
   // ["too few function arguments", 'CONCAT(x)!'],
   // ["redeclared field", '']
 ];

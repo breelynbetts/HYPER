@@ -10,16 +10,16 @@ const analyze = require("../analyzer");
 
 const program = {
   while: [
-    String.raw`INT x IS 5!
+    String.raw`INT x IS -5!
 INT y IS 7!
-UNTIL x EQUALS y:
+UNTIL x EQUALS y AND x GRT 2:
 ⇨ x IS x ADD 1!
 ⇦`,
   ],
   for: [
     String.raw`INT total!
 FUNC LITERALLYNOTHING hey(): 
-⇨LOOKAT INT x IN RANGE(0, 10):
+⇨LOOKAT INT x IN RANGE(0, 10, 1):
 ⇨total IS total ADD x!
 ⇦SAY("hey")!
 ⇦`,
@@ -39,8 +39,9 @@ GIMME sum!
 ⇦`,
   ],
   funcCoercion: [
-    String.raw`STR b IS x(3)!
-FUNC STR x(STR y):
+    String.raw`ARR<STR> c IS ["hey"]! 
+STR b IS x(c, "3")!
+FUNC STR x(ARR<STR> x, STR y):
 ⇨GIMME y!
 ⇦`,
   ],
@@ -51,15 +52,29 @@ LOOKAT STR s IN a:
 ⇦`,
   ],
   if: [
-    String.raw`INT x IS 5!
-TRY x GRT 0:
+    String.raw`FUNC STR isZero(INT x):
+⇨TRY x GRT 0:
 ⇨GIMME "x > 0"!
 ⇦NO?TRY x LESS 0:
 ⇨GIMME "x < 0"!
 ⇦NO???:
 ⇨GIMME "x = 0"!
+⇦GIMME "done!"!
 ⇦`,
   ],
+  func2: [
+    String.raw`FUNC ARR<STR> arrayStr(STR x):
+⇨GIMME [x]!
+⇦`,
+  ],
+  //   if2: [
+  //     String.raw`INT x IS 4!
+  // TRY x GRT 0:
+  // ⇨GIMME "x > 0"!
+  // ⇦NO???:
+  // ⇨GIMME "x = 0"!
+  // ⇦`,
+  //   ],
 };
 
 // INT x IS 1!

@@ -11,6 +11,7 @@ const {
   ArrayType,
   DictType,
   TupleType,
+  PrimitiveType,
   SequenceType,
   AnyType,
   UnionType,
@@ -62,11 +63,11 @@ Block.prototype.analyze = function(context) {
 // type, index, collection, body
 ForStatement.prototype.analyze = function(context) {
   this.collection.analyze(context);
-  if (typeof this.type === "string") {
-    this.type = context.lookup(this.type);
-  } else {
-    this.type.analyze(context);
-  }
+  // if (typeof this.type === "string") {
+  this.type = context.lookup(this.type);
+  // } else {
+  //   this.type.analyze(context);
+  // }
   check.isRangeOrArray(this.collection);
   const bodyContext = context.createChildContextForLoop();
 
@@ -90,11 +91,12 @@ WhileStatement.prototype.analyze = function(context) {
 IfStatement.prototype.analyze = function(context) {
   this.tests.forEach((test) => test.analyze(context));
   this.tests.forEach((test) => check.isBoolean(test));
-  console.log(this.consequents);
   this.consequents.forEach((consequent) =>
     consequent.analyze(context.createChildContextForBlock())
   );
-  this.alternate.analyze(context.createChildContextForBlock());
+  if (this.alternate) {
+    this.alternate.forEach((alt) => alt.analyze(context));
+  }
 };
 
 Func.prototype.analyzeSignature = function(context) {
@@ -102,9 +104,9 @@ Func.prototype.analyzeSignature = function(context) {
   if (this.params) {
     this.params.forEach((p) => p.analyze(this.bodyContext));
   }
-  if (!this.returnType) {
-    this.returnType = undefined;
-  }
+  // if (!this.returnType) {
+  //   this.returnType = undefined;
+  // }
   if (typeof this.returnType === "string") {
     this.returnType = context.lookup(this.returnType);
   } else {
@@ -147,8 +149,11 @@ Declaration.prototype.analyze = function(context) {
 
 ArrayType.prototype.analyze = function(context) {
   check.isArrayType(this);
+  console.log(this);
   if (typeof this.memberType === "string") {
     this.memberType = context.lookup(this.memberType);
+  } else if (this.memberType.constructor === PrimitiveType) {
+    this.type = this.type;
   } else {
     this.memberType.analyze(context);
   }
@@ -156,11 +161,11 @@ ArrayType.prototype.analyze = function(context) {
 
 DictType.prototype.analyze = function(context) {
   check.isDictType(this);
-  if (typeof this.keyType === "string") {
-    this.keyType = context.lookup(this.keyType);
-  } else {
-    this.keyType.analyze(context);
-  }
+  // if (typeof this.keyType === "string") {
+  this.keyType = context.lookup(this.keyType);
+  // } else {
+  //   this.keyType.analyze(context);
+  // }
   if (typeof this.valueType === "string") {
     this.valueType = context.lookup(this.valueType);
   } else {
@@ -171,11 +176,11 @@ DictType.prototype.analyze = function(context) {
 TupleType.prototype.analyze = function(context) {
   check.isTupleType(this);
   for (let i = 0; i < this.memberTypes.length; i++) {
-    if (typeof this.memberTypes[i]) {
-      this.memberTypes[i] = context.lookup(this.memberTypes[i]);
-    } else {
-      this.memberTypes[i].analyze(this.memberTypes[i]);
-    }
+    // if (typeof this.memberTypes[i] === "string") {
+    this.memberTypes[i] = context.lookup(this.memberTypes[i]);
+    // } else {
+    //   this.memberTypes[i].analyze(this.memberTypes[i]);
+    // }
   }
 };
 
@@ -185,6 +190,11 @@ PrintStatement.prototype.analyze = function(context) {
 
 ReturnStatement.prototype.analyze = function(context) {
   check.inFunction(context);
+
+  if (this.expression.constructor === ArrayExp) {
+    const newType = context.lookup(this.expression.members[0].ref);
+    this.expression.type.memberType = newType.type;
+  }
   if (this.expression) {
     this.expression.analyze(context);
   }
@@ -244,10 +254,11 @@ ArrayExp.prototype.analyze = function(context) {
   this.size.analyze(context);
   check.isInteger(this.size);
   this.members.forEach((member) => {
-    member.analyze();
+    member.analyze(context);
     if (this.type.memberType === IntType && member.type === FloatType) {
       this.type.memberType = FloatType;
     }
+    console.log(this);
     check.isAssignableTo(member, this.type.memberType);
   });
 };
@@ -311,6 +322,8 @@ SubscriptedExp.prototype.analyze = function(context) {
 Param.prototype.analyze = function(context) {
   if (typeof this.type === "string") {
     this.type = context.lookup(this.type);
+  } else if (this.type.constructor === PrimitiveType) {
+    this.type = this.type;
   } else {
     this.type.analyze(context);
   }
@@ -337,6 +350,7 @@ Literal.prototype.analyze = function() {
 };
 
 Identifier.prototype.analyze = function(context) {
+  console.log(context);
   this.ref = context.lookup(this.ref);
   this.type = this.ref.type;
 };
