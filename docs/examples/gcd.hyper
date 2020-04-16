@@ -1,5 +1,5 @@
 FUNC INT gcd(INT x, INT y):
-    UNTIL y:
+    UNTIL y EQUALS 0:
         x IS y!
         y IS x MOD y!
     GIMME x!
