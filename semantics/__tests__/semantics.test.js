@@ -27,7 +27,7 @@ FUNC LITERALLYNOTHING hey():
   func: [
     String.raw`DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!
 FLT t IS 2!
-ARR<INT> evens IS [2, 4, 6, 8]!
+ARR<FLT> evens IS [2, 4.3, 6, 8]!
 evens[3] IS 10!
 FLT c IS -3.4!
 BOO s IS ~FALSE!
@@ -40,8 +40,8 @@ GIMME sum!
   ],
   funcCoercion: [
     String.raw`ARR<STR> c IS ["hey"]! 
-STR b IS x(c, "3")!
-FUNC STR x(ARR<STR> x, STR y):
+STR b IS x(c, "3", 1)!
+FUNC STR x(ARR<STR> x, STR y, FLT z):
 ⇨GIMME y!
 ⇦`,
   ],

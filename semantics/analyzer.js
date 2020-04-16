@@ -146,16 +146,14 @@ Declaration.prototype.analyze = function(context) {
   }
   context.add(this.id, this);
 };
-
+// TODO: HYPER! does not currently support nested Arrays, so
+// later must alternate Grammar to support this functionality
 ArrayType.prototype.analyze = function(context) {
   check.isArrayType(this);
-  console.log(this);
   if (typeof this.memberType === "string") {
     this.memberType = context.lookup(this.memberType);
   } else if (this.memberType.constructor === PrimitiveType) {
     this.type = this.type;
-  } else {
-    this.memberType.analyze(context);
   }
 };
 
@@ -166,11 +164,11 @@ DictType.prototype.analyze = function(context) {
   // } else {
   //   this.keyType.analyze(context);
   // }
-  if (typeof this.valueType === "string") {
-    this.valueType = context.lookup(this.valueType);
-  } else {
-    this.valueType.analyze(context);
-  }
+  // if (typeof this.valueType === "string") {
+  this.valueType = context.lookup(this.valueType);
+  // } else {
+  //   this.valueType.analyze(context);
+  // }
 };
 
 TupleType.prototype.analyze = function(context) {
@@ -258,7 +256,7 @@ ArrayExp.prototype.analyze = function(context) {
     if (this.type.memberType === IntType && member.type === FloatType) {
       this.type.memberType = FloatType;
     }
-    console.log(this);
+
     check.isAssignableTo(member, this.type.memberType);
   });
 };
@@ -322,9 +320,11 @@ SubscriptedExp.prototype.analyze = function(context) {
 Param.prototype.analyze = function(context) {
   if (typeof this.type === "string") {
     this.type = context.lookup(this.type);
-  } else if (this.type.constructor === PrimitiveType) {
-    this.type = this.type;
-  } else {
+  }
+  // else if (this.type.constructor === PrimitiveType) {
+  //   this.type = this.type;
+  // }
+  else {
     this.type.analyze(context);
   }
   context.add(this.id, this);
@@ -350,7 +350,6 @@ Literal.prototype.analyze = function() {
 };
 
 Identifier.prototype.analyze = function(context) {
-  console.log(context);
   this.ref = context.lookup(this.ref);
   this.type = this.ref.type;
 };

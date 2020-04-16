@@ -9,14 +9,10 @@ const parse = require("../../ast/parser");
 const Context = require("../context");
 
 // ERRORS TO IMPLEMENT:
-//     use of an undeclared variable,
-//     types don’t match in declaration,
-//     type mismatch in assignment,
-//     too many/too few function arguments,
+
 //     redeclared field,
 //     array index out of range (int[] v = new int[10]; v[10] = 100;),
 //     performing an impossible cast (boolean into int),
-//     call of nonfunction,
 //     no such field
 //     type mismatch in DICTs => DICT<INT:STR> z IS {"abc": TRUE, 24: FALSE, 34: "good"}!\n
 //     type mismatch in TUPs => TUP<INT,STR> z IS ("abc", TRUE)!\n
@@ -41,14 +37,27 @@ const errors = [
     "too many function arguments",
     'STR x IS "hey"!\nSTR y IS "there"!\nSIZE(x,y)\n',
   ],
+  [
+    "too few function arguments",
+    'ARR<STR> c IS ["hey"]!\nSTR b IS x(c, "3")!\nFUNC STR x(ARR<STR> x, STR y, FLT z):\n⇨GIMME y!\n⇦',
+  ],
+  [
+    "parameter type mismatch",
+    'STR b IS x("green", "3")!\nFUNC STR x(ARR<STR> x, STR y, FLT z):\n⇨GIMME y!\n⇦',
+  ],
   ["function return type mismatch", "FUNC STR num(INT x):\n⇨GIMME x!\n⇦"],
+  ["dict key/value pair mismatch", 'ARR<STR> c IS ["hey"]!\nSTR b IS c(1)!'],
   ["tuple type mismatch", 'TUP<STR,INT,FLT> tup IS (TRUE,"blue",2.3)!\n'],
   ["while loop test is not a boolean", "UNTIL 3 ADD 5:\n⇨SAY(TRUE)!\n⇦"],
   ["no return statement in function", "FUNC INT x(INT y):\n⇨y IS y GRT 3!\n⇦"],
   ["unary expressions mismatch", "-TRUE\n"],
   ["unary expressions mismatch 2", "~5.2\n"],
   ["non-integer range type", "RANGE[0, TRUE, 1.0]"],
-  // ["too few function arguments", 'CONCAT(x)!'],
+  [
+    "void function has return type",
+    "FUNC LITERALLYNOTHING say(STR this):\n⇨GIMME this!\n⇦",
+  ],
+  ["call of non-function", 'ARR<STR> c IS ["hey"]!\nSTR b IS c(1)!'],
   // ["redeclared field", '']
 ];
 
