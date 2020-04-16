@@ -100,9 +100,7 @@ Func.prototype.analyzeSignature = function(context) {
   if (this.params) {
     this.params.forEach((p) => p.analyze(this.bodyContext));
   }
-  // if (!this.returnType) {
-  //   this.returnType = undefined;
-  // }
+
   if (typeof this.returnType === "string") {
     this.returnType = context.lookup(this.returnType);
   } else {
@@ -113,7 +111,6 @@ Func.prototype.analyzeSignature = function(context) {
 Func.prototype.analyze = function() {
   this.body.forEach((b) => b.analyze(this.bodyContext));
   check.functionHasReturnStatement(this);
-  // check.isAssignableTo(this.body, this.returnType);
   delete this.bodyContext;
 };
 
@@ -142,6 +139,7 @@ Declaration.prototype.analyze = function(context) {
   }
   context.add(this.id, this);
 };
+
 // TODO: HYPER! does not currently support nested Arrays, so
 // later must alternate Grammar to support this functionality
 ArrayType.prototype.analyze = function(context) {
@@ -149,33 +147,19 @@ ArrayType.prototype.analyze = function(context) {
   if (typeof this.memberType === "string") {
     this.memberType = context.lookup(this.memberType);
   }
-  // else if (this.memberType.constructor === PrimitiveType) {
-  //   this.type = this.type;
-  // }
 };
 
 DictType.prototype.analyze = function(context) {
   check.isDictType(this);
-  // if (typeof this.keyType === "string") {
   this.keyType = context.lookup(this.keyType);
-  // } else {
-  //   this.keyType.analyze(context);
-  // }
-  // if (typeof this.valueType === "string") {
   this.valueType = context.lookup(this.valueType);
-  // } else {
-  //   this.valueType.analyze(context);
-  // }
 };
 
+// Tuples currently only support PrimitiveTypes
 TupleType.prototype.analyze = function(context) {
   check.isTupleType(this);
   for (let i = 0; i < this.memberTypes.length; i++) {
-    // if (typeof this.memberTypes[i] === "string") {
     this.memberTypes[i] = context.lookup(this.memberTypes[i]);
-    // } else {
-    //   this.memberTypes[i].analyze(this.memberTypes[i]);
-    // }
   }
 };
 
