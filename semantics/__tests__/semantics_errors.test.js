@@ -55,9 +55,15 @@ const errors = [
   ["non-integer range type", "RANGE[0, TRUE, 1.0]"],
   [
     "void function has return type",
-    "FUNC LITERALLYNOTHING say(STR this):\n⇨GIMME this!\n⇦",
+    "FUNC LITERALLYNOTHING say(STR this):\n⇨GIMME!\n⇦",
   ],
   ["call of non-function", 'ARR<STR> c IS ["hey"]!\nSTR b IS c(1)!'],
+  [
+    "return statement out of function",
+    'TRY 3 EQUALS 2:\n⇨SAY("yes")!\n⇦NO?TRY 4 GRT 1:\n⇨SAY("yep")!\n⇦NO???:\n⇨GIMME "here"!\n⇦',
+  ],
+  ["empty DictExp", "DICT<INT:STR> v IS {}!\n"],
+  ["range has floats", 'RANGE[13, 2)\nINT x IS "blue"!\n'],
   // ["redeclared field", '']
 ];
 

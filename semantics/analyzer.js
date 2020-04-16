@@ -25,7 +25,7 @@ const {
   TupleExp,
   CallExp,
   RangeExp,
-  MemberExp,
+  // MemberExp,
   SubscriptedExp,
   Param,
   KeyValue,
@@ -63,17 +63,13 @@ Block.prototype.analyze = function(context) {
 // type, index, collection, body
 ForStatement.prototype.analyze = function(context) {
   this.collection.analyze(context);
-  // if (typeof this.type === "string") {
   this.type = context.lookup(this.type);
-  // } else {
-  //   this.type.analyze(context);
-  // }
   check.isRangeOrArray(this.collection);
   const bodyContext = context.createChildContextForLoop();
-
+  // if (this.collection.type.constructor === ArrayType)
   if (this.collection.constructor === RangeExp) {
     check.isInteger(this);
-  } else if (this.collection.type.constructor === ArrayType) {
+  } else {
     check.isAssignableTo(this, this.collection.type.memberType);
   }
   this.index = new Declaration(this.type, this.index.ref);
@@ -152,9 +148,10 @@ ArrayType.prototype.analyze = function(context) {
   check.isArrayType(this);
   if (typeof this.memberType === "string") {
     this.memberType = context.lookup(this.memberType);
-  } else if (this.memberType.constructor === PrimitiveType) {
-    this.type = this.type;
   }
+  // else if (this.memberType.constructor === PrimitiveType) {
+  //   this.type = this.type;
+  // }
 };
 
 DictType.prototype.analyze = function(context) {
@@ -188,12 +185,11 @@ PrintStatement.prototype.analyze = function(context) {
 
 ReturnStatement.prototype.analyze = function(context) {
   check.inFunction(context);
-
-  if (this.expression.constructor === ArrayExp) {
-    const newType = context.lookup(this.expression.members[0].ref);
-    this.expression.type.memberType = newType.type;
-  }
   if (this.expression) {
+    if (this.expression.constructor === ArrayExp) {
+      const newType = context.lookup(this.expression.members[0].ref);
+      this.expression.type.memberType = newType.type;
+    }
     this.expression.analyze(context);
   }
   check.returnTypeMatchesFunctionReturnType(
@@ -304,10 +300,12 @@ RangeExp.prototype.analyze = function(context) {
     check.isInteger(this.step);
   }
 };
-
-MemberExp.prototype.analyze = function(context) {
-  this.record.analyze(context);
-};
+// value / subscript
+// MemberExp.prototype.analyze = function(context) {
+//   this.value.analyze(context);
+//   check.isDict(this.value);
+//   this.subscript.analyze(context);
+// };
 
 SubscriptedExp.prototype.analyze = function(context) {
   this.array.analyze(context);
@@ -344,9 +342,10 @@ Literal.prototype.analyze = function() {
     this.type = BoolType;
   } else if (this.type === "INT") {
     this.type = IntType;
-  } else {
-    this.type = NoneType;
   }
+  // else {
+  //   this.type = NoneType;
+  // }
 };
 
 Identifier.prototype.analyze = function(context) {

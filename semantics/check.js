@@ -40,33 +40,15 @@ module.exports = {
   isArray(expression) {
     doCheck(expression.type.constructor === ArrayType, "Not an array");
   },
-  // isDict(expression) {
-  //   doCheck(expression.type.constructor === DictType, "Not a dictionary");
-  // },
-  // isTuple(expression) {
-  //   doCheck(expression.type.constructor === TupleType, "Not a tuple");
-  // },
   isInteger(expression) {
     doCheck(expression.type === IntType, "Not an integer");
   },
-  // isFloat(expression) {
-  //   doCheck(expression.type === FloatType, "Not a float");
-  // },
   isNumber(expression) {
     doCheck(
       expression.type === IntType || expression.type === FloatType,
       "Not a number"
     );
   },
-  // isString(expression) {
-  //   doCheck(expression.type === StringType, "Not an string");
-  // },
-  // isStringOrArray(expression) {
-  //   doCheck(
-  //     expression.type === StringType ||
-  //       expression.type.constructor === ArrayType
-  //   );
-  // },
   isBoolean(expression) {
     doCheck(expression.type === BoolType, "Not a boolean");
   },

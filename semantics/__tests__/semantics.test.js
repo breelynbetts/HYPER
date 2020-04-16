@@ -57,14 +57,17 @@ LOOKAT STR s IN a:
 ⇨GIMME "x > 0"!
 ⇦NO?TRY x LESS 0:
 ⇨GIMME "x < 0"!
-⇦NO???:
-⇨GIMME "x = 0"!
-⇦GIMME "done!"!
+⇦GIMME "yes"!
 ⇦`,
   ],
   func2: [
     String.raw`FUNC ARR<STR> arrayStr(STR x):
 ⇨GIMME [x]!
+⇦`,
+  ],
+  noFuncParams: [
+    String.raw`FUNC INT getFive():
+⇨GIMME 5!
 ⇦`,
   ],
   //   if2: [
