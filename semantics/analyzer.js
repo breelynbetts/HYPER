@@ -265,6 +265,7 @@ CallExp.prototype.analyze = function(context) {
   this.callee.analyze(context);
   check.isFunction(this.callee.ref);
   this.args.forEach((arg) => arg.analyze(context));
+  // console.log(this.callee.ref);
   check.legalArguments(this.args, this.callee.ref.params);
   this.type = this.callee.ref.returnType;
 };

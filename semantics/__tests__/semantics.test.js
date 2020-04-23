@@ -9,6 +9,10 @@ const parse = require("../../ast/parser");
 const analyze = require("../analyzer");
 
 const program = {
+  hello: [
+    String.raw`SAY("hello world")
+`,
+  ],
   while: [
     String.raw`INT x IS -5!
 INT y IS 7!

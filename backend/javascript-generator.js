@@ -64,22 +64,6 @@ const javaScriptId = (() => {
   };
 })();
 
-// new Func(NoneType, "SAY", [new Param(AnyType, "s")]),
-// new Func(IntType, "SIZE", [new Param(SequenceType, "s")]),
-// new Func(NoneType, "EXIT", [new Param(IntType, "code")]),
-// new Func(StringType, "CONCAT", [
-//   new Param(StringType, "s"),
-//   new Param(StringType, "t"),
-// ]),
-// new Func(StringType, "SUBSTRING", [
-//   new Param(StringType, "s"),
-//   new Param(IntType, "start"),
-//   new Param(IntType, "end"),
-// ]),
-// new Func(ArrayType, "PUSH", [
-//   new Param(new UnionType(BoolType, FloatType, IntType, StringType), "u"),
-// ]),
-
 const builtin = {
   SAY([s]) {
     return `console.log(${s})`;

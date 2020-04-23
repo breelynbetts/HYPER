@@ -113,11 +113,17 @@ module.exports = {
       args.length === params.length,
       `Expected ${params.length} args in call, got ${args.length}`
     );
-    args.forEach((arg, i) => {
-      if (params[i].type.constructor === SequenceType) {
-        this.isAssignableTo(arg, params[i].type.constructor);
-      } else this.isAssignableTo(arg, params[i].type);
-    });
+    if (params[0].type === AnyType) {
+      args.forEach((arg) => {
+        doCheck(arg !== NoneType, "say function parameter cannot be NoneType");
+      });
+    } else {
+      args.forEach((arg, i) => {
+        if (params[i].type.constructor === SequenceType) {
+          this.isAssignableTo(arg, params[i].type.constructor);
+        } else this.isAssignableTo(arg, params[i].type);
+      });
+    }
   },
   functionHasReturnStatement(func) {
     doCheck(
