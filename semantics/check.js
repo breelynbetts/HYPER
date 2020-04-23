@@ -9,7 +9,6 @@ const {
   Identifier,
   RangeExp,
   ReturnStatement,
-  PrimitiveType,
 } = require("../ast");
 const {
   BoolType,
@@ -26,8 +25,6 @@ function doCheck(condition, message) {
 }
 
 module.exports = {
-  // TODO: FIX HOW TO CHECK TYPES
-  //    - add isRange() test
   isArrayType(type) {
     doCheck(type.constructor === ArrayType, "Not an ArrayType");
   },
@@ -137,7 +134,7 @@ module.exports = {
         : expression.type;
 
     doCheck(
-      this.identicalTypes(expType, funcReturnType),
+      this.coercivelyAssignable(expType, funcReturnType),
       `Expected function to return expression of type ${util.format(
         funcReturnType
       )}, received type ${util.format(expType)}`

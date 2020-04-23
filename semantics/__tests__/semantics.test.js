@@ -66,8 +66,9 @@ LOOKAT STR s IN a:
 ⇦`,
   ],
   noFuncParams: [
-    String.raw`FUNC INT getFive():
-⇨GIMME 5!
+    String.raw`FUNC FLT getFive():
+⇨FLT x IS 3!
+GIMME 5!
 ⇦`,
   ],
   //   if2: [
@@ -79,19 +80,6 @@ LOOKAT STR s IN a:
   // ⇦`,
   //   ],
 };
-
-// INT x IS 1!
-// SAY(x)!
-
-// INT sum IS getSum(3,4)!
-// FUNC INT getSum (STR a, STR b):
-// ⇨INT strA IS strToInt(a)!
-// INT strB IS strToInt(b)!
-// INT sum IS a MULT b!
-// GIMME sum!
-// ⇦
-// ?!
-// `;
 
 describe("The semantic analyzer", () => {
   Object.entries(program).forEach(([name, [code]]) => {

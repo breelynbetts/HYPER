@@ -11,10 +11,8 @@ const {
   ArrayType,
   DictType,
   TupleType,
-  PrimitiveType,
   SequenceType,
   AnyType,
-  UnionType,
   PrintStatement,
   ReturnStatement,
   Break,
@@ -25,7 +23,6 @@ const {
   TupleExp,
   CallExp,
   RangeExp,
-  // MemberExp,
   SubscriptedExp,
   Param,
   KeyValue,
@@ -284,12 +281,6 @@ RangeExp.prototype.analyze = function(context) {
     check.isInteger(this.step);
   }
 };
-// value / subscript
-// MemberExp.prototype.analyze = function(context) {
-//   this.value.analyze(context);
-//   check.isDict(this.value);
-//   this.subscript.analyze(context);
-// };
 
 SubscriptedExp.prototype.analyze = function(context) {
   this.array.analyze(context);
@@ -302,11 +293,7 @@ SubscriptedExp.prototype.analyze = function(context) {
 Param.prototype.analyze = function(context) {
   if (typeof this.type === "string") {
     this.type = context.lookup(this.type);
-  }
-  // else if (this.type.constructor === PrimitiveType) {
-  //   this.type = this.type;
-  // }
-  else {
+  } else {
     this.type.analyze(context);
   }
   context.add(this.id, this);
