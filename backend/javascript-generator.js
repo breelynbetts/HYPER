@@ -66,6 +66,7 @@ const javaScriptId = (() => {
 
 const builtin = {
   SAY([s]) {
+    console.log("here");
     return `console.log(${s})`;
   },
   SIZE([s]) {
@@ -83,4 +84,35 @@ const builtin = {
   EXIT(code) {
     return `process.exit(${code})`;
   },
+};
+
+module.exports = function(exp) {
+  return beautify(exp.gen(), { indent_size: 2 });
+};
+
+Program.prototype.gen = function() {
+  // indentLevel = 0;
+  // emit("(function () {");
+  // this.block.gen();
+  // emit("}());");
+  return this.block.gen();
+};
+
+Block.prototype.gen = function() {
+  // indentLevel += 1;
+  return this.statements.forEach((s) => s.gen());
+  // indentLevel -= 1;
+};
+
+CallExp.prototype.gen = function() {
+  const args = this.args.map((a) => a.gen());
+  if (this.callee.ref.builtin) {
+    console.log(builtin[this.callee.ref.id](args));
+    return builtin[this.callee.ref.id](args);
+  }
+  return `${javaScriptId(this.callee)}(${args.join(",")})`;
+};
+
+Literal.prototype.gen = function() {
+  return this.type === StringType ? `"${this.value}"` : this.value;
 };
