@@ -1,1 +1,1 @@
-SAY "hello"!
+SAY("hello")!
