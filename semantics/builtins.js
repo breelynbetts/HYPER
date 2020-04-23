@@ -28,17 +28,9 @@ const StandardFunctions = [
     new Param(IntType, "end"),
   ]),
   new Func(ArrayType, "PUSH", [
+    new Param(ArrayType, "a"),
     new Param(new UnionType(BoolType, FloatType, IntType, StringType), "u"),
   ]),
-  // later down the road =>
-  //    split up builtin functions into
-  //       - string functions
-  //       - math functions
-  //       - dict functions
-  //       - array functions
-  //       - string functions
-  //       - tuple functions
-  //       - range functions
 ];
 
 StandardFunctions.forEach((f) => {

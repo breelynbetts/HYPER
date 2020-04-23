@@ -8,17 +8,6 @@
 const parse = require("../../ast/parser");
 const Context = require("../context");
 
-// ERRORS TO IMPLEMENT:
-
-//     redeclared field,
-//     array index out of range (int[] v = new int[10]; v[10] = 100;),
-//     performing an impossible cast (boolean into int),
-//     no such field
-//     type mismatch in DICTs => DICT<INT:STR> z IS {"abc": TRUE, 24: FALSE, 34: "good"}!\n
-//     type mismatch in TUPs => TUP<INT,STR> z IS ("abc", TRUE)!\n
-//     type mismatch in ARRs => ARR<INT> z IS ["abc", TRUE, 24, 34, "good"]!\n
-//     non integer subscript
-
 const errors = [
   ["type mismatch in assignment", 'INT x IS 5!\nx IS "blue"!\n'],
   ["use of an undeclared variable", "SAY(x)!"],
@@ -64,7 +53,10 @@ const errors = [
   ],
   ["empty DictExp", "DICT<INT:STR> v IS {}!\n"],
   ["range has floats", 'RANGE[13, 2)\nINT x IS "blue"!\n'],
-  // ["redeclared field", '']
+  [
+    "SIZE() builtin function on non-sequence type",
+    "FLT x IS 5!\nINT size IS SIZE(x)!\n",
+  ],
 ];
 
 describe("The semantic analyzer", () => {

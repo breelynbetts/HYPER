@@ -11,8 +11,6 @@ const {
   ArrayType,
   DictType,
   TupleType,
-  SequenceType,
-  AnyType,
   PrintStatement,
   ReturnStatement,
   Break,
@@ -314,9 +312,6 @@ Literal.prototype.analyze = function() {
   } else if (this.type === "INT") {
     this.type = IntType;
   }
-  // else {
-  //   this.type = NoneType;
-  // }
 };
 
 Identifier.prototype.analyze = function(context) {

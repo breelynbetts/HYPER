@@ -69,6 +69,7 @@ module.exports = {
     if (
       (t1 === IntType && t2 === FloatType) ||
       (t1 === StringType && t2 === SequenceType) ||
+      (t1.constructor === ArrayType && t2 === SequenceType) ||
       (t1 !== NoneType && t1 === AnyType)
     ) {
       return true;
@@ -113,10 +114,9 @@ module.exports = {
       `Expected ${params.length} args in call, got ${args.length}`
     );
     args.forEach((arg, i) => {
-      // if (params[i].type === StringType && arg.type !== StringType) {
-      //   arg.type = StringType;
-      // }
-      this.isAssignableTo(arg, params[i].type);
+      if (params[i].type.constructor === SequenceType) {
+        this.isAssignableTo(arg, params[i].type.constructor);
+      } else this.isAssignableTo(arg, params[i].type);
     });
   },
   functionHasReturnStatement(func) {
