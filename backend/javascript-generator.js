@@ -87,7 +87,9 @@ const builtin = {
 };
 
 module.exports = function(exp) {
-  return beautify(exp.gen(), { indent_size: 2 });
+  console.log(exp.gen());
+  return exp.gen();
+  // beautify(exp.gen(), { indent_size: 2 });
 };
 
 Program.prototype.gen = function() {
@@ -95,6 +97,7 @@ Program.prototype.gen = function() {
   // emit("(function () {");
   // this.block.gen();
   // emit("}());");
+  console.log(this.block.gen());
   return this.block.gen();
 };
 
@@ -107,7 +110,6 @@ Block.prototype.gen = function() {
 CallExp.prototype.gen = function() {
   const args = this.args.map((a) => a.gen());
   if (this.callee.ref.builtin) {
-    console.log(builtin[this.callee.ref.id](args));
     return builtin[this.callee.ref.id](args);
   }
   return `${javaScriptId(this.callee)}(${args.join(",")})`;
