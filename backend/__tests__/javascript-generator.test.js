@@ -16,9 +16,23 @@ const fixture = {
     String.raw`console.log("hello, world")`,
   ],
   arithmetic: [
-    String.raw`5 MULT -3 ADD 2 
+    String.raw`5 MULT -3 ADD 2
 `,
     String.raw`((5 * (-(3))) + 2)`,
+  ],
+  declAndAssign: [
+    String.raw`INT x IS 5!
+x IS 3!
+`,
+    /let x_(\d+) = 5;\s+x_\1 = 3/,
+  ],
+  call: [
+    String.raw`ARR<STR> c IS ["hey"]! 
+STR b IS x(c, "3", 1)!
+FUNC STR x(ARR<STR> x, STR y, FLT z):
+⇨GIMME y!
+⇦`,
+    /"hey"/,
   ],
 };
 describe("The JavaScript generator", () => {

@@ -78,6 +78,11 @@ LOOKAT STR s IN a:
 GIMME 5!
 ⇦`,
   ],
+  declAndAssign: [
+    String.raw`INT x IS 5!
+x IS 4!
+`,
+  ],
 };
 
 describe("The semantic analyzer", () => {

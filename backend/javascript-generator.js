@@ -4,13 +4,13 @@
  * Requiring this module adds a gen() method to each of the AST classes, except
  * for types, and fields, which don’t figure into code generation. It exports a
  * function that generates a complete, pretty-printed JavaScript program for a
- * Tiger expression, bundling the translation of the Tiger standard library with
+ * HYPER! expression, bundling the translation of the HYPER! standard library with
  * the expression's translation.
  *
  * Each gen() method returns a fragment of JavaScript.
  *
  *   const generate = require('./backend/javascript-generator');
- *   generate(tigerExpression);
+ *   generate(hyperExpression);
  */
 
 const beautify = require("js-beautify");
@@ -107,8 +107,32 @@ Program.prototype.gen = function() {
 };
 
 Block.prototype.gen = function() {
+  const stmt = this.statements.map((s) => console.log(s));
   const statements = this.statements.map((s) => s.gen());
   return `${statements.join("")}`;
+};
+
+Func.prototype.gen = function() {
+  const name = javaScriptId(this);
+  const params = this.params ? this.params.map((p) => javaScriptId(p)) : [""];
+  const body = this.body.map((b) => b.gen());
+  return `function ${name} (${params.join(",")}) {${body}}`;
+};
+
+Assignment.prototype.gen = function() {
+  return `${this.target.gen()} = ${this.source.gen()};`;
+};
+
+Declaration.prototype.gen = function() {
+  const exp = this.init ? this.init.gen() : undefined;
+  const init = exp ? `= ${exp}` : ``;
+  return `let ${javaScriptId(this)} ${init};`;
+};
+
+ReturnStatement.prototype.gen = function() {
+  console.log(this);
+  // const exp = this.expression ? this.expression.gen() :
+  return `return ${this.expression.gen()}`;
 };
 
 BinaryExp.prototype.gen = function() {
@@ -117,6 +141,11 @@ BinaryExp.prototype.gen = function() {
 
 UnaryExp.prototype.gen = function() {
   return `(${makeOp(this.op)} (${this.operand.gen()}))`;
+};
+
+ArrayExp.prototype.gen = function() {
+  const elements = this.members.map((e) => e.gen());
+  return `Array(${this.size.gen()}).fill(${elements})`;
 };
 
 CallExp.prototype.gen = function() {
@@ -129,4 +158,8 @@ CallExp.prototype.gen = function() {
 
 Literal.prototype.gen = function() {
   return this.type === StringType ? `"${this.value}"` : this.value;
+};
+
+Identifier.prototype.gen = function() {
+  return javaScriptId(this.ref);
 };
