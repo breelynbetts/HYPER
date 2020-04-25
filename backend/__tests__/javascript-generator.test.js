@@ -13,7 +13,7 @@ const fixture = {
   hello: [
     String.raw`SAY("hello, world")
 `,
-    String.raw`console.log("Hello, world\n")`,
+    String.raw`console.log("hello, world")`,
   ],
 };
 describe("The JavaScript generator", () => {

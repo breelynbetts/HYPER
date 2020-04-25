@@ -97,13 +97,14 @@ Program.prototype.gen = function() {
   // emit("(function () {");
   // this.block.gen();
   // emit("}());");
-  console.log(this.block.gen());
   return this.block.gen();
 };
 
 Block.prototype.gen = function() {
   // indentLevel += 1;
-  return this.statements.forEach((s) => s.gen());
+  const statements = this.statements.map((s) => s.gen());
+  console.log(this.statements);
+  return `${statements.join("")}`;
   // indentLevel -= 1;
 };
 
