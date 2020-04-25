@@ -23,9 +23,6 @@ const {
   Func,
   Assignment,
   Declaration,
-  ArrayType,
-  TupleType,
-  DictType,
   PrintStatement,
   ReturnStatement,
   Break,
@@ -46,7 +43,23 @@ const {
 const { StringType } = require("../semantics/builtins");
 
 function makeOp(op) {
-  return { EQUALS: "===", "<>": "!==", "&": "&&", "|": "||" }[op] || op;
+  return (
+    {
+      EQUALS: "===",
+      NOTEQ: "!==",
+      LESS: "<",
+      LESSEQ: "<=",
+      GRTEQ: ">=",
+      AND: "&&",
+      OR: "||",
+      ADD: "+",
+      SUB: "-",
+      MULT: "*",
+      DIV: "/",
+      MOD: "%",
+      "~": "!",
+    }[op] || op
+  );
 }
 
 // javaScriptId(e) takes any HYPER! object with an id property, such as a Variable,
@@ -66,7 +79,6 @@ const javaScriptId = (() => {
 
 const builtin = {
   SAY([s]) {
-    console.log("here");
     return `console.log(${s})`;
   },
   SIZE([s]) {
@@ -87,25 +99,24 @@ const builtin = {
 };
 
 module.exports = function(exp) {
-  console.log(exp.gen());
-  return exp.gen();
-  // beautify(exp.gen(), { indent_size: 2 });
+  return beautify(exp.gen(), { indent_size: 2 });
 };
 
 Program.prototype.gen = function() {
-  // indentLevel = 0;
-  // emit("(function () {");
-  // this.block.gen();
-  // emit("}());");
   return this.block.gen();
 };
 
 Block.prototype.gen = function() {
-  // indentLevel += 1;
   const statements = this.statements.map((s) => s.gen());
-  console.log(this.statements);
   return `${statements.join("")}`;
-  // indentLevel -= 1;
+};
+
+BinaryExp.prototype.gen = function() {
+  return `(${this.left.gen()} ${makeOp(this.op)} ${this.right.gen()})`;
+};
+
+UnaryExp.prototype.gen = function() {
+  return `(${makeOp(this.op)} (${this.operand.gen()}))`;
 };
 
 CallExp.prototype.gen = function() {

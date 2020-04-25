@@ -15,6 +15,11 @@ const fixture = {
 `,
     String.raw`console.log("hello, world")`,
   ],
+  arithmetic: [
+    String.raw`5 MULT -3 ADD 2 
+`,
+    String.raw`((5 * (-(3))) + 2)`,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
