@@ -164,7 +164,6 @@ CallExp.prototype.gen = function() {
   return `${javaScriptId(this.callee.ref)}(${args.join(",")})`;
 };
 
-// isOpenInclusive, start, end, step, isCloseInclusive
 RangeExp.prototype.gen = function() {
   const start = this.isOpenInclusive ? this.start.gen() : this.start.gen() + 1;
   const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();

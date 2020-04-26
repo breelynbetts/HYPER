@@ -116,12 +116,6 @@ class SequenceType {
   }
 }
 
-// class PrintStatement {
-//   constructor(expression) {
-//     this.expression = expression;
-//   }
-// }
-
 class ReturnStatement {
   constructor(expression) {
     this.expression = expression;

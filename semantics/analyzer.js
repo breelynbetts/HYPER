@@ -157,10 +157,6 @@ TupleType.prototype.analyze = function(context) {
   }
 };
 
-// PrintStatement.prototype.analyze = function(context) {
-//   this.expression.analyze(context);
-// };
-
 ReturnStatement.prototype.analyze = function(context) {
   check.inFunction(context);
   if (this.expression) {
