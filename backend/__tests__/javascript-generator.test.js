@@ -60,6 +60,11 @@ INT y IS 7!
 UNTIL x EQUALS y AND x GRT 2:
 ⇨x IS x ADD 1!
 ⇦`,
+    /let x_(\d+) = \(-\(5\)\);\s*/,
+  ],
+  dict: [
+    String.raw`DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!`,
+    /let sizes_(\d+) /,
   ],
 };
 describe("The JavaScript generator", () => {

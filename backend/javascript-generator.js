@@ -101,6 +101,10 @@ function generateBlock(block) {
   return block.map((s) => `${s.gen()};`).join("");
 }
 
+function generateBody(block) {
+  return block.map((s) => `${s.gen()}`).join("");
+}
+
 module.exports = function(exp) {
   return beautify(exp.gen(), { indent_size: 2 });
 };
@@ -119,7 +123,10 @@ ForStatement.prototype.gen = function() {
   return `for (${this.index.gen()} of ${this.collection.gen()}) {${body}}`;
 };
 
-WhileStatement.prototype.gen = function() {};
+WhileStatement.prototype.gen = function() {
+  const body = generateBlock(this.body);
+  return `while (${this.test.gen()}) {${body}}`;
+};
 
 IfStatement.prototype.gen = function() {
   const tests = this.tests.map((t) => t.gen());
@@ -167,6 +174,11 @@ ArrayExp.prototype.gen = function() {
   const elements = this.members.map((e) => e.gen());
   return `Array(${this.size.gen()}).fill(${elements})`;
 };
+// keyValuePairs
+DictExp.prototype.gen = function() {
+  const keyValuePairs = this.keyValuePairs.map((kv) => kv.gen());
+  return `{${keyValuePairs}}`;
+};
 
 CallExp.prototype.gen = function() {
   const args = this.args.map((a) => a.gen());
@@ -183,6 +195,10 @@ RangeExp.prototype.gen = function() {
   const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
   const step = this.step ? this.step.gen() : 1;
   return `Array.from({ length: (${end} - ${start} + 1) / ${step}}, (_, i) => ${start} + i * ${step} )`;
+};
+
+KeyValue.prototype.gen = function() {
+  return `${this.key.gen()} : ${this.value.gen()}`;
 };
 
 Literal.prototype.gen = function() {
