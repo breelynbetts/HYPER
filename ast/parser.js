@@ -66,8 +66,8 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   ArrayType(_arr, t, _close) {
     return new ArrayType(t.ast());
   },
-  SimpleStmt_print(_print, _open, e, _close, _exclamation) {
-    return new PrintStatement(arrayToNullable(e.ast()));
+  SimpleStmt_print(print, _open, e, _close, _exclamation) {
+    return new CallExp(print.ast(), arrayToNullable(e.ast()));
   },
   SimpleStmt_return(_return, e, _exc) {
     return new ReturnStatement(arrayToNullable(e.ast()));

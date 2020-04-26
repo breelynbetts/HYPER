@@ -26,13 +26,23 @@ x IS 3!
 `,
     /let x_(\d+) = 5;\s+x_\1 = 3/,
   ],
+  // NEED TO EXPAND ON CHECK
   call: [
     String.raw`ARR<STR> c IS ["hey"]! 
 STR b IS x(c, "3", 1)!
 FUNC STR x(ARR<STR> x, STR y, FLT z):
 ⇨GIMME y!
 ⇦`,
-    /"hey"/,
+    /let c_(\d+) = Array\(1\).fill\(\"hey\"\);\s*/,
+  ],
+  for: [
+    String.raw`INT total!
+FUNC LITERALLYNOTHING hey(): 
+⇨LOOKAT INT x IN RANGE(0, 10, 1):
+⇨total IS total ADD x!
+⇦!!!SAY("hey")!
+⇦`,
+    /"no"/,
   ],
 };
 describe("The JavaScript generator", () => {

@@ -98,6 +98,11 @@ const builtin = {
   },
 };
 
+function generateBlock(block) {
+  console.log(block);
+  return block.map((s) => `${s.gen()};`).join("");
+}
+
 module.exports = function(exp) {
   return beautify(exp.gen(), { indent_size: 2 });
 };
@@ -107,30 +112,38 @@ Program.prototype.gen = function() {
 };
 
 Block.prototype.gen = function() {
-  const stmt = this.statements.map((s) => console.log(s));
-  const statements = this.statements.map((s) => s.gen());
+  const statements = this.statements.map((s) => `${s.gen()};`);
   return `${statements.join("")}`;
 };
 
+PrintStatement.prototype.gen = function() {
+  return ``;
+};
+
+ForStatement.prototype.gen = function() {
+  const body = generateBlock(this.body);
+  return `for (${this.index.gen()} of ${this.collection.gen()}) {${body}}`;
+};
+
 Func.prototype.gen = function() {
+  console.log(this);
   const name = javaScriptId(this);
   const params = this.params ? this.params.map((p) => javaScriptId(p)) : [""];
-  const body = this.body.map((b) => b.gen());
+  const body = generateBlock(this.body);
   return `function ${name} (${params.join(",")}) {${body}}`;
 };
 
 Assignment.prototype.gen = function() {
-  return `${this.target.gen()} = ${this.source.gen()};`;
+  return `${this.target.gen()} = ${this.source.gen()}`;
 };
 
 Declaration.prototype.gen = function() {
   const exp = this.init ? this.init.gen() : undefined;
   const init = exp ? `= ${exp}` : ``;
-  return `let ${javaScriptId(this)} ${init};`;
+  return `let ${javaScriptId(this)} ${init}`;
 };
 
 ReturnStatement.prototype.gen = function() {
-  console.log(this);
   // const exp = this.expression ? this.expression.gen() :
   return `return ${this.expression.gen()}`;
 };
@@ -153,7 +166,15 @@ CallExp.prototype.gen = function() {
   if (this.callee.ref.builtin) {
     return builtin[this.callee.ref.id](args);
   }
-  return `${javaScriptId(this.callee)}(${args.join(",")})`;
+  return `${javaScriptId(this.callee.ref)}(${args.join(",")})`;
+};
+
+// isOpenInclusive, start, end, step, isCloseInclusive
+RangeExp.prototype.gen = function() {
+  const start = this.isOpenInclusive ? this.start.gen() : this.start.gen() + 1;
+  const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
+  const step = this.step ? this.step.gen() : 1;
+  return `Array.from({ length: (${end} - ${start} + 1) / ${step}}, (_, i) => ${start} + i * ${step} )`;
 };
 
 Literal.prototype.gen = function() {
