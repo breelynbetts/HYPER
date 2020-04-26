@@ -40,9 +40,9 @@ FUNC STR x(ARR<STR> x, STR y, FLT z):
 FUNC LITERALLYNOTHING hey(): 
 ⇨LOOKAT INT x IN RANGE(0, 10, 1):
 ⇨total IS total ADD x!
-⇦!!!SAY("hey")!
+⇦SAY("hey")!
 ⇦`,
-    /"no"/,
+    /let total_(\d+);\s*function hey_(\d+)\(\)/,
   ],
 };
 describe("The JavaScript generator", () => {

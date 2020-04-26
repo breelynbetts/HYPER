@@ -14,7 +14,6 @@ const {
   ArrayType,
   TupleType,
   DictType,
-  PrintStatement,
   ReturnStatement,
   Break,
   BinaryExp,

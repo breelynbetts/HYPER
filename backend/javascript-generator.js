@@ -23,7 +23,6 @@ const {
   Func,
   Assignment,
   Declaration,
-  PrintStatement,
   ReturnStatement,
   Break,
   BinaryExp,
@@ -115,10 +114,6 @@ Block.prototype.gen = function() {
   return `${statements.join("")}`;
 };
 
-PrintStatement.prototype.gen = function() {
-  return ``;
-};
-
 ForStatement.prototype.gen = function() {
   const body = generateBlock(this.body);
   return `for (${this.index.gen()} of ${this.collection.gen()}) {${body}}`;
@@ -161,7 +156,9 @@ ArrayExp.prototype.gen = function() {
 
 CallExp.prototype.gen = function() {
   const args = this.args.map((a) => a.gen());
-  if (this.callee.ref.builtin) {
+  if (this.callee.builtin) {
+    return builtin[this.callee.id](args);
+  } else if (this.callee.ref.builtin) {
     return builtin[this.callee.ref.id](args);
   }
   return `${javaScriptId(this.callee.ref)}(${args.join(",")})`;

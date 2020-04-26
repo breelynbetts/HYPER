@@ -11,7 +11,6 @@ const {
   ArrayType,
   DictType,
   TupleType,
-  PrintStatement,
   ReturnStatement,
   Break,
   BinaryExp,
@@ -158,9 +157,9 @@ TupleType.prototype.analyze = function(context) {
   }
 };
 
-PrintStatement.prototype.analyze = function(context) {
-  this.expression.analyze(context);
-};
+// PrintStatement.prototype.analyze = function(context) {
+//   this.expression.analyze(context);
+// };
 
 ReturnStatement.prototype.analyze = function(context) {
   check.inFunction(context);
@@ -262,16 +261,18 @@ TupleExp.prototype.analyze = function(context) {
 };
 
 CallExp.prototype.analyze = function(context) {
+  this.args.forEach((arg) => arg.analyze(context));
   if (this.callee === "SAY") {
     this.callee = context.lookup(this.callee);
     check.isFunction(this.callee);
+    check.legalArguments(this.args, this.callee.params);
+    this.type = this.callee.returnType;
   } else {
     this.callee.analyze(context);
     check.isFunction(this.callee.ref);
+    check.legalArguments(this.args, this.callee.ref.params);
+    this.type = this.callee.ref.returnType;
   }
-  this.args.forEach((arg) => arg.analyze(context));
-  check.legalArguments(this.args, this.callee.ref.params);
-  this.type = this.callee.ref.returnType;
 };
 
 RangeExp.prototype.analyze = function(context) {

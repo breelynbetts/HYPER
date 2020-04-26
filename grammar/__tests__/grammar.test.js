@@ -25,7 +25,7 @@ TRY (num1 GRTEQ num2) AND (num1 GRTEQ num3):
 ⇨largest IS num2!
 ⇦NO???:
  ⇨largest IS num3!
-⇦SAY("The largest number is ", largest)!
+⇦SAY(CONCAT("The largest number is ", largest))!
 `;
 
 const program3 = String.raw`
@@ -38,7 +38,7 @@ const program4 = String.raw`
 ARR<STR> array IS ["Hi", "I'm", "Hyper"]!
 array IS array.push("LOL")!
 
-SAY("element0: ", array[0])!
+SAY(CONCAT("element0: ", array[0]))!
 `;
 
 describe("The syntax checker", () => {

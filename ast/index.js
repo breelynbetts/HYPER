@@ -116,11 +116,11 @@ class SequenceType {
   }
 }
 
-class PrintStatement {
-  constructor(expression) {
-    this.expression = expression;
-  }
-}
+// class PrintStatement {
+//   constructor(expression) {
+//     this.expression = expression;
+//   }
+// }
 
 class ReturnStatement {
   constructor(expression) {
@@ -271,7 +271,6 @@ module.exports = {
   DictType,
   TupleType,
   SequenceType,
-  PrintStatement,
   PrimitiveType,
   AnyType,
   UnionType,
