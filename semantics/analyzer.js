@@ -262,8 +262,13 @@ TupleExp.prototype.analyze = function(context) {
 };
 
 CallExp.prototype.analyze = function(context) {
-  this.callee.analyze(context);
-  check.isFunction(this.callee.ref);
+  if (this.callee === "SAY") {
+    this.callee = context.lookup(this.callee);
+    check.isFunction(this.callee);
+  } else {
+    this.callee.analyze(context);
+    check.isFunction(this.callee.ref);
+  }
   this.args.forEach((arg) => arg.analyze(context));
   check.legalArguments(this.args, this.callee.ref.params);
   this.type = this.callee.ref.returnType;

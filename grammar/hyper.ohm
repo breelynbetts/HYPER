@@ -7,7 +7,7 @@ HYPER {
                 | Function
     SimpleStmt  = Assignment
                 | Declaration
-                | say "(" Exps ")" "!"                              -- print
+                | say "(" Exp ")" "!"                              -- print
                 | gimme Exp? "!"                                    -- return
                 | leave "!"                                         -- break
                 | Exp

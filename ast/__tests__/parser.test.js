@@ -36,7 +36,7 @@ let fixture = {
   hello: [
     String.raw`SAY(3)!
   `,
-    new Program(new Block([new PrintStatement(new Literal("INT", 3))])),
+    new Program(new Block([new CallExp("SAY", [new Literal("INT", 3)])])),
   ],
 
   assignment: [
@@ -133,13 +133,13 @@ INT z IS x ADD y!
             false
           ),
           [
-            new PrintStatement(
+            new CallExp("SAY", [
               new BinaryExp(
                 new Identifier("x"),
                 "POW",
                 new BinaryExp(new Identifier("x"), "ADD", new Literal("INT", 2))
-              )
-            ),
+              ),
+            ]),
           ]
         ),
       ])
@@ -181,10 +181,10 @@ NO???:
             ),
           ],
           [
-            new PrintStatement(new Literal("STR", "Positive number")),
-            new PrintStatement(new Literal("STR", "Zero")),
+            new CallExp("SAY", [new Literal("STR", "Positive number")]),
+            new CallExp("SAY", [new Literal("STR", "Zero")]),
           ],
-          [new PrintStatement(new Literal("STR", "Negative number"))]
+          [new CallExp("SAY", [new Literal("STR", "Negative number")])]
         ),
       ])
     ),
@@ -210,9 +210,9 @@ SAY(c[1])!
             new ArrayType("STR")
           )
         ),
-        new PrintStatement(
-          new SubscriptedExp(new Identifier("c"), new Literal("INT", 1))
-        ),
+        new CallExp("SAY", [
+          new SubscriptedExp(new Identifier("c"), new Literal("INT", 1)),
+        ]),
       ])
     ),
   ],
@@ -267,13 +267,13 @@ LEAVE!
           "hey",
           [],
           [
-            new PrintStatement(
+            new CallExp("SAY", [
               new BinaryExp(
                 new Literal("STR", "HELLO"),
                 "OR",
                 new Literal("STR", "HEY")
-              )
-            ),
+              ),
+            ]),
           ]
         ),
       ])

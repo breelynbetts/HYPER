@@ -99,7 +99,6 @@ const builtin = {
 };
 
 function generateBlock(block) {
-  console.log(block);
   return block.map((s) => `${s.gen()};`).join("");
 }
 
@@ -126,7 +125,6 @@ ForStatement.prototype.gen = function() {
 };
 
 Func.prototype.gen = function() {
-  console.log(this);
   const name = javaScriptId(this);
   const params = this.params ? this.params.map((p) => javaScriptId(p)) : [""];
   const body = generateBlock(this.body);
