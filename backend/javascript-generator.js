@@ -119,6 +119,20 @@ ForStatement.prototype.gen = function() {
   return `for (${this.index.gen()} of ${this.collection.gen()}) {${body}}`;
 };
 
+WhileStatement.prototype.gen = function() {};
+
+IfStatement.prototype.gen = function() {
+  const tests = this.tests.map((t) => t.gen());
+  const consequents = this.consequents.map((s) => `${s.gen()}`);
+  let elseIfs = "";
+  const ifPart = `if (${tests[0]}) {${consequents[0]}}`;
+  for (let i = 1; i < tests.length; i++) {
+    elseIfs += `else if (${tests[i]}) {${consequents[i]}}`;
+  }
+  const alternate = this.alternate ? `else {${this.alternate.gen()}}` : "";
+  return `${ifPart} ${elseIfs} ${alternate}`;
+};
+
 Func.prototype.gen = function() {
   const name = javaScriptId(this);
   const params = this.params ? this.params.map((p) => javaScriptId(p)) : [""];

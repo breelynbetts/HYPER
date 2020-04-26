@@ -44,6 +44,23 @@ FUNC LITERALLYNOTHING hey():
 ⇦`,
     /let total_(\d+);\s*function hey_(\d+)\(\)/,
   ],
+  if: [
+    String.raw`FUNC STR isZero(INT x):
+⇨TRY x GRT 0:
+⇨GIMME CONCAT("x ", "> 0")!
+⇦NO?TRY x LESS 0:
+⇨GIMME CONCAT("x ", "< 0")!
+⇦GIMME "yes"!
+⇦`,
+    /function isZero_(\d+)\(x_(\d+)\)/,
+  ],
+  while: [
+    String.raw`INT x IS -5!
+INT y IS 7!
+UNTIL x EQUALS y AND x GRT 2:
+⇨x IS x ADD 1!
+⇦`,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {

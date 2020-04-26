@@ -17,7 +17,7 @@ const program = {
     String.raw`INT x IS -5!
 INT y IS 7!
 UNTIL x EQUALS y AND x GRT 2:
-⇨ x IS x ADD 1!
+⇨x IS x ADD 1!
 ⇦`,
   ],
   for: [
