@@ -65,12 +65,6 @@ class Context {
     });
   }
 
-  variableMustNotBeDeclared(name) {
-    if (this.declarations.has(name)) {
-      throw `${name} already declared in this scope`;
-    }
-  }
-
   add(id, entity) {
     this.declarations.set(id, entity);
   }
