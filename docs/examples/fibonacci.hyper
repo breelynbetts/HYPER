@@ -1,4 +1,4 @@
-INT fib IS fibonacci(5)!
+INT fib IS fibonacci(12)!
 SAY(fib)!
 
 FUNC INT fibonacci(INT num): 
