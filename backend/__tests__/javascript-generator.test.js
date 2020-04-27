@@ -23,6 +23,7 @@ const fixture = {
   declAndAssign: [
     String.raw`INT x IS 5!
 x IS 3!
+STR sub IS SUBSTRING("hello, world", 1, 5)!
 `,
     /let x_(\d+) = 5;\s+x_\1 = 3/,
   ],
@@ -77,7 +78,11 @@ TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 `,
     /let evens_(\d+) = Array\(4\).fill\(2, 4.3, 6, 8\);\s*/,
   ],
-  // subExp: [],
+  builtins: [
+    String.raw`EXIT(3)
+`,
+    /process\.exit\(3\)/,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
