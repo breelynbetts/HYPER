@@ -26,17 +26,22 @@ const {
   Literal,
   Identifier,
 } = require("../ast");
-const {
-  BoolType,
-  FloatType,
-  IntType,
-  NoneType,
-  StringType,
-} = require("./builtins");
+const { BoolType, FloatType, IntType, StringType } = require("./builtins");
 const check = require("./check");
 const Context = require("./context");
 
 module.exports = (exp) => exp.analyze(Context.INITIAL);
+
+function getType(typeString) {
+  if (typeString === "STR") {
+    return StringType;
+  } else if (typeString === "INT") {
+    return IntType;
+  } else if (typeString === "FLT") {
+    return FloatType;
+  }
+  return BoolType;
+}
 
 Program.prototype.analyze = function(context) {
   this.block.analyze(context);
@@ -303,15 +308,7 @@ KeyValue.prototype.analyze = function(context) {
 };
 
 Literal.prototype.analyze = function() {
-  if (this.type === "STR") {
-    this.type = StringType;
-  } else if (this.type === "FLT") {
-    this.type = FloatType;
-  } else if (this.type === "BOO") {
-    this.type = BoolType;
-  } else if (this.type === "INT") {
-    this.type = IntType;
-  }
+  this.type = getType(this.type);
 };
 
 Identifier.prototype.analyze = function(context) {
