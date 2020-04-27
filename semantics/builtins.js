@@ -16,7 +16,7 @@ const StringType = new PrimitiveType("STR");
 
 const StandardFunctions = [
   new Func(NoneType, "SAY", [new Param(AnyType, "s")]),
-  new Func(IntType, "SIZE", [new Param(SequenceType, "s")]),
+  new Func(IntType, "SIZE", [new Param(new SequenceType(SequenceType), "s")]),
   new Func(NoneType, "EXIT", [new Param(IntType, "code")]),
   new Func(StringType, "CONCAT", [
     new Param(StringType, "s"),

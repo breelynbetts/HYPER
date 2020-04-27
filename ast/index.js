@@ -228,12 +228,6 @@ class Param {
   }
 }
 
-// class Arg {
-//   constructor(exp) {
-//     Object.assign(this, { exp });
-//   }
-// }
-
 class KeyValue {
   constructor(key, value) {
     Object.assign(this, { key, value });

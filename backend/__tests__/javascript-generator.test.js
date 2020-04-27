@@ -34,7 +34,7 @@ STR b IS x(c, "3", 1)!
 FUNC STR x(ARR<STR> x, STR y, FLT z):
 ⇨GIMME y!
 ⇦`,
-    /let c_(\d+) = Array\(1\).fill\(\"hey\"\);\s*/,
+    /let c_(\d+) = \[\"hey\"\];\s*/,
   ],
   for: [
     String.raw`INT total!
@@ -76,7 +76,7 @@ FLT x IS evens[2]!
 SAY(x)!
 TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 `,
-    /let evens_(\d+) = Array\(4\).fill\(2, 4.3, 6, 8\);\s*/,
+    /let evens_(\d+) = \[2, 4.3, 6, 8\];\s*/,
   ],
   builtins: [
     String.raw`EXIT(3)
