@@ -91,9 +91,7 @@ IfStatement.prototype.analyze = function(context) {
 
 Func.prototype.analyzeSignature = function(context) {
   this.bodyContext = context.createChildContextForFunctionBody(this);
-  if (this.params) {
-    this.params.forEach((p) => p.analyze(this.bodyContext));
-  }
+  this.params.forEach((p) => p.analyze(this.bodyContext));
 
   if (typeof this.returnType === "string") {
     this.returnType = context.lookup(this.returnType);
