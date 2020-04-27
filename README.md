@@ -20,7 +20,7 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 
 ## Types and Variable Declaration
 
-| Types      | Types in HYPER!           | Variable Declaration                                         |
+| Types      | Types in Hyper!           | Variable Declaration                                         |
 | ---------- | ------------------------- | ------------------------------------------------------------ |
 | int        | `INT`                     | `INT x IS 4!`                                                |
 | float      | `FLT`                     | `FLT y IS 4.56!`                                             |
@@ -34,7 +34,7 @@ Hyper! was devised by Breelyn Betts, Maya Dahlke, and Lexi Weingardt.
 
 ## Operators
 
-| Operation             | Operation in HYPER! | Variable Declaration       |
+| Operation             | Operation in Hyper! | Variable Declaration       |
 | --------------------- | ------------------- | -------------------------- |
 | add                   | `ADD`               | `sum IS 3 ADD 10`          |
 | subtract              | `SUB`               | `diff IS 5 SUB 2`          |
@@ -118,7 +118,7 @@ comment
 
 <table>
   <tr>
-  <th>HYPER!</th>
+  <th>Hyper!</th>
   <th>Python</th>
   </tr>
 
@@ -144,7 +144,7 @@ print('Hello, World!')
 
 <table>
   <tr>
-  <th>HYPER!</th>
+  <th>Hyper!</th>
   <th>Python</th>
   </tr>
 
@@ -182,7 +182,7 @@ def fibonacci(num):
 
 <table>
   <tr>
-  <th>HYPER!</th>
+  <th>Hyper!</th>
   <th>Python</th>
   </tr>
 
@@ -218,7 +218,7 @@ def gcd(x, y):
 
 <table>
   <tr>
-  <th>HYPER!</th>
+  <th>Hyper!</th>
   <th>Python</th>
   </tr>
 
@@ -269,7 +269,7 @@ print("The largest number is", largest)
 
 <table>
   <tr>
-  <th>HYPER!</th>
+  <th>Hyper!</th>
   <th>Python</th>
   </tr>
 
@@ -304,7 +304,7 @@ for i in range(1, 11):
 
 <table>
   <tr>
-  <th>HYPER!</th>
+  <th>Hyper!</th>
   <th>Python</th>
   </tr>
 
@@ -335,7 +335,7 @@ def is_even(num):
 
 <table>
   <tr>
-  <th>HYPER!</th>
+  <th>Hyper!</th>
   <th>Python</th>
   </tr>
 
