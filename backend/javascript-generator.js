@@ -189,7 +189,7 @@ DictExp.prototype.gen = function() {
 
 TupleExp.prototype.gen = function() {
   const values = this.values.map((v) => v.gen());
-  return `(${values.join(",")})`;
+  return `[${values.join(",")}]`;
 };
 
 CallExp.prototype.gen = function() {
