@@ -344,7 +344,7 @@ def is_even(num):
 
 ```
 ARR array IS ["Hi", "I'm", "Hyper"]!
-array.push("LOL")!
+array.PUSH("LOL")!
 
 SAY("element0: ", array[0])!
 
