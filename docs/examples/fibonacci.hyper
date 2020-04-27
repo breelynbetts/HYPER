@@ -1,3 +1,6 @@
+INT fib IS fibonacci(5)!
+SAY(fib)!
+
 FUNC INT fibonacci(INT num): 
     TRY num EQUALS 0:
         GIMME 0!
