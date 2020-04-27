@@ -67,33 +67,16 @@ module.exports = {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
   coercivelyAssignable(t1, t2) {
-    // if (
-    //   (t1 === IntType && t2 === FloatType) ||
-    //   (t1 === StringType && t2 === SequenceType) ||
-    //   (t1.constructor === ArrayType && t2 === SequenceType) ||
-    //   (t1 !== NoneType && t2 === AnyType) ||
-    //   (t1 === IntType && t2.constructor === UnionType) ||
-    //   (t2 !== NoneType && t1 === AnyType)
-    // ) {
-    //   return true;
-    // } else return this.identicalTypes(t1, t2);
-
-    if (t1 === IntType && t2 === FloatType) {
+    if (
+      (t1 === IntType && t2 === FloatType) ||
+      (t1 === StringType && t2 === SequenceType) ||
+      (t1.constructor === ArrayType && t2 === SequenceType) ||
+      (t1 !== NoneType && t2 === AnyType) ||
+      (t1 === IntType && t2.constructor === UnionType) ||
+      (t2 !== NoneType && t1 === AnyType)
+    ) {
       return true;
-    } else if (t1 === StringType && t2 === SequenceType) {
-      return true;
-    } else if (t1.constructor === ArrayType && t2 === SequenceType) {
-      return true;
-    } else if (t1 !== NoneType && t2 === AnyType) {
-      return true;
-    } else if (t1 === IntType && t2.constructor === UnionType) {
-      return true;
-    } else if (t2 !== NoneType && t1 === AnyType) {
-      console.log(t1, t2);
-      return true;
-    } else {
-      return this.identicalTypes(t1, t2);
-    }
+    } else return this.identicalTypes(t1, t2);
   },
   identicalTypes(t1, t2) {
     if (t1.constructor === ArrayType && t2.constructor === ArrayType) {
@@ -118,7 +101,6 @@ module.exports = {
   isAssignableTo(expression, type) {
     doCheck(
       this.coercivelyAssignable(expression.type, type) ||
-        (expression.constructor === ArrayType && type === SequenceType) ||
         this.identicalTypes(expression.type, type),
       `Expression of type ${util.format(
         expression.type
