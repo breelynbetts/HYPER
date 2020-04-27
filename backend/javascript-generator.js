@@ -48,6 +48,7 @@ function makeOp(op) {
       NOTEQ: "!==",
       LESS: "<",
       LESSEQ: "<=",
+      GRT: ">",
       GRTEQ: ">=",
       AND: "&&",
       OR: "||",
@@ -162,6 +163,10 @@ ReturnStatement.prototype.gen = function() {
   return `return ${this.expression.gen()}`;
 };
 
+Break.prototype.gen = function() {
+  return "break";
+};
+
 BinaryExp.prototype.gen = function() {
   return `(${this.left.gen()} ${makeOp(this.op)} ${this.right.gen()})`;
 };
@@ -203,7 +208,6 @@ RangeExp.prototype.gen = function() {
 };
 
 SubscriptedExp.prototype.gen = function() {
-  console.log(this);
   const id = this.array.gen();
   const sub = this.subscript.gen();
   return `${id}\[${sub}\]`;

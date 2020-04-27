@@ -59,6 +59,7 @@ FUNC LITERALLYNOTHING hey():
 INT y IS 7!
 UNTIL x EQUALS y AND x GRT 2:
 ⇨x IS x ADD 1!
+LEAVE!
 ⇦`,
     /let x_(\d+) = \(-\(5\)\);\s*/,
   ],
