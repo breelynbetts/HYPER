@@ -95,6 +95,12 @@ TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 ⇦`,
     /function isZero_(\d+)\(x_(\d+)\)/,
   ],
+  boolean: [
+    String.raw`BOO b IS ~TRUE!
+BOO c IS FALSE!
+`,
+    /let b_(\d+) = \(!\(true\)\);\s*let c_(\d+) = false;\s*/,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {

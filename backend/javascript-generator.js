@@ -39,7 +39,7 @@ const {
   Literal,
   Identifier,
 } = require("../ast");
-const { StringType } = require("../semantics/builtins");
+const { StringType, BoolType } = require("../semantics/builtins");
 
 function makeOp(op) {
   return (
@@ -220,7 +220,15 @@ KeyValue.prototype.gen = function() {
 };
 
 Literal.prototype.gen = function() {
-  return this.type === StringType ? `"${this.value}"` : this.value;
+  switch (this.type) {
+    case StringType:
+      return `"${this.value}"`;
+    case BoolType:
+      if (this.value === true) return "true";
+      return "false";
+    default:
+      return this.value;
+  }
 };
 
 Identifier.prototype.gen = function() {
