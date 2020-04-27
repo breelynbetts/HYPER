@@ -101,9 +101,9 @@ function generateBlock(block) {
   return block.map((s) => `${s.gen()};`).join("");
 }
 
-function generateBody(block) {
-  return block.map((s) => `${s.gen()}`).join("");
-}
+// function generateBody(block) {
+//   return block.map((s) => `${s.gen()}`).join("");
+// }
 
 module.exports = function(exp) {
   return beautify(exp.gen(), { indent_size: 2 });
@@ -200,6 +200,17 @@ RangeExp.prototype.gen = function() {
   const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
   const step = this.step ? this.step.gen() : 1;
   return `Array.from({ length: (${end} - ${start} + 1) / ${step}}, (_, i) => ${start} + i * ${step} )`;
+};
+
+SubscriptedExp.prototype.gen = function() {
+  console.log(this);
+  const id = this.array.gen();
+  const sub = this.subscript.gen();
+  return `${id}\[${sub}\]`;
+};
+
+Param.prototype.gen = function() {
+  return `${this.id.gen()}`;
 };
 
 KeyValue.prototype.gen = function() {

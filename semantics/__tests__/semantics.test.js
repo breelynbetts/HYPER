@@ -87,6 +87,7 @@ x IS 4!
     String.raw`ARR<FLT> evens IS [2, 4.3, 6, 8]!
 INT size IS SIZE(evens)!
 evens IS PUSH(evens, 10)!
+SAY(evens[2])!
 TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 `,
   ],
