@@ -102,7 +102,6 @@ describe("The JavaScript generator", () => {
       const ast = parse(source);
       analyze(ast);
       expect(generate(ast)).toMatch(expected);
-      console.log(generate(ast));
       done();
     });
   });

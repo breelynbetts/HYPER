@@ -137,7 +137,6 @@ IfStatement.prototype.gen = function() {
   for (let i = 1; i < tests.length; i++) {
     elseIfs += `else if (${tests[i]}) {${consequents[i]}}`;
   }
-  console.log(this);
   const alternate = this.alternate
     ? `else {${generateBlock(this.alternate)}}`
     : "";
@@ -146,7 +145,7 @@ IfStatement.prototype.gen = function() {
 
 Func.prototype.gen = function() {
   const name = javaScriptId(this);
-  const params = this.params ? this.params.map((p) => javaScriptId(p)) : [""];
+  const params = this.params.map((p) => javaScriptId(p));
   const body = generateBlock(this.body);
   return `function ${name} (${params.join(",")}) {${body}}`;
 };
