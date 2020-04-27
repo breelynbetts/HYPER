@@ -83,6 +83,13 @@ GIMME 5!
 x IS 4!
 `,
   ],
+  tup: [
+    String.raw`ARR<FLT> evens IS [2, 4.3, 6, 8]!
+INT size IS SIZE(evens)!
+evens IS PUSH(evens, 10)!
+TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
+`,
+  ],
 };
 
 describe("The semantic analyzer", () => {

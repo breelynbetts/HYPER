@@ -9,6 +9,7 @@ const {
   Identifier,
   RangeExp,
   ReturnStatement,
+  UnionType,
 } = require("../ast");
 const {
   BoolType,
@@ -70,14 +71,16 @@ module.exports = {
       (t1 === IntType && t2 === FloatType) ||
       (t1 === StringType && t2 === SequenceType) ||
       (t1.constructor === ArrayType && t2 === SequenceType) ||
-      (t1 !== NoneType && t1 === AnyType)
+      (t1 !== NoneType && t2 === AnyType) ||
+      (t1 === IntType && t2.constructor === UnionType) ||
+      (t2 !== NoneType && t1 === AnyType)
     ) {
       return true;
     } else return this.identicalTypes(t1, t2);
   },
   identicalTypes(t1, t2) {
     if (t1.constructor === ArrayType && t2.constructor === ArrayType) {
-      return this.identicalTypes(t1.memberType, t2.memberType);
+      return this.coercivelyAssignable(t1.memberType, t2.memberType);
     } else if (
       t1.constructor === TupleType &&
       t2.constructor === TupleType &&

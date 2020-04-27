@@ -27,8 +27,8 @@ const StandardFunctions = [
     new Param(IntType, "start"),
     new Param(IntType, "end"),
   ]),
-  new Func(ArrayType, "PUSH", [
-    new Param(ArrayType, "a"),
+  new Func(new ArrayType(AnyType), "PUSH", [
+    new Param(new ArrayType(AnyType), "a"),
     new Param(new UnionType(BoolType, FloatType, IntType, StringType), "u"),
   ]),
 ];

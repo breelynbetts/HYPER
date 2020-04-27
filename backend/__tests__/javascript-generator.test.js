@@ -66,6 +66,14 @@ UNTIL x EQUALS y AND x GRT 2:
     String.raw`DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!`,
     /let sizes_(\d+) /,
   ],
+  tup: [
+    String.raw`ARR<FLT> evens IS [2, 4.3, 6, 8]!
+INT size IS SIZE(evens)!
+evens IS PUSH(evens, 10)!
+TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
+`,
+    /let evens_(\d+) = Array\(4\).fill\(2, 4.3, 6, 8\);\s*/,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {

@@ -174,10 +174,15 @@ ArrayExp.prototype.gen = function() {
   const elements = this.members.map((e) => e.gen());
   return `Array(${this.size.gen()}).fill(${elements})`;
 };
-// keyValuePairs
+
 DictExp.prototype.gen = function() {
   const keyValuePairs = this.keyValuePairs.map((kv) => kv.gen());
   return `{${keyValuePairs}}`;
+};
+
+TupleExp.prototype.gen = function() {
+  const values = this.values.map((v) => v.gen());
+  return `(${values.join(",")})`;
 };
 
 CallExp.prototype.gen = function() {
