@@ -1,5 +1,8 @@
+SAY(gcd(10, 25))!
+
 FUNC INT gcd(INT x, INT y):
-    UNTIL y EQUALS 0:
-        x IS y!
+    UNTIL y NOTEQ 0:
+        INT t IS y!
         y IS x MOD y!
+        x IS t!
     GIMME x!

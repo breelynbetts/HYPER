@@ -1,2 +1,4 @@
+SAY (isEven(0))!
+
 FUNC BOO isEven(INT num):
     GIMME num MOD 2 EQUALS 0!

@@ -9,4 +9,4 @@ NO?TRY (num2 GRTEQ num1) AND (num2 GRTEQ num3):
   largest IS num2!
 NO???:
   largest IS num3!
-SAY("The largest number is ", largest)!
+SAY(largest)!

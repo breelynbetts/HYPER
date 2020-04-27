@@ -1,4 +1,4 @@
-INT num IS 3!
+INT num IS 0!
 
 TRY num GRT 0:
     SAY("Positive number")!

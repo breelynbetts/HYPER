@@ -227,6 +227,7 @@ Literal.prototype.gen = function() {
       if (this.value === true) return "true";
       return "false";
     default:
+      if (this.value === 0) return `0`;
       return this.value;
   }
 };

@@ -12,12 +12,12 @@ const generate = require("../javascript-generator");
 const fixture = {
   hello: [
     String.raw`SAY("hello, world")
-`,
+  `,
     String.raw`console.log("hello, world")`,
   ],
   arithmetic: [
     String.raw`5 MULT -3 ADD 2
-`,
+  `,
     String.raw`((5 * (-(3))) + 2)`,
   ],
   declAndAssign: [
@@ -29,7 +29,7 @@ STR sub IS SUBSTRING("hello, world", 1, 5)!
   ],
   // NEED TO EXPAND ON CHECK
   call: [
-    String.raw`ARR<STR> c IS ["hey"]! 
+    String.raw`ARR<STR> c IS ["hey"]!
 STR b IS x(c, "3", 1)!
 FUNC STR x(ARR<STR> x, STR y, FLT z):
 ⇨GIMME y!
@@ -38,7 +38,7 @@ FUNC STR x(ARR<STR> x, STR y, FLT z):
   ],
   for: [
     String.raw`INT total!
-FUNC LITERALLYNOTHING hey(): 
+FUNC LITERALLYNOTHING hey():
 ⇨LOOKAT INT x IN RANGE(0, 10):
 ⇨total IS total ADD x!
 ⇦SAY(RANGE[3, 12, 3])!
@@ -98,7 +98,7 @@ TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
   boolean: [
     String.raw`BOO b IS ~TRUE!
 BOO c IS FALSE!
-`,
+  `,
     /let b_(\d+) = \(!\(true\)\);\s*let c_(\d+) = false;\s*/,
   ],
 };
