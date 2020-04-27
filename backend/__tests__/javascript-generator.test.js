@@ -39,9 +39,9 @@ FUNC STR x(ARR<STR> x, STR y, FLT z):
   for: [
     String.raw`INT total!
 FUNC LITERALLYNOTHING hey(): 
-⇨LOOKAT INT x IN RANGE(0, 10, 1):
+⇨LOOKAT INT x IN RANGE(0, 10):
 ⇨total IS total ADD x!
-⇦SAY("hey")!
+⇦SAY(RANGE[3, 12, 3])!
 ⇦`,
     /let total_(\d+);\s*function hey_(\d+)\(\)/,
   ],
@@ -83,6 +83,18 @@ TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 `,
     /process\.exit\(3\)/,
   ],
+  anotherIf: [
+    String.raw`FUNC STR isZero(INT x):
+⇨TRY x GRTEQ 0:
+⇨GIMME CONCAT("x ", "> 0")!
+⇦NO?TRY x NOTEQ 0:
+⇨GIMME CONCAT("x ", "< 0")!
+⇦NO???:
+⇨GIMME "x is zero"!
+⇦GIMME "idk"!
+⇦`,
+    /function isZero_(\d+)\(x_(\d+)\)/,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
@@ -90,6 +102,7 @@ describe("The JavaScript generator", () => {
       const ast = parse(source);
       analyze(ast);
       expect(generate(ast)).toMatch(expected);
+      console.log(generate(ast));
       done();
     });
   });

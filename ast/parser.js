@@ -141,8 +141,8 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new TupleExp(inner.ast());
   },
   Range(_range, open, start, _sep, end, _sep2, step, close) {
-    const isOpenInclusive = open === "[";
-    const isCloseInclusive = close === "]";
+    const isOpenInclusive = open.primitiveValue === "[";
+    const isCloseInclusive = close.primitiveValue === "]";
     return new RangeExp(
       isOpenInclusive,
       start.ast(),

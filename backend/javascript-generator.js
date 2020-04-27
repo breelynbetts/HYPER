@@ -137,7 +137,10 @@ IfStatement.prototype.gen = function() {
   for (let i = 1; i < tests.length; i++) {
     elseIfs += `else if (${tests[i]}) {${consequents[i]}}`;
   }
-  const alternate = this.alternate ? `else {${this.alternate.gen()}}` : "";
+  console.log(this);
+  const alternate = this.alternate
+    ? `else {${generateBlock(this.alternate)}}`
+    : "";
   return `${ifPart} ${elseIfs} ${alternate}`;
 };
 
@@ -213,9 +216,10 @@ SubscriptedExp.prototype.gen = function() {
   return `${id}\[${sub}\]`;
 };
 
-Param.prototype.gen = function() {
-  return `${this.id.gen()}`;
-};
+// Param.prototype.gen = function() {
+//   console
+//   return `${this.id.gen()}`;
+// };
 
 KeyValue.prototype.gen = function() {
   return `${this.key.gen()} : ${this.value.gen()}`;
