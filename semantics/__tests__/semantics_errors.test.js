@@ -20,7 +20,7 @@ const errors = [
   ],
   [
     "mismatch in forloop types",
-    "ARR<INT> a IS [1,2,3]!\nLOOKAT STR x IN a:\n⇨SAY(x)!\n⇦",
+    "ARR<INT> a IS [1,2,3]!\nc IS PUSH(c, 4)!\nLOOKAT STR x IN a:\n⇨SAY(x)!\n⇦",
   ],
   [
     "too many function arguments",
@@ -35,10 +35,16 @@ const errors = [
     'STR b IS x("green", "3")!\nFUNC STR x(ARR<STR> x, STR y, FLT z):\n⇨GIMME y!\n⇦',
   ],
   ["function return type mismatch", "FUNC STR num(INT x):\n⇨GIMME x!\n⇦"],
-  ["dict key/value pair mismatch", 'ARR<STR> c IS ["hey"]!\nSTR b IS c(1)!'],
+  [
+    "dict key/value pair mismatch",
+    'ARR<STR> c IS ["hey"]!\nINT s IS SIZE(c)!\nARR<FLT> evens IS [2, 4.3, 6, 8]!\nevens IS PUSH(evens, 10)!\nSTR b IS c(1)!\n',
+  ],
   ["tuple type mismatch", 'TUP<STR,INT,FLT> tup IS (TRUE,"blue",2.3)!\n'],
   ["while loop test is not a boolean", "UNTIL 3 ADD 5:\n⇨SAY(TRUE)!\n⇦"],
-  ["no return statement in function", "FUNC INT x(INT y):\n⇨y IS y GRT 3!\n⇦"],
+  [
+    "no return statement in function",
+    'INT c IS SIZE("hello!")!\nFUNC INT x(INT y):\n⇨y IS y GRT 3!\n⇦',
+  ],
   ["unary expressions mismatch", "-TRUE\n"],
   ["unary expressions mismatch 2", "~5.2\n"],
   ["non-integer range type", "RANGE[0, TRUE, 1.0]"],
