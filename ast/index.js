@@ -96,11 +96,7 @@ class PrimitiveType {
 }
 
 // Semantics only - any expression can have this type
-class AnyType {
-  constructor(id) {
-    Object.assign(this, { id });
-  }
-}
+const AnyType = {};
 
 // Semantics only - represents things like "Integer or String"
 class UnionType {
