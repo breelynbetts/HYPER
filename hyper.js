@@ -6,7 +6,7 @@ const parse = require("./ast/parser");
 const analyze = require("./semantics/analyzer");
 const graphView = require("./semantics/viewer");
 // require("./semantics/optimizer");
-// require(`./backend/${argv.target}generator`);
+const generate = require("./backend/javascript-generator");
 
 function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
   let program = parse(sourceCode);

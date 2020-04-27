@@ -179,7 +179,7 @@ UnaryExp.prototype.gen = function() {
 
 ArrayExp.prototype.gen = function() {
   const elements = this.members.map((e) => e.gen());
-  return `Array(${this.size.gen()}).fill(${elements})`;
+  return `[${elements.join(",")}]`;
 };
 
 DictExp.prototype.gen = function() {
@@ -214,11 +214,6 @@ SubscriptedExp.prototype.gen = function() {
   const sub = this.subscript.gen();
   return `${id}\[${sub}\]`;
 };
-
-// Param.prototype.gen = function() {
-//   console
-//   return `${this.id.gen()}`;
-// };
 
 KeyValue.prototype.gen = function() {
   return `${this.key.gen()} : ${this.value.gen()}`;
