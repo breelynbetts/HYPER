@@ -91,6 +91,11 @@ SAY(evens[2])!
 TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 `,
   ],
+  builtin: [
+    String.raw`DICT<STR:INT> d IS {"hey": 1, "there": 3}!
+SAY(d.GET("hey"))!
+`,
+  ],
 };
 
 describe("The semantic analyzer", () => {

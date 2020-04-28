@@ -1,5 +1,6 @@
 const {
   Func,
+  MemberExp,
   Param,
   ArrayType,
   DictType,
@@ -38,6 +39,7 @@ const StandardFunctions = [
   new Func(new ArrayType(AnyType), "VALUES", [
     new Param(new DictType(AnyType, AnyType), "d"),
   ]),
+  new Func(AnyType, "GET", [new Param(AnyType, "d")]),
 ];
 
 StandardFunctions.forEach((f) => {

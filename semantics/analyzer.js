@@ -20,24 +20,25 @@ const {
   TupleExp,
   CallExp,
   RangeExp,
+  MemberExp,
   SubscriptedExp,
   Param,
   KeyValue,
   Literal,
   Identifier,
-} = require('../ast');
-const { BoolType, FloatType, IntType, StringType } = require('./builtins');
-const check = require('./check');
-const Context = require('./context');
+} = require("../ast");
+const { BoolType, FloatType, IntType, StringType } = require("./builtins");
+const check = require("./check");
+const Context = require("./context");
 
-module.exports = exp => exp.analyze(Context.INITIAL);
+module.exports = (exp) => exp.analyze(Context.INITIAL);
 
 function getType(typeString) {
-  if (typeString === 'STR') {
+  if (typeString === "STR") {
     return StringType;
-  } else if (typeString === 'INT') {
+  } else if (typeString === "INT") {
     return IntType;
-  } else if (typeString === 'FLT') {
+  } else if (typeString === "FLT") {
     return FloatType;
   }
   return BoolType;
@@ -49,9 +50,13 @@ Program.prototype.analyze = function(context) {
 
 Block.prototype.analyze = function(context) {
   const newContext = context.createChildContextForBlock();
-  this.statements.filter(s => s.constructor === Func).map(s => s.analyzeSignature(newContext));
-  this.statements.filter(s => s.constructor === Func).map(s => newContext.add(s.id, s));
-  this.statements.forEach(s => s.analyze(newContext));
+  this.statements
+    .filter((s) => s.constructor === Func)
+    .map((s) => s.analyzeSignature(newContext));
+  this.statements
+    .filter((s) => s.constructor === Func)
+    .map((s) => newContext.add(s.id, s));
+  this.statements.forEach((s) => s.analyze(newContext));
 };
 
 // TODO: make forloops compatible with DictTypes
@@ -69,30 +74,32 @@ ForStatement.prototype.analyze = function(context) {
   }
   this.index = new Declaration(this.type, this.index.ref);
   bodyContext.add(this.index.id, this.index);
-  this.body.forEach(b => b.analyze(bodyContext));
+  this.body.forEach((b) => b.analyze(bodyContext));
 };
 
 WhileStatement.prototype.analyze = function(context) {
   this.test.analyze(context);
   check.isBoolean(this.test);
   const newContext = context.createChildContextForLoop();
-  this.body.forEach(b => b.analyze(newContext));
+  this.body.forEach((b) => b.analyze(newContext));
 };
 
 IfStatement.prototype.analyze = function(context) {
-  this.tests.forEach(test => test.analyze(context));
-  this.tests.forEach(test => check.isBoolean(test));
-  this.consequents.forEach(consequent => consequent.analyze(context.createChildContextForBlock()));
+  this.tests.forEach((test) => test.analyze(context));
+  this.tests.forEach((test) => check.isBoolean(test));
+  this.consequents.forEach((consequent) =>
+    consequent.analyze(context.createChildContextForBlock())
+  );
   if (this.alternate) {
-    this.alternate.forEach(alt => alt.analyze(context));
+    this.alternate.forEach((alt) => alt.analyze(context));
   }
 };
 
 Func.prototype.analyzeSignature = function(context) {
   this.bodyContext = context.createChildContextForFunctionBody(this);
-  this.params.forEach(p => p.analyze(this.bodyContext));
+  this.params.forEach((p) => p.analyze(this.bodyContext));
 
-  if (typeof this.returnType === 'string') {
+  if (typeof this.returnType === "string") {
     this.returnType = context.lookup(this.returnType);
   } else {
     this.returnType.analyze(context);
@@ -100,7 +107,7 @@ Func.prototype.analyzeSignature = function(context) {
 };
 
 Func.prototype.analyze = function() {
-  this.body.forEach(b => b.analyze(this.bodyContext));
+  this.body.forEach((b) => b.analyze(this.bodyContext));
   check.functionHasReturnStatement(this);
   delete this.bodyContext;
 };
@@ -119,7 +126,7 @@ Assignment.prototype.analyze = function(context) {
 
 Declaration.prototype.analyze = function(context) {
   check.variableIsNotAlreadyDeclared(context, this.id);
-  if (typeof this.type === 'string') {
+  if (typeof this.type === "string") {
     this.type = context.lookup(this.type);
   } else {
     this.type.analyze(context);
@@ -135,7 +142,7 @@ Declaration.prototype.analyze = function(context) {
 // later must alternate Grammar to support this functionality
 ArrayType.prototype.analyze = function(context) {
   check.isArrayType(this);
-  if (typeof this.memberType === 'string') {
+  if (typeof this.memberType === "string") {
     this.memberType = context.lookup(this.memberType);
   }
 };
@@ -163,27 +170,31 @@ ReturnStatement.prototype.analyze = function(context) {
     }
     this.expression.analyze(context);
   }
-  check.returnTypeMatchesFunctionReturnType(this.expression, context.currentFunction);
+  check.returnTypeMatchesFunctionReturnType(
+    this.expression,
+    context.currentFunction
+  );
 };
 
 Break.prototype.analyze = function(context) {
-  check.inLoop(context, 'LEAVE');
+  check.inLoop(context, "LEAVE");
 };
 
 BinaryExp.prototype.analyze = function(context) {
   this.left.analyze(context);
   this.right.analyze(context);
   let left = this.left.constructor === Identifier ? this.left.ref : this.left;
-  let right = this.right.constructor === Identifier ? this.right.ref : this.right;
+  let right =
+    this.right.constructor === Identifier ? this.right.ref : this.right;
 
-  if (['LESSEQ', 'GRTEQ', 'LESS', 'GRT'].includes(this.op)) {
+  if (["LESSEQ", "GRTEQ", "LESS", "GRT"].includes(this.op)) {
     check.isNumber(left);
     check.isNumber(right);
     this.type = BoolType;
-  } else if (['EQUALS', 'NOTEQ'].includes(this.op)) {
+  } else if (["EQUALS", "NOTEQ"].includes(this.op)) {
     check.expressionsHaveSameType(left, right);
     this.type = BoolType;
-  } else if (['AND', 'OR'].includes(this.op)) {
+  } else if (["AND", "OR"].includes(this.op)) {
     check.isBoolean(left);
     check.isBoolean(right);
     this.type = BoolType;
@@ -198,7 +209,7 @@ BinaryExp.prototype.analyze = function(context) {
 
 UnaryExp.prototype.analyze = function(context) {
   this.operand.analyze(context);
-  if (this.op === '~') {
+  if (this.op === "~") {
     check.isBoolean(this.operand);
     this.type = BoolType;
   } else {
@@ -214,7 +225,7 @@ ArrayExp.prototype.analyze = function(context) {
   check.isArrayType(this.type);
   this.size.analyze(context);
   check.isInteger(this.size);
-  this.members.forEach(member => {
+  this.members.forEach((member) => {
     member.analyze(context);
     if (this.type.memberType === IntType && member.type === FloatType) {
       this.type.memberType = FloatType;
@@ -225,7 +236,7 @@ ArrayExp.prototype.analyze = function(context) {
 };
 
 DictExp.prototype.analyze = function(context) {
-  this.keyValuePairs.forEach(keyValue => {
+  this.keyValuePairs.forEach((keyValue) => {
     keyValue.analyze(context);
     check.isAssignableTo(keyValue.key, this.keyValuePairs[0].key.type);
     check.isAssignableTo(keyValue.value, this.keyValuePairs[0].value.type);
@@ -245,17 +256,23 @@ TupleExp.prototype.analyze = function(context) {
     check.expressionsHaveSameType(value.type, this.values[index].type);
   });
   const valueTypes = [];
-  this.values.forEach(value => valueTypes.push(value.type));
+  this.values.forEach((value) => valueTypes.push(value.type));
   this.type = new TupleType(valueTypes);
 };
 
 CallExp.prototype.analyze = function(context) {
-  this.args.forEach(arg => arg.analyze(context));
-  if (this.callee === 'SAY') {
+  this.args.forEach((arg) => arg.analyze(context));
+  if (this.callee === "SAY") {
     this.callee = context.lookup(this.callee);
     check.isFunction(this.callee);
     check.legalArguments(this.args, this.callee.params);
     this.type = this.callee.returnType;
+  } else if (this.callee.constructor === MemberExp) {
+    this.callee.analyze(context);
+    check.isFunction(this.callee.subscript);
+    this.args.forEach((arg) =>
+      check.isAssignableTo(arg, this.callee.argType[0])
+    );
   } else {
     this.callee.analyze(context);
     check.isFunction(this.callee.ref);
@@ -275,6 +292,14 @@ RangeExp.prototype.analyze = function(context) {
   }
 };
 
+MemberExp.prototype.analyze = function(context) {
+  this.value.analyze(context);
+  check.isDict(this.value);
+  this.subscript = context.lookup(this.subscript);
+  this.argType = [this.value.type.keyType];
+  this.returnType = this.value.type.valueType;
+};
+
 SubscriptedExp.prototype.analyze = function(context) {
   this.array.analyze(context);
   check.isArray(this.array.ref);
@@ -284,7 +309,7 @@ SubscriptedExp.prototype.analyze = function(context) {
 };
 
 Param.prototype.analyze = function(context) {
-  if (typeof this.type === 'string') {
+  if (typeof this.type === "string") {
     this.type = context.lookup(this.type);
   } else {
     this.type.analyze(context);

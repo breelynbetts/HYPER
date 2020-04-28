@@ -1,0 +1,4 @@
+DICT<STR:INT> d IS {"hey": 1, "there": 3}!
+SAY(d.GET("there"))!
+SAY(KEYS(d))!
+SAY(VALUES(d))!

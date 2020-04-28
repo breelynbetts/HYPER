@@ -97,7 +97,10 @@ const builtin = {
     return `Object.keys(${d})`;
   },
   VALUES([d]) {
-    return `Object.keys(${d})`;
+    return `Object.values(${d})`;
+  },
+  GET([d]) {
+    return `[${d}]`;
   },
   EXIT(code) {
     return `process.exit(${code})`;
@@ -202,6 +205,9 @@ CallExp.prototype.gen = function() {
   const args = this.args.map((a) => a.gen());
   if (this.callee.builtin) {
     return builtin[this.callee.id](args);
+  } else if (this.callee.subscript) {
+    const mem = this.callee.gen();
+    return `${mem}` + builtin[this.callee.subscript.id](args);
   } else if (this.callee.ref.builtin) {
     return builtin[this.callee.ref.id](args);
   }
@@ -213,6 +219,11 @@ RangeExp.prototype.gen = function() {
   const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
   const step = this.step ? this.step.gen() : 1;
   return `Array.from({ length: (${end} - ${start} + 1) / ${step}}, (_, i) => ${start} + i * ${step} )`;
+};
+
+MemberExp.prototype.gen = function() {
+  const value = this.value.gen();
+  return `${value}`;
 };
 
 SubscriptedExp.prototype.gen = function() {

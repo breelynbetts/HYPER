@@ -38,6 +38,9 @@ module.exports = {
   isArray(expression) {
     doCheck(expression.type.constructor === ArrayType, "Not an array");
   },
+  isDict(expression) {
+    doCheck(expression.type.constructor === DictType, "Not a dictionary");
+  },
   isInteger(expression) {
     doCheck(expression.type === IntType, "Not an integer");
   },

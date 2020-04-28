@@ -108,6 +108,12 @@ ARR<STR> values IS VALUES(d)!
 `,
     /let d_(\d+)/,
   ],
+  evenMoreBuiltin: [
+    String.raw`DICT<STR:INT> d IS {"hey": 1, "there": 3}!
+SAY(d.GET("hey"))!
+`,
+    /let d_(\d+) /,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
