@@ -2,6 +2,7 @@ const {
   Func,
   Param,
   ArrayType,
+  DictType,
   PrimitiveType,
   AnyType,
   SequenceType,
@@ -30,6 +31,12 @@ const StandardFunctions = [
   new Func(new ArrayType(AnyType), "PUSH", [
     new Param(new ArrayType(AnyType), "a"),
     new Param(new UnionType(BoolType, FloatType, IntType, StringType), "u"),
+  ]),
+  new Func(new ArrayType(AnyType), "KEYS", [
+    new Param(new DictType(AnyType, AnyType), "d"),
+  ]),
+  new Func(new ArrayType(AnyType), "VALUES", [
+    new Param(new DictType(AnyType, AnyType), "d"),
   ]),
 ];
 

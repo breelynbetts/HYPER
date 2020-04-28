@@ -101,6 +101,13 @@ BOO c IS FALSE!
   `,
     /let b_(\d+) = \(!\(true\)\);\s*let c_(\d+) = false;\s*/,
   ],
+  builtins2: [
+    String.raw`DICT<STR:FLT> d IS {"a": 2.4, "b": 5.6}!
+ARR<STR> keys IS KEYS(d)!
+ARR<STR> values IS VALUES(d)!
+`,
+    /let d_(\d+)/,
+  ],
 };
 describe("The JavaScript generator", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {

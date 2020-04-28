@@ -93,6 +93,12 @@ const builtin = {
   PUSH([a, u]) {
     return `${a}.push(${u})`;
   },
+  KEYS([d]) {
+    return `Object.keys(${d})`;
+  },
+  VALUES([d]) {
+    return `Object.keys(${d})`;
+  },
   EXIT(code) {
     return `process.exit(${code})`;
   },

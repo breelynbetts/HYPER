@@ -1,4 +1,4 @@
-const util = require('util');
+const util = require("util");
 const {
   ArrayType,
   TupleType,
@@ -10,8 +10,14 @@ const {
   RangeExp,
   ReturnStatement,
   UnionType,
-} = require('../ast');
-const { BoolType, FloatType, IntType, StringType, NoneType } = require('./builtins');
+} = require("../ast");
+const {
+  BoolType,
+  FloatType,
+  IntType,
+  StringType,
+  NoneType,
+} = require("./builtins");
 
 function doCheck(condition, message) {
   if (!condition) {
@@ -21,40 +27,44 @@ function doCheck(condition, message) {
 
 module.exports = {
   isArrayType(type) {
-    doCheck(type.constructor === ArrayType, 'Not an ArrayType');
+    doCheck(type.constructor === ArrayType, "Not an ArrayType");
   },
   isDictType(type) {
-    doCheck(type.constructor === DictType, 'Not a DictType');
+    doCheck(type.constructor === DictType, "Not a DictType");
   },
   isTupleType(type) {
-    doCheck(type.constructor === TupleType, 'Not a TupleType');
+    doCheck(type.constructor === TupleType, "Not a TupleType");
   },
   isArray(expression) {
-    doCheck(expression.type.constructor === ArrayType, 'Not an array');
+    doCheck(expression.type.constructor === ArrayType, "Not an array");
   },
   isInteger(expression) {
-    doCheck(expression.type === IntType, 'Not an integer');
+    doCheck(expression.type === IntType, "Not an integer");
   },
   isNumber(expression) {
-    doCheck(expression.type === IntType || expression.type === FloatType, 'Not a number');
+    doCheck(
+      expression.type === IntType || expression.type === FloatType,
+      "Not a number"
+    );
   },
   isBoolean(expression) {
-    doCheck(expression.type === BoolType, 'Not a boolean');
+    doCheck(expression.type === BoolType, "Not a boolean");
   },
   isRangeOrArray(expression) {
     doCheck(
-      expression.constructor === RangeExp || expression.type.constructor === ArrayType,
-      'Not an Array or Range Expression'
+      expression.constructor === RangeExp ||
+        expression.type.constructor === ArrayType,
+      "Not an Array or Range Expression"
     );
   },
   isFunction(value) {
-    doCheck(value.constructor === Func, 'Not a function');
+    doCheck(value.constructor === Func, "Not a function");
   },
   inFunction(context) {
-    doCheck(context.currentFunction !== null, 'Not a function');
+    doCheck(context.currentFunction !== null, "Not a function");
   },
   expressionsHaveSameType(e1, e2) {
-    doCheck(e1.type === e2.type, 'Types must match exactly');
+    doCheck(e1.type === e2.type, "Types must match exactly");
   },
   coercivelyAssignable(t1, t2) {
     if (
@@ -74,13 +84,15 @@ module.exports = {
     } else if (
       t1.constructor === TupleType &&
       t2.constructor === TupleType &&
-      t1.memberTypes.every((t, i) => this.coercivelyAssignable(t, t2.memberTypes[i]))
+      t1.memberTypes.every((t, i) =>
+        this.coercivelyAssignable(t, t2.memberTypes[i])
+      )
     ) {
       return true;
     } else if (t1.constructor === DictType && t2.constructor === DictType) {
       return (
-        this.identicalTypes(t1.keyType, t2.keyType) &&
-        this.identicalTypes(t1.valueType, t2.valueType)
+        this.coercivelyAssignable(t1.keyType, t2.keyType) &&
+        this.coercivelyAssignable(t1.valueType, t2.valueType)
       );
     } else {
       return t1 === t2;
@@ -90,13 +102,16 @@ module.exports = {
     doCheck(
       this.coercivelyAssignable(expression.type, type) ||
         this.identicalTypes(expression.type, type),
-      `Expression of type ${util.format(expression.type)} not compatible with type ${util.format(
-        type
-      )}`
+      `Expression of type ${util.format(
+        expression.type
+      )} not compatible with type ${util.format(type)}`
     );
   },
   variableIsNotAlreadyDeclared(context, name) {
-    doCheck(!context.declarations.has(name), `${name} already declared in this scope`);
+    doCheck(
+      !context.declarations.has(name),
+      `${name} already declared in this scope`
+    );
   },
   inLoop(context, keyword) {
     doCheck(context.inLoop, `${keyword} can only be used in a loop`);
@@ -107,8 +122,8 @@ module.exports = {
       `Expected ${params.length} args in call, got ${args.length}`
     );
     if (params[0].type === AnyType) {
-      args.forEach(arg => {
-        doCheck(arg !== NoneType, 'say function parameter cannot be NoneType');
+      args.forEach((arg) => {
+        doCheck(arg !== NoneType, "say function parameter cannot be NoneType");
       });
     } else {
       args.forEach((arg, i) => {
@@ -120,13 +135,17 @@ module.exports = {
   },
   functionHasReturnStatement(func) {
     doCheck(
-      func.body.some(s => s.constructor === ReturnStatement) || func.returnType === NoneType,
-      'Expected function to have a return type'
+      func.body.some((s) => s.constructor === ReturnStatement) ||
+        func.returnType === NoneType,
+      "Expected function to have a return type"
     );
   },
   returnTypeMatchesFunctionReturnType(expression, func) {
     const funcReturnType = func.returnType;
-    let expType = expression.constructor === Identifier ? expression.ref.type : expression.type;
+    let expType =
+      expression.constructor === Identifier
+        ? expression.ref.type
+        : expression.type;
 
     doCheck(
       this.coercivelyAssignable(expType, funcReturnType),
