@@ -75,15 +75,14 @@ p {
 }
 
 .tm-nav {
-    background: rgba(0, 0, 0, 0.50);
     padding: 0;
 }
 
 .nav-link, .nav-link:focus {
-	color: white; 
+	color: white;
 	text-transform: uppercase;
 	letter-spacing: 1.5px;
-	font-size: 100%;
+	/* font-size: 18px; */
 }
 
 .nav-link:hover {
@@ -120,12 +119,13 @@ p {
 	margin-bottom: 0;
 }
 
-.tm-bg-black-translucent { background-color: rgba(0, 0, 0, 0.5); }
+.tm-bg-black-translucent {background-color: rgba(0, 0, 0, 0.70);}
 
 .tm-content-box {
 	margin: 0 100px;
-	padding: 40px;	
-    justify-content: center;
+	padding: 40px;
+	justify-content: center;
+	border: #fdb53d 7px solid;
 }
 
 .tm-page-content-width {
@@ -207,17 +207,15 @@ p {
 }
 
 .tm-section-home {
-	/*background-image: url(../images/image-01.jpg); */
 	background: #b2ddd1;
 }
 
-.tm-section-abouthyper { 
+.tm-section-abouthyper {
 	background: url(../images/image-02.jpg); 
 }
 
 .tm-section-codeexamples {
-	/*background-image: url(../images/image-03.jpg);*/
-	background: #b2ddd1; /*#abd7af;*/
+	background: #b2ddd1; 
 }
 
 .tm-section-developers { 
@@ -246,11 +244,11 @@ p {
 	width: 45%;
 	height: 300px;
 	padding: 20px;
-	border: #3a6ebd 7px solid;
+	border: #4877cc 7px solid;
 }
 
 .tm-codeexamples-section-title {
-	color: #3a6ebd;
+	color: #313131;
 	font-size: 2.2rem;
 	margin-bottom: 30px;
 }
@@ -287,10 +285,11 @@ footer {
 }
 
 .tm-text {
-	font-family: 'Open Sans', Helvetica, Arial, sans-serif; 
+	/* font-family: 'Open Sans', Helvetica, Arial, sans-serif; */
 	font-weight: bolder;
 	font-style: normal;
 	margin: 15px;
+	font-size: 18px;
 }
 
 #buttons {
