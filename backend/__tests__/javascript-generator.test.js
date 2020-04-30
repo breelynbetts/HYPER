@@ -92,7 +92,7 @@ TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 ⇨GIMME "x is zero"!
 ⇦GIMME "idk"!
 ⇦`,
-    /function isZero_(\d+)\(x_(\d+)\)/,
+    /function isZero_(\d+)\(x_(\d+)\) \{\s*if \(\(x_\2 >= 0\)\) \{\s*return "x ".concat\("> 0"\)\s*\} else if \(\(x_\2 !== 0\)\) \{\s*return "x ".concat\("< 0"\)\s*\} else {\s*return "x is zero";\s*\};\s*return "idk";\s*\};/,
   ],
   boolean: [
     String.raw`BOO b IS ~TRUE!
