@@ -4,16 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>HYPER Programming Language</title>
-<!--
-
-Template 2084 Zipper
-
-http://www.tooplate.com/view/2084-zipper
-
--->
-    <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro">  <!-- Google web font "Source Code Pro" -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arya:700bold">
@@ -21,24 +12,24 @@ http://www.tooplate.com/view/2084-zipper
     <link rel="stylesheet" href="css/zipper.min.css">                                      <!-- Bootstrap style -->
     <link rel="stylesheet" href="css/zipper.css">                                   <!-- Templatemo style -->
     <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-          <![endif]-->
+    <!-- load JS files -->
+    <script src="js/zipper.js"></script> 
+    <script src="js/jquery.min.js"></script>         <!-- jQuery (https://jquery.com/download/) -->
+    <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> <!-- Tether for Bootstrap (http://stackoverflow.com/questions/34567939/how-to-fix-the-error-error-bootstrap-tooltips-require-tether-http-github-h) -->
+    <script src="js/zipper.min.js"></script>             <!-- Bootstrap js (v4-alpha.getbootstrap.com/) -->
+    <script src="js/jquery.singlePageNav.min.js"></script>  <!-- Single page nav (https://github.com/ChrisWojcik/single-page-nav) --> 
 </head>
 
     <body>
 
         <div class="container-fluid">
             <!-- Navigation -->        
-            <div class="tm-nav">
+            <div class="tm-nav" id="tm-nav-id" style="background: #0000007d;">
                 <nav class="navbar">
 
                     <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar"></button> <!-- &#9776; ☰ -->
                     <div class="collapse navbar-toggleable-sm text-xs-center tm-navbar" id="tmNavbar">
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav" id="nav-txt" style="font-size: 18px;">
                             <li class="nav-item">
                                 <a class="nav-link" href="#home">Home</a>
                             </li>
@@ -51,9 +42,6 @@ http://www.tooplate.com/view/2084-zipper
                             <li class="nav-item">
                                 <a class="nav-link" href="#developers">Developers</a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="#contact">Contact</a>
-                            </li> -->
                         </ul>
                     </div>
                 </nav>
@@ -136,19 +124,19 @@ http://www.tooplate.com/view/2084-zipper
                     <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Dictionaries</h2>
-                            <p class="tm-code">DICT&#60;STR:INT&#62; d IS {"hey": 1, "there": 3}!<br>SAY(d.GET("there"))!<br>SAY(KEYS(d))!<br>SAY(VALUES(d))!</p>
+                            <p class="tm-code">DICT&#60;STR:INT&#62; luckyNum IS {"bree": 7, "lexi": 3, "maya": 9}!<br>SAY(luckyNum.GET("lexi"))!<br>SAY(KEYS(luckyNum))!<br>SAY(VALUES(luckyNum))!<br>SAY(luckyNum.SIZE())!</p>
                         </div>                        
                     </div>
                     <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Tuples</h2>
-                            <p class="tm-code">TBD</p>
+                            <p class="tm-code">TUP&#60;INT,FLT,STR&#62; toal IS ("Toal", 488, 10.8)!<br>SAY(toal)!</p>
                         </div>                        
                     </div>
                     <div class="tm-bg-black-translucent tm-block-codeexamples">
                         <div class="tm-content-box-inner">
                             <h2 class="tm-example-title">Arrays</h2>
-                            <p class="tm-code">TBD</p>
+                            <p class="tm-code">ARR array IS ["Hi", "I'm", "Hyper"]!<br>array.PUSH("LOL")!<br>SAY(CONCAT("The element @ index 0 is ", array[0]))!</p>
                         </div>                        
                     </div>
                     <div class="tm-bg-black-translucent tm-block-codeexamples">
@@ -170,7 +158,7 @@ http://www.tooplate.com/view/2084-zipper
                                 <div class="tm-content-box-inner">
                                     <figure>
                                         <img src="images/lexi.jpg" alt="lexi" class="profile-img">
-                                        <figcaption>Lexi Weingardt<br>I am a CS major at LMU! I love the beach and my favorite activity is tennis. I also love to hang with friends and family.<br>Here is the link to my Github: https://github.com/aweingar</figcaption>
+                                        <figcaption>Lexi Weingardt~<br>Lexi is a Computer Science major at LMU. She is an exec member in Pi Beta Phi on campus. Lexi loves the beach and her favorite activity is tennis. She also loves to hang out with friends and family.<br>Here is the link to her Github: <a href="https://github.com/aweingar">Lexi's Github</a></figcaption>
                                     </figure>
                                 </div>
                             </div>
@@ -178,7 +166,7 @@ http://www.tooplate.com/view/2084-zipper
                                 <div class="tm-content-box-inner">
                                     <figure>
                                         <img src="images/breelyn.jpg" alt="breelyn" class="profile-img">
-                                        <figcaption>Breelyn Betts</figcaption>
+                                        <figcaption>Breelyn Betts<br></figcaption>
                                     </figure>
                                 </div>          
                             </div>
@@ -186,7 +174,7 @@ http://www.tooplate.com/view/2084-zipper
                                 <div class="tm-content-box-inner">
                                     <figure>
                                         <img src="images/maya.jpg" alt="maya" class="profile-img">
-                                        <figcaption>Maya Dahlke</figcaption>
+                                        <figcaption>Maya Dahlke~<br>Maya is majoring in CS and minoring in applied math. She is excited to be Treasurer of SWE (20’-21’). She enjoys playing guitar, baking, and traveling. Loves action movies and reading - especially Webtoon comics :P<br>Here is the link to her Github: <a href="https://github.com/mdalhlke">Maya's Github</a></figcaption>
                                     </figure>
                                 </div>          
                             </div>                                        
@@ -196,16 +184,6 @@ http://www.tooplate.com/view/2084-zipper
             </section>
 
             <!-- Footer --> 
-            <footer>HYPER! Copyright &copy; 2020</footer>
-        
-        <!-- load JS files -->
-        <script src="js/jquery.min.js"></script>         <!-- jQuery (https://jquery.com/download/) -->
-        <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> <!-- Tether for Bootstrap (http://stackoverflow.com/questions/34567939/how-to-fix-the-error-error-bootstrap-tooltips-require-tether-http-github-h) -->
-        <script src="js/zipper.min.js"></script>             <!-- Bootstrap js (v4-alpha.getbootstrap.com/) -->
-        <script src="js/jquery.singlePageNav.min.js"></script>  <!-- Single page nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        
-        <script>     
-        </script>             
-
+            <footer>HYPER! Copyright &copy; 2020</footer>      
 </body>
 </html>
