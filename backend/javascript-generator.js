@@ -34,7 +34,6 @@ const {
   RangeExp,
   MemberExp,
   SubscriptedExp,
-  Param,
   KeyValue,
   Literal,
   Identifier,
@@ -229,7 +228,7 @@ MemberExp.prototype.gen = function() {
 SubscriptedExp.prototype.gen = function() {
   const id = this.array.gen();
   const sub = this.subscript.gen();
-  return `${id}\[${sub}\]`;
+  return `${id}[${sub}]`;
 };
 
 KeyValue.prototype.gen = function() {

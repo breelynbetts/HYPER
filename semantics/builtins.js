@@ -1,6 +1,5 @@
 const {
   Func,
-  MemberExp,
   Param,
   ArrayType,
   DictType,

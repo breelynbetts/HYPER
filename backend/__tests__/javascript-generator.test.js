@@ -34,7 +34,7 @@ STR b IS x(c, "3", 1)!
 FUNC STR x(ARR<STR> x, STR y, FLT z):
 ⇨GIMME y!
 ⇦`,
-    /let c_(\d+) = \[\"hey\"\];\s*/,
+    /let c_(\d+) = \["hey"\];\s*/,
   ],
   for: [
     String.raw`INT total!

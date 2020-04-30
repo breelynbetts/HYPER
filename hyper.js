@@ -15,7 +15,8 @@ function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
   }
   analyze(program);
   if (shouldOptimize) {
-    optimize(program);
+    console.log(shouldOptimize);
+    // optimize(program);
   }
   if (frontEndOnly) {
     return graphView(program);
