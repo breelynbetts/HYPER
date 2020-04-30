@@ -42,7 +42,7 @@ FUNC LITERALLYNOTHING hey():
 ⇨total IS total ADD x!
 ⇦SAY(RANGE[3, 12, 3])!
 ⇦`,
-    /let total_(\d+);\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of Array.from/,
+    /let total_(\d+);\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of Array.from\(\{\s*length: \(10 - 01 \+ 1\) \/ 1\s*\}, \(_, i\) => 01 \+ i \* 1\)\) \{\s*total_\1 = \(total_\1 \+ x_\3\);\s*\};/,
   ],
   if: [
     String.raw`FUNC STR isZero(INT x):
