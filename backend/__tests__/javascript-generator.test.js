@@ -105,13 +105,13 @@ BOO c IS FALSE!
 ARR<STR> keys IS KEYS(d)!
 ARR<STR> values IS VALUES(d)!
 `,
-    /let d_(\d+)/,
+    /let d_(\d+) = \{\s*"a": 2.4,\s*"b": 5.6\s*\};\s*let keys_(\d+) = Object.keys\(d_\1\);\s*let values_(\d+) = Object.values\(d_\1\);/,
   ],
   evenMoreBuiltin: [
     String.raw`DICT<STR:INT> d IS {"hey": 1, "there": 3}!
 SAY(d.GET("hey"))!
 `,
-    /let d_(\d+) /,
+    /let d_(\d+) = \{\s*"hey": 1,\s*"there": 3\s*\};\s*console.log\(d_(\d+)\["hey"\]\);/,
   ],
 };
 describe("The JavaScript generator", () => {
