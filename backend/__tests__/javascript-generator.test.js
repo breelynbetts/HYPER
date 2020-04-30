@@ -25,16 +25,15 @@ const fixture = {
 x IS 3!
 STR sub IS SUBSTRING("hello, world", 1, 5)!
 `,
-    /let x_(\d+) = 5;\s+x_\1 = 3/,
+    /let x_(\d+) = 5;\s*x_\1 = 3;\s*let sub_(\d+) = "hello, world".substr\(1, 5\)/,
   ],
-  // NEED TO EXPAND ON CHECK
   call: [
     String.raw`ARR<STR> c IS ["hey"]!
 STR b IS x(c, "3", 1)!
 FUNC STR x(ARR<STR> x, STR y, FLT z):
 ⇨GIMME y!
 ⇦`,
-    /let c_(\d+) = \["hey"\];\s*/,
+    /let c_(\d+) = \["hey"\];\s*let b_(\d+) = x_(\d+)\(c_\1, "3", 1\);\s*function x_(\d+)\(x_(\d+), y_(\d+), z_(\d+)\) \{\s*return y_(\d+);\s*\}/,
   ],
   for: [
     String.raw`INT total!
@@ -43,7 +42,7 @@ FUNC LITERALLYNOTHING hey():
 ⇨total IS total ADD x!
 ⇦SAY(RANGE[3, 12, 3])!
 ⇦`,
-    /let total_(\d+);\s*function hey_(\d+)\(\)/,
+    /let total_(\d+);\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of Array.from/,
   ],
   if: [
     String.raw`FUNC STR isZero(INT x):
