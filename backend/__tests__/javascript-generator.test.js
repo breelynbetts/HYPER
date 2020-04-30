@@ -61,11 +61,11 @@ UNTIL x EQUALS y AND x GRT 2:
 ⇨x IS x ADD 1!
 LEAVE!
 ⇦`,
-    /let x_(\d+) = \(-\(5\)\);\s*/,
+    /let x_(\d+) = \(-\(5\)\);\s*let y_(\d+) = 7;\s*while \(\(\(x_\1 === y_\2\) && \(x_\1 > 2\)\)\) \{\s*x_\1 = \(x_\1 \+ 1\);\s*break;\s*\};/,
   ],
   dict: [
     String.raw`DICT<STR:FLT> sizes IS {"red": 2.4, "blue": 3, "green": 5.6}!`,
-    /let sizes_(\d+) /,
+    /let sizes_(\d+) = \{\s*"red": 2.4,\s*"blue": 3,\s*"green": 5.6\s*};/,
   ],
   tup: [
     String.raw`ARR<FLT> evens IS [2, 4.3, 6, 8]!
@@ -75,7 +75,7 @@ FLT x IS evens[2]!
 SAY(x)!
 TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 `,
-    /let evens_(\d+) = \[2, 4.3, 6, 8\];\s*/,
+    /let evens_(\d+) = \[2, 4.3, 6, 8\];\s*let size_(\d+) = evens_\1.length;\s*evens_\1 = evens_\1.push\(10\);\s*let x_(\d+) = evens_\1\[2\];\s*console.log\(x_\3\);\s*let tuple_(\d+) = \["hello!", 2, 2.4\];/,
   ],
   builtins: [
     String.raw`EXIT(3)
