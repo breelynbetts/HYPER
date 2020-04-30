@@ -110,10 +110,6 @@ function generateBlock(block) {
   return block.map((s) => `${s.gen()};`).join("");
 }
 
-// function generateBody(block) {
-//   return block.map((s) => `${s.gen()}`).join("");
-// }
-
 module.exports = function(exp) {
   return beautify(exp.gen(), { indent_size: 2 });
 };

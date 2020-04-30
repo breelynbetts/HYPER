@@ -47,12 +47,12 @@ FUNC LITERALLYNOTHING hey():
   if: [
     String.raw`FUNC STR isZero(INT x):
 ⇨TRY x GRT 0:
-⇨GIMME CONCAT("x ", "> 0")!
+⇨GIMME "> 0"!
 ⇦NO?TRY x LESS 0:
-⇨GIMME CONCAT("x ", "< 0")!
+⇨GIMME "< 0"!
 ⇦GIMME "yes"!
 ⇦`,
-    /function isZero_(\d+)\(x_(\d+)\)/,
+    /function isZero_(\d+)\(x_(\d+)\) \{\s*if \(\(x_\2 > 0\)\) \{\s*return "> 0"\s*\} else if \(\(x_\2 < 0\)\) \{\s*return "< 0"\s*\};\s*return "yes";\s*\};/,
   ],
   while: [
     String.raw`INT x IS -5!
