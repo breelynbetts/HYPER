@@ -37,6 +37,7 @@ const {
   KeyValue,
   Literal,
   Identifier,
+  Ignore,
 } = require("../ast");
 const { StringType, BoolType } = require("../semantics/builtins");
 
@@ -133,7 +134,9 @@ Program.prototype.gen = function() {
 };
 
 Block.prototype.gen = function() {
-  const statements = this.statements.map((s) => `${s.gen()};`);
+  const statements = this.statements.map((s) =>
+    s.gen() === "" ? `${s.gen()}` : `${s.gen()};`
+  );
   return `${statements.join("")}`;
 };
 
@@ -262,4 +265,8 @@ Literal.prototype.gen = function() {
 
 Identifier.prototype.gen = function() {
   return javaScriptId(this.ref);
+};
+
+Ignore.prototype.gen = function() {
+  return "";
 };

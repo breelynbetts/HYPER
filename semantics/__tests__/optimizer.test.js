@@ -17,6 +17,13 @@ s IS (((10 DIV 5) MOD 2) MULT 10)!
 ⇦`,
     /while \(true\) \{\s*break;\s*\}/,
   ],
+  whileOpt: [
+    String.raw`INT x IS 3 MULT 0!
+UNTIL 7 NOTEQ 7:
+⇨LEAVE!
+⇦`,
+    /let x_(\d+) = 0;/,
+  ],
   subscriptedExp: [
     String.raw`ARR<FLT> evens IS [2, 4.3, 6, 8]!
 FLT x IS evens[2]!`,

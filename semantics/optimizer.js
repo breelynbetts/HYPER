@@ -64,7 +64,7 @@ Block.prototype.optimize = function() {
 
 WhileStatement.prototype.optimize = function() {
   this.test = this.test.optimize();
-  if (this.test instanceof Literal && this.test.value === "FALSE") {
+  if (this.test instanceof Literal && this.test.value === false) {
     return new Ignore();
   }
   this.body = this.body.map((s) => s.optimize()).filter((s) => s != null);
@@ -142,11 +142,9 @@ ArrayExp.prototype.optimize = function() {
 
 DictExp.prototype.optimize = function() {
   this.keyValuePairs = this.keyValuePairs.map((kv) => kv.optimize());
-  console.log(this);
   return this;
 };
 SubscriptedExp.prototype.optimize = function() {
-  console.log(this);
   this.array = this.array.optimize();
   this.subscript = this.subscript.optimize();
   return this;
