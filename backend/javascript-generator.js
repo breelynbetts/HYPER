@@ -224,7 +224,9 @@ CallExp.prototype.gen = function() {
 };
 
 RangeExp.prototype.gen = function() {
-  const start = this.isOpenInclusive ? this.start.gen() : this.start.gen() + 1;
+  const start = this.isOpenInclusive
+    ? this.start.gen()
+    : this.start.gen() + "+ 1";
   const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
   const step = this.step ? this.step.gen() : 1;
   return `RANGE(${start}, ${end}, ${step})`;

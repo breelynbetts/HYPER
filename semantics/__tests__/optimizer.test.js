@@ -20,7 +20,11 @@ s IS (((10 DIV 5) MOD 2) MULT 10)!
   subscriptedExp: [
     String.raw`ARR<FLT> evens IS [2, 4.3, 6, 8]!
 FLT x IS evens[2]!`,
-    /let nothing/,
+    /let evens_(\d+) = \[2, 4.3, 6, 8\];\s*let x_(\d+) = evens_\1\[2\];/,
+  ],
+  dictExp: [
+    String.raw`DICT<INT:STR> colors IS {1: "red", 2: "blue", 3: "orange"}!`,
+    /let colors_(\d+) = \{\s*1: "red",\s*2: "blue",\s*3: "orange"\s*\};/,
   ],
 };
 

@@ -7,13 +7,6 @@ const {
   Func,
   Assignment,
   Declaration,
-  ArrayType,
-  DictType,
-  TupleType,
-  SequenceType,
-  PrimitiveType,
-  AnyType,
-  UnionType,
   ReturnStatement,
   Break,
   BinaryExp,
@@ -143,15 +136,25 @@ UnaryExp.prototype.optimize = function() {
   }
 };
 ArrayExp.prototype.optimize = function() {
-  console.log(this);
   this.members = this.members.map((e) => e.optimize());
   return this;
 };
 
+DictExp.prototype.optimize = function() {
+  this.keyValuePairs = this.keyValuePairs.map((kv) => kv.optimize());
+  console.log(this);
+  return this;
+};
 SubscriptedExp.prototype.optimize = function() {
   console.log(this);
   this.array = this.array.optimize();
   this.subscript = this.subscript.optimize();
+  return this;
+};
+
+KeyValue.prototype.optimize = function() {
+  this.key = this.key.optimize();
+  this.value = this.value.optimize();
   return this;
 };
 
