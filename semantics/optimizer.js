@@ -50,6 +50,14 @@ function bothNumLiterals(e) {
   return isLiteral && isLeftNum && isRightNum;
 }
 
+function isFalse(item) {
+  return item instanceof Literal && item.value === false;
+}
+
+function isTrue(item) {
+  return item instanceof Literal && item.value === true;
+}
+
 Program.prototype.optimize = function() {
   this.block = this.block.optimize();
   return this;
@@ -103,6 +111,17 @@ BinaryExp.prototype.optimize = function() {
   if (this.op === "MULT" && isOne(this.right)) return this.left;
   if (this.op === "MULT" && isOne(this.left)) return this.right;
 
+  if ((this.op === "AND" && isFalse(this.right)) || isFalse(this.left)) {
+    return new Literal(BoolType, false);
+  }
+  if (this.op === "AND" && isTrue(this.right) && isTrue(this.left)) {
+    return this.left;
+  }
+  if (this.op === "OR" && isFalse(this.right)) return this.left;
+  if (this.op === "OR" && isFalse(this.left)) return this.right;
+  if (this.op === "OR" && isTrue(this.left)) return this.right;
+  if (this.op === "OR" && isTrue(this.right)) return this.left;
+
   if (bothNumLiterals(this)) {
     const [x, y] = [parseFloat(this.left.value), parseFloat(this.right.value)];
     let resultType = IntType;
@@ -120,8 +139,6 @@ BinaryExp.prototype.optimize = function() {
     if (this.op === "GRTEQ") return new Literal(BoolType, x >= y);
     if (this.op === "NOTEQ") return new Literal(BoolType, x !== y);
     if (this.op === "EQUALS") return new Literal(BoolType, x === y);
-    if (this.op === "AND") return new Literal(BoolType, x && y);
-    if (this.op === "OR") return new Literal(BoolType, x || y);
   }
   return this;
 };

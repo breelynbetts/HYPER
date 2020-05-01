@@ -6,10 +6,19 @@ require("../../semantics/optimizer");
 const fixture = {
   arithmetic: [String.raw`5 MULT -2 ADD 8`, String.raw`-2`],
   assignAndDec: [
-    String.raw`INT s IS 4 POW 2!
+    String.raw`INT s IS 4.5 POW 2!
 s IS (((10 DIV 5) MOD 2) MULT 10)!
   `,
-    /let s_(\d+) = 16;\s*s_\1 = 0;/,
+    /let s_(\d+) = 20.25;\s*s_\1 = 0;/,
+  ],
+  operations: [
+    String.raw`FALSE OR ~FALSE
+TRUE AND ~FALSE
+(5 LESS 2) AND (100 LESS 5)
+(7 GRT 2) OR (100 LESS 5)
+(7 GRT 2) OR (100 GRTEQ 5)
+`,
+    /idk/,
   ],
   while: [
     String.raw`UNTIL 7 EQUALS 7:
