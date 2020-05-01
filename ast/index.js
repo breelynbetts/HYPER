@@ -241,6 +241,7 @@ class Identifier {
     this.ref = ref;
   }
 }
+class Ignore {}
 
 module.exports = {
   Program,
@@ -273,4 +274,5 @@ module.exports = {
   KeyValue,
   Literal,
   Identifier,
+  Ignore,
 };

@@ -29,6 +29,7 @@ const {
   KeyValue,
   Literal,
   Identifier,
+  Ignore,
 } = require("../ast");
 
 const {
@@ -68,6 +69,25 @@ Block.prototype.optimize = function() {
   return this;
 };
 
+WhileStatement.prototype.optimize = function() {
+  this.test = this.test.optimize();
+  if (this.test instanceof Literal && this.test.value === "FALSE") {
+    return new Ignore();
+  }
+  this.body = this.body.map((s) => s.optimize()).filter((s) => s != null);
+  return this;
+};
+
+Assignment.prototype.optimize = function() {
+  this.source = this.source.optimize();
+  return this;
+};
+
+Declaration.prototype.optimize = function() {
+  this.init = this.init.optimize();
+  return this;
+};
+
 Break.prototype.optimize = function() {
   return this;
 };
@@ -90,8 +110,6 @@ BinaryExp.prototype.optimize = function() {
   if (this.op === "MULT" && isOne(this.right)) return this.left;
   if (this.op === "MULT" && isOne(this.left)) return this.right;
 
-  //   "POW" "OR" "AND" "LESSEQ" "EQUALS" "NOTEQ" "GRTEQ"
-  //   "LESS"  "GRT" "MULT" "DIV" "MOD" "ADD"  "SUB" "TRUE"  "FALSE"
   if (bothNumLiterals(this)) {
     const [x, y] = [parseFloat(this.left.value), parseFloat(this.right.value)];
     let resultType = IntType;
@@ -102,8 +120,15 @@ BinaryExp.prototype.optimize = function() {
     if (this.op === "MULT") return new Literal(resultType, x * y);
     if (this.op === "DIV") return new Literal(resultType, x / y);
     if (this.op === "MOD") return new Literal(resultType, x % y);
-    if (this.op === "LESS") return new Literal(BoolType, x < y);
     if (this.op === "POW") return new Literal(resultType, x ** y);
+    if (this.op === "LESS") return new Literal(BoolType, x < y);
+    if (this.op === "GRT") return new Literal(BoolType, x > y);
+    if (this.op === "LESSEQ") return new Literal(BoolType, x <= y);
+    if (this.op === "GRTEQ") return new Literal(BoolType, x >= y);
+    if (this.op === "NOTEQ") return new Literal(BoolType, x !== y);
+    if (this.op === "EQUALS") return new Literal(BoolType, x === y);
+    if (this.op === "AND") return new Literal(BoolType, x && y);
+    if (this.op === "OR") return new Literal(BoolType, x || y);
   }
   return this;
 };
@@ -117,7 +142,23 @@ UnaryExp.prototype.optimize = function() {
     return new Literal(this.operand.type, -this.operand.value);
   }
 };
+ArrayExp.prototype.optimize = function() {
+  console.log(this);
+  this.members = this.members.map((e) => e.optimize());
+  return this;
+};
+
+SubscriptedExp.prototype.optimize = function() {
+  console.log(this);
+  this.array = this.array.optimize();
+  this.subscript = this.subscript.optimize();
+  return this;
+};
 
 Literal.prototype.optimize = function() {
+  return this;
+};
+
+Identifier.prototype.optimize = function() {
   return this;
 };
