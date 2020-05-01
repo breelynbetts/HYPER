@@ -54,10 +54,6 @@ function isFalse(item) {
   return item instanceof Literal && item.value === false;
 }
 
-function isTrue(item) {
-  return item instanceof Literal && item.value === true;
-}
-
 Program.prototype.optimize = function() {
   this.block = this.block.optimize();
   return this;
@@ -103,7 +99,6 @@ BinaryExp.prototype.optimize = function() {
   if (this.op === "ADD" && isZero(this.right)) return this.left;
   if (this.op === "ADD" && isZero(this.left)) return this.right;
   if (this.op === "SUB" && isZero(this.right)) return this.left;
-  if (this.op === "SUB" && isZero(this.left)) return -this.left;
   if (this.op === "MULT" && isZero(this.right))
     return new Literal(leftType, "0");
   if (this.op === "MULT" && isZero(this.left))
@@ -111,16 +106,16 @@ BinaryExp.prototype.optimize = function() {
   if (this.op === "MULT" && isOne(this.right)) return this.left;
   if (this.op === "MULT" && isOne(this.left)) return this.right;
 
-  if ((this.op === "AND" && isFalse(this.right)) || isFalse(this.left)) {
+  if (this.op === "AND" && (isFalse(this.right) || isFalse(this.left))) {
     return new Literal(BoolType, false);
   }
-  if (this.op === "AND" && isTrue(this.right) && isTrue(this.left)) {
-    return this.left;
+  if (this.op === "OR") {
+    return new Literal(BoolType, this.left.value || this.right.value);
   }
-  if (this.op === "OR" && isFalse(this.right)) return this.left;
-  if (this.op === "OR" && isFalse(this.left)) return this.right;
-  if (this.op === "OR" && isTrue(this.left)) return this.right;
-  if (this.op === "OR" && isTrue(this.right)) return this.left;
+  // if (this.op === "OR" && isTrue(this.right)) {
+  //   console.log(this.right);
+  //   return this.right;
+  // }
 
   if (bothNumLiterals(this)) {
     const [x, y] = [parseFloat(this.left.value), parseFloat(this.right.value)];
@@ -149,8 +144,10 @@ UnaryExp.prototype.optimize = function() {
     return new Literal(BoolType, !this.operand.value);
   }
   if (this.op === "-" && this.operand instanceof Literal) {
+    console.log("here");
     return new Literal(this.operand.type, -this.operand.value);
   }
+  return this;
 };
 ArrayExp.prototype.optimize = function() {
   this.members = this.members.map((e) => e.optimize());

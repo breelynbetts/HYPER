@@ -12,11 +12,22 @@ s IS (((10 DIV 5) MOD 2) MULT 10)!
     /let s_(\d+) = 20.25;\s*s_\1 = 0;/,
   ],
   operations: [
-    String.raw`FALSE OR ~FALSE
+    String.raw`INT z IS -12412!
+z IS -z!
+FALSE OR (~FALSE)
 TRUE AND ~FALSE
+FALSE OR TRUE
 (5 LESS 2) AND (100 LESS 5)
 (7 GRT 2) OR (100 LESS 5)
 (7 GRT 2) OR (100 GRTEQ 5)
+5000 ADD 0
+0 ADD 23502
+2000 SUB 0
+0 SUB 12421904
+1 MULT 12421
+149502 MULT 1
+INT x IS -(-(100 ADD 5))!
+35 LESSEQ 5
 `,
     /idk/,
   ],
