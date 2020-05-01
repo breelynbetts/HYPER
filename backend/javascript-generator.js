@@ -110,12 +110,26 @@ function generateBlock(block) {
   return block.map((s) => `${s.gen()};`).join("");
 }
 
+const helperFunction = `
+function RANGE(start, end, step) {
+  const rangeArr = [];
+  let current = start; 
+  while (current <= end) {
+    rangeArr.push(current);
+    current += step;
+  }
+  return rangeArr;
+}`;
+
 module.exports = function(exp) {
   return beautify(exp.gen(), { indent_size: 2 });
 };
 
 Program.prototype.gen = function() {
-  return this.block.gen();
+  const functions = helperFunction;
+  const block = this.block.gen();
+  const body = block.includes("RANGE") ? `${functions}${block}` : `${block}`;
+  return `${body}`;
 };
 
 Block.prototype.gen = function() {
@@ -213,7 +227,7 @@ RangeExp.prototype.gen = function() {
   const start = this.isOpenInclusive ? this.start.gen() : this.start.gen() + 1;
   const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
   const step = this.step ? this.step.gen() : 1;
-  return `Array.from({ length: (${end} - ${start} + 1) / ${step}}, (_, i) => ${start} + i * ${step} )`;
+  return `RANGE(${start}, ${end}, ${step})`;
 };
 
 MemberExp.prototype.gen = function() {
@@ -239,7 +253,7 @@ Literal.prototype.gen = function() {
       if (this.value === true) return "true";
       return "false";
     default:
-      if (this.value === 0) return `0`;
+      if (this.value === 0) return Number(0);
       return this.value;
   }
 };

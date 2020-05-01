@@ -124,6 +124,9 @@ module.exports = {
       args.length === params.length,
       `Expected ${params.length} args in call, got ${args.length}`
     );
+    if (params.length === 0) {
+      return;
+    }
     if (params[0].type === AnyType) {
       args.forEach((arg) => {
         doCheck(arg !== NoneType, "say function parameter cannot be NoneType");
