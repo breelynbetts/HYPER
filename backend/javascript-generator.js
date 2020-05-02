@@ -39,7 +39,7 @@ const {
   Identifier,
   Ignore,
 } = require("../ast");
-const { StringType, BoolType } = require("../semantics/builtins");
+const { StringType, BoolType, IntType } = require("../semantics/builtins");
 
 function makeOp(op) {
   return (
@@ -227,9 +227,16 @@ CallExp.prototype.gen = function() {
 };
 
 RangeExp.prototype.gen = function() {
-  const start = this.isOpenInclusive
-    ? this.start.gen()
-    : this.start.gen() + "+ 1";
+  let start = this.isOpenInclusive ? this.start.gen() : true;
+  if (start === true) {
+    start = new BinaryExp(
+      new Literal(IntType, this.start.gen()),
+      "ADD",
+      new Literal(IntType, 1)
+    );
+    start = start.gen();
+  }
+  console.log(start);
   const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
   const step = this.step ? this.step.gen() : 1;
   return `RANGE(${start}, ${end}, ${step})`;

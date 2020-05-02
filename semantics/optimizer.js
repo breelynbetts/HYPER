@@ -18,7 +18,6 @@ const {
   RangeExp,
   MemberExp,
   SubscriptedExp,
-  Param,
   KeyValue,
   Literal,
   Identifier,
@@ -187,15 +186,27 @@ DictExp.prototype.optimize = function() {
   return this;
 };
 
+TupleExp.prototype.optimize = function() {
+  this.values = this.values.map((l) => l.optimize());
+  return this;
+};
+
 CallExp.prototype.optimize = function() {
   this.callee = this.callee.optimize();
   this.args = this.args.map((a) => a.optimize());
   return this;
 };
 
+RangeExp.prototype.optimize = function() {
+  console.log(this);
+  this.start = this.start.optimize();
+  this.end = this.end.optimize();
+  this.step = this.step ? this.step.optimize() : null;
+  return this;
+};
+
 MemberExp.prototype.optimize = function() {
   this.subscript = this.subscript.optimize();
-  console.log(this);
   return this;
 };
 

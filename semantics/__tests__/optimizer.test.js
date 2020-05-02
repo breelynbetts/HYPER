@@ -83,6 +83,16 @@ SAY(d.GET("hey"))!
 `,
     /let d_(\d+) = \{\s*"hey": 1,\s*"there": 3\s*\};\s*console.log\(d_\1\["hey"\]\);/,
   ],
+  rangeAndTuple: [
+    String.raw`TUP<INT,STR,BOO> a IS (2, "hey", FALSE)!
+INT total IS 1!
+FUNC LITERALLYNOTHING hey():
+⇨LOOKAT INT x IN RANGE(0, 10):
+⇨total IS total ADD x!
+⇦SAY(RANGE[3, 12, 3])!
+⇦`,
+    /yes/,
+  ],
 };
 
 describe("The JavaScript generator with optimization", () => {

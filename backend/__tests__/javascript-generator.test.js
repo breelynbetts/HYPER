@@ -43,7 +43,7 @@ FUNC LITERALLYNOTHING hey():
 ⇨total IS total ADD x!
 ⇦SAY(RANGE[3, 12, 3])!
 ⇦`,
-    /function RANGE\(start, end, step\) \{\s+const rangeArr = \[\];\s*let current = start;\s*while \(current <= end\) \{\s*rangeArr.push\(current\);\s*current \+= step;\s*\}\s*return rangeArr;\s*\}\s*let total_(\d+);\s*hey_(\d+)\(\);\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of RANGE\(0 \+ 1, 10, 1\)\) \{\s*total_\1 = \(total_\1 \+ x_\4\);\s*\};\s*console.log\(RANGE\(3, 13, 3\)\);\s*\};/,
+    /function RANGE\(start, end, step\) \{\s+const rangeArr = \[\];\s*let current = start;\s*while \(current <= end\) \{\s*rangeArr.push\(current\);\s*current \+= step;\s*\}\s*return rangeArr;\s*\}\s*let total_(\d+);\s*hey_(\d+)\(\);\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of RANGE\(\(0 \+ 1\), 10, 1\)\) \{\s*total_\1 = \(total_\1 \+ x_\4\);\s*\};\s*console.log\(RANGE\(3, 13, 3\)\);\s*\};/,
   ],
   if: [
     String.raw`FUNC STR isZero(INT x):
