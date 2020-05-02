@@ -87,9 +87,9 @@ SAY(d.GET("hey"))!
     String.raw`TUP<INT,STR,BOO> a IS (2, "hey", FALSE)!
 INT total IS 1!
 FUNC LITERALLYNOTHING hey():
-⇨LOOKAT INT x IN RANGE(0, 10):
+⇨LOOKAT INT x IN RANGE(0 ADD 2, 10):
 ⇨total IS total ADD x!
-⇦SAY(RANGE[3, 12, 3])!
+⇦SAY(RANGE(3, 12, 3])!
 ⇦`,
     /yes/,
   ],

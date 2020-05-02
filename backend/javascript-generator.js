@@ -227,17 +227,14 @@ CallExp.prototype.gen = function() {
 };
 
 RangeExp.prototype.gen = function() {
-  let start = this.isOpenInclusive ? this.start.gen() : true;
-  if (start === true) {
-    start = new BinaryExp(
-      new Literal(IntType, this.start.gen()),
-      "ADD",
-      new Literal(IntType, 1)
-    );
-    start = start.gen();
-  }
-  console.log(start);
-  const end = this.isCloseInclusive ? this.end.gen() + 1 : this.end.gen();
+  let start = this.start.gen();
+  start = this.isOpenInclusive ? start : start + 1;
+  let end = this.end.gen();
+  end = this.isCloseInclusive
+    ? end
+    : typeof end === "string"
+    ? end + "- 1"
+    : end - 1;
   const step = this.step ? this.step.gen() : 1;
   return `RANGE(${start}, ${end}, ${step})`;
 };
