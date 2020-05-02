@@ -75,6 +75,27 @@ WhileStatement.prototype.optimize = function() {
   return this;
 };
 
+IfStatement.prototype.optimize = function() {
+  this.tests = this.tests.map((t) => t.optimize());
+  let toRemove = [];
+
+  this.tests.forEach((test, i) => {
+    if (isFalse(test)) {
+      toRemove.push(i);
+    }
+  });
+  toRemove.forEach((i) => {
+    this.tests.splice(i, 1);
+    this.consequents.splice(i, 1);
+  });
+  return this;
+};
+
+Func.prototype.optimize = function() {
+  this.body = this.body.map((s) => s.optimize());
+  return this;
+};
+
 Assignment.prototype.optimize = function() {
   this.source = this.source.optimize();
   return this;
@@ -82,6 +103,12 @@ Assignment.prototype.optimize = function() {
 
 Declaration.prototype.optimize = function() {
   this.init = this.init.optimize();
+  return this;
+};
+
+ReturnStatement.prototype.optimize = function() {
+  console.log(this);
+  this.expression = this.expression.optimize();
   return this;
 };
 
@@ -112,10 +139,6 @@ BinaryExp.prototype.optimize = function() {
   if (this.op === "OR") {
     return new Literal(BoolType, this.left.value || this.right.value);
   }
-  // if (this.op === "OR" && isTrue(this.right)) {
-  //   console.log(this.right);
-  //   return this.right;
-  // }
 
   if (bothNumLiterals(this)) {
     const [x, y] = [parseFloat(this.left.value), parseFloat(this.right.value)];
@@ -144,7 +167,6 @@ UnaryExp.prototype.optimize = function() {
     return new Literal(BoolType, !this.operand.value);
   }
   if (this.op === "-" && this.operand instanceof Literal) {
-    console.log("here");
     return new Literal(this.operand.type, -this.operand.value);
   }
   return this;

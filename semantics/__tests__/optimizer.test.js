@@ -29,7 +29,7 @@ FALSE OR TRUE
 INT x IS -(-(100 ADD 5))!
 35 LESSEQ 5
 `,
-    /idk/,
+    /let z_(\d+) = -12412;\s*z_\1 = \(-\(z_\1\)\);/,
   ],
   while: [
     String.raw`UNTIL 7 EQUALS 7:
@@ -52,6 +52,18 @@ FLT x IS evens[2]!`,
   dictExp: [
     String.raw`DICT<INT:STR> colors IS {1: "red", 2: "blue", 3: "orange"}!`,
     /let colors_(\d+) = \{\s*1: "red",\s*2: "blue",\s*3: "orange"\s*\};/,
+  ],
+  func: [
+    String.raw`FUNC STR isZero(INT x):
+⇨TRY x GRT 0:
+⇨GIMME "> 0"!
+⇦NO?TRY 0 NOTEQ 0:
+⇨SAY("removeTHIS")!
+⇦NO?TRY x LESS 0:
+⇨GIMME "< 0"!
+⇦GIMME "yes"!
+⇦`,
+    /function isZero_(\d+)\(x_(\d+)\) \{\s*if \(\(x_\2 > 0\)\) \{\s*return "> 0"\s*\} else if \(\(x_\2 < 0\)\) \{\s*return "< 0"\s*\};\s*return "yes";\s*\};/,
   ],
 };
 
