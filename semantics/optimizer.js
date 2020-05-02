@@ -199,7 +199,7 @@ CallExp.prototype.optimize = function() {
 
 RangeExp.prototype.optimize = function() {
   this.start = this.start.optimize();
-  console.log(this.start);
+
   // this.start = !this.isOpenInclusive ? new Literal(IntType, this.start.value + 1) :
   this.end = this.end.optimize();
   this.step = this.step ? this.step.optimize() : null;

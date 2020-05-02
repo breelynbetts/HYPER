@@ -39,7 +39,7 @@ const {
   Identifier,
   Ignore,
 } = require("../ast");
-const { StringType, BoolType, IntType } = require("../semantics/builtins");
+const { StringType, BoolType } = require("../semantics/builtins");
 
 function makeOp(op) {
   return (

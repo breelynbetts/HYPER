@@ -89,9 +89,9 @@ INT total IS 1!
 FUNC LITERALLYNOTHING hey():
 ⇨LOOKAT INT x IN RANGE(0 ADD 2, 10):
 ⇨total IS total ADD x!
-⇦SAY(RANGE(3, 12, 3])!
+⇦SAY(RANGE(3, 12 ADD 5, 3])!
 ⇦`,
-    /yes/,
+    /function RANGE\(start, end, step\) \{\s+const rangeArr = \[\];\s*let current = start;\s*while \(current <= end\) \{\s*rangeArr.push\(current\);\s*current \+= step;\s*\}\s*return rangeArr;\s*\}\s*let a_(\d+) = \[2, "hey", false\];\s*let total_(\d+) = 1;\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of RANGE\(3, 9, 1\)\) \{\s*total_\2 = \(total_\2 \+ x_\4\);\s*\};\s*console.log\(RANGE\(4, 17, 3\)\);\s*\};/,
   ],
 };
 
