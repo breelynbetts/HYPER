@@ -25,13 +25,7 @@ const {
   Ignore,
 } = require("../ast");
 
-const {
-  BoolType,
-  FloatType,
-  IntType,
-  NoneType,
-  StringType,
-} = require("./builtins");
+const { BoolType, FloatType, IntType } = require("./builtins");
 
 module.exports = (program) => program.optimize();
 
@@ -66,6 +60,13 @@ Block.prototype.optimize = function() {
   return this;
 };
 
+ForStatement.prototype.optimize = function() {
+  this.index = this.index.optimize();
+  this.collection = this.collection.optimize();
+  this.body = this.body.map((s) => s.optimize());
+  return this;
+};
+
 WhileStatement.prototype.optimize = function() {
   this.test = this.test.optimize();
   if (this.test instanceof Literal && this.test.value === false) {
@@ -92,7 +93,9 @@ IfStatement.prototype.optimize = function() {
 };
 
 Func.prototype.optimize = function() {
-  this.body = this.body.map((s) => s.optimize());
+  if (this.body) {
+    this.body = this.body.map((s) => s.optimize());
+  }
   return this;
 };
 
@@ -102,12 +105,13 @@ Assignment.prototype.optimize = function() {
 };
 
 Declaration.prototype.optimize = function() {
-  this.init = this.init.optimize();
+  if (this.init) {
+    this.init = this.init.optimize();
+  }
   return this;
 };
 
 ReturnStatement.prototype.optimize = function() {
-  console.log(this);
   this.expression = this.expression.optimize();
   return this;
 };
@@ -180,6 +184,13 @@ DictExp.prototype.optimize = function() {
   this.keyValuePairs = this.keyValuePairs.map((kv) => kv.optimize());
   return this;
 };
+
+CallExp.prototype.optimize = function() {
+  this.callee = this.callee.optimize();
+  this.args = this.args.map((a) => a.optimize());
+  return this;
+};
+
 SubscriptedExp.prototype.optimize = function() {
   this.array = this.array.optimize();
   this.subscript = this.subscript.optimize();

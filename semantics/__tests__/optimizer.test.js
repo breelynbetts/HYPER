@@ -65,6 +65,18 @@ FLT x IS evens[2]!`,
 ⇦`,
     /function isZero_(\d+)\(x_(\d+)\) \{\s*if \(\(x_\2 > 0\)\) \{\s*return "> 0"\s*\} else if \(\(x_\2 < 0\)\) \{\s*return "< 0"\s*\};\s*return "yes";\s*\};/,
   ],
+  forExp: [
+    String.raw`INT total IS 1!
+DICT<STR:INT> d IS {"a": 1, "b": 2, "c": 3}!
+hey()
+FUNC LITERALLYNOTHING hey():
+⇨LOOKAT INT x IN VALUES(d):
+⇨total IS total ADD x!
+SAY(total)!
+⇦SAY("done")!
+⇦`,
+    /let total_(\d+) = 1;\s*let d_(\d+) = \{\s*"a": 1,\s*"b": 2,\s*"c": 3\s*\};\s*hey_(\d+)\(\);\s*function hey_\3\(\) \{\s*for \(let x_(\d+) of Object.values\(d_\2\)\) \{\s*total_\1 = \(total_\1 \+ x_\4\);\s*console.log\(total_\1\);\s*\};\s*console.log\("done"\);\s*\};/,
+  ],
 };
 
 describe("The JavaScript generator with optimization", () => {
