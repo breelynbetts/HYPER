@@ -57,6 +57,8 @@ Block.prototype.optimize = function() {
   this.statements = this.statements
     .map((s) => s.optimize())
     .filter((s) => s != null);
+  let blockContainsFuncDec = this.statements.filter((s) => s instanceof Func);
+  // console.log(blockContainsFuncDec);
   return this;
 };
 
@@ -188,6 +190,12 @@ DictExp.prototype.optimize = function() {
 CallExp.prototype.optimize = function() {
   this.callee = this.callee.optimize();
   this.args = this.args.map((a) => a.optimize());
+  return this;
+};
+
+MemberExp.prototype.optimize = function() {
+  this.subscript = this.subscript.optimize();
+  console.log(this);
   return this;
 };
 

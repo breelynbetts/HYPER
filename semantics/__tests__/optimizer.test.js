@@ -77,6 +77,12 @@ SAY(total)!
 ⇦`,
     /let total_(\d+) = 1;\s*let d_(\d+) = \{\s*"a": 1,\s*"b": 2,\s*"c": 3\s*\};\s*hey_(\d+)\(\);\s*function hey_\3\(\) \{\s*for \(let x_(\d+) of Object.values\(d_\2\)\) \{\s*total_\1 = \(total_\1 \+ x_\4\);\s*console.log\(total_\1\);\s*\};\s*console.log\("done"\);\s*\};/,
   ],
+  memberExp: [
+    String.raw`DICT<STR:INT> d IS {"hey": 1, "there": 3}!
+SAY(d.GET("hey"))!
+`,
+    /let d_(\d+) = \{\s*"hey": 1,\s*"there": 3\s*\};\s*console.log\(d_\1\["hey"\]\);/,
+  ],
 };
 
 describe("The JavaScript generator with optimization", () => {
