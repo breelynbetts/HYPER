@@ -47,17 +47,30 @@ function isFalse(item) {
   return item instanceof Literal && item.value === false;
 }
 
+function declaredFuncIsCalled(decl, calls, stmts) {
+  decl = decl.filter((d) => !calls.includes(d));
+  return stmts.filter((s) => !(s instanceof Func && decl.includes(s.id)));
+}
+
+let functionDeclarations = [];
+let calledFunctions = [];
+
 Program.prototype.optimize = function() {
   this.block = this.block.optimize();
   return this;
 };
 
 Block.prototype.optimize = function() {
+  functionDeclarations = [];
+  calledFunctions = [];
   this.statements = this.statements
     .map((s) => s.optimize())
     .filter((s) => s != null);
-  let blockContainsFuncDec = this.statements.filter((s) => s instanceof Func);
-  // console.log(blockContainsFuncDec);
+  this.statements = declaredFuncIsCalled(
+    functionDeclarations,
+    calledFunctions,
+    this.statements
+  );
   return this;
 };
 
@@ -94,6 +107,7 @@ IfStatement.prototype.optimize = function() {
 };
 
 Func.prototype.optimize = function() {
+  this.builtin ? "" : functionDeclarations.push(this.id);
   if (this.body) {
     this.body = this.body.map((s) => s.optimize());
   }
@@ -192,6 +206,7 @@ TupleExp.prototype.optimize = function() {
 };
 
 CallExp.prototype.optimize = function() {
+  this.callee.ref ? calledFunctions.push(this.callee.ref.id) : "";
   this.callee = this.callee.optimize();
   this.args = this.args.map((a) => a.optimize());
   return this;
@@ -199,8 +214,6 @@ CallExp.prototype.optimize = function() {
 
 RangeExp.prototype.optimize = function() {
   this.start = this.start.optimize();
-
-  // this.start = !this.isOpenInclusive ? new Literal(IntType, this.start.value + 1) :
   this.end = this.end.optimize();
   this.step = this.step ? this.step.optimize() : null;
   return this;

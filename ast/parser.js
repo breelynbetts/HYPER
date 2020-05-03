@@ -40,7 +40,7 @@ function arrayToNullable(a) {
 /* eslint-disable no-unused-vars */
 const astGenerator = grammar.createSemantics().addOperation("ast", {
   Program(b) {
-    return new Program(b.ast());
+    return new Program(arrayToNullable(b.ast()));
   },
   Block(_new, stmts, _) {
     return new Block(stmts.ast());

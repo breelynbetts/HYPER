@@ -39,11 +39,12 @@ FUNC STR x(ARR<STR> x, STR y, FLT z):
     String.raw`INT total!
 hey()
 FUNC LITERALLYNOTHING hey():
-⇨LOOKAT INT x IN RANGE(0, 10 ADD 3):
+⇨LOOKAT INT x IN RANGE(0, 10 ADD 3]:
 ⇨total IS total ADD x!
 ⇦SAY(RANGE[3, 12, 3 ADD 1))!
+SAY(RANGE[3, 12 ADD 2, 3))!
 ⇦`,
-    /function RANGE\(start, end, step\) \{\s+const rangeArr = \[\];\s*let current = start;\s*while \(current <= end\) \{\s*rangeArr.push\(current\);\s*current \+= step;\s*\}\s*return rangeArr;\s*\}\s*let total_(\d+);\s*hey_(\d+)\(\);\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of RANGE\(1, \(10 \+ 3\) - 1, 1\)\) \{\s*total_\1 = \(total_\1 \+ x_\4\);\s*\};\s*console.log\(RANGE\(3, 11, \(3 \+ 1\)\)\);\s*\};/,
+    /function RANGE\(start, end, step\) \{\s+const rangeArr = \[\];\s*let current = start;\s*while \(current <= end\) \{\s*rangeArr.push\(current\);\s*current \+= step;\s*\}\s*return rangeArr;\s*\}\s*let total_(\d+);\s*hey_(\d+)\(\);\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of RANGE\(1, \(10 \+ 3\), 1\)\) \{\s*total_\1 = \(total_\1 \+ x_\4\);\s*\};\s*console.log\(RANGE\(3, 11, \(3 \+ 1\)\)\);\s*console.log\(RANGE\(3, \(12 \+ 2\) - 1, 3\)\);\s*\};/,
   ],
   if: [
     String.raw`FUNC STR isZero(INT x):

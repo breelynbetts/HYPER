@@ -54,7 +54,8 @@ FLT x IS evens[2]!`,
     /let colors_(\d+) = \{\s*1: "red",\s*2: "blue",\s*3: "orange"\s*\};/,
   ],
   func: [
-    String.raw`FUNC STR isZero(INT x):
+    String.raw`STR s IS "the function should be GONE"!
+FUNC STR isZero(INT x):
 ⇨TRY x GRT 0:
 ⇨GIMME "> 0"!
 ⇦NO?TRY 0 NOTEQ 0:
@@ -63,19 +64,18 @@ FLT x IS evens[2]!`,
 ⇨GIMME "< 0"!
 ⇦GIMME "yes"!
 ⇦`,
-    /function isZero_(\d+)\(x_(\d+)\) \{\s*if \(\(x_\2 > 0\)\) \{\s*return "> 0"\s*\} else if \(\(x_\2 < 0\)\) \{\s*return "< 0"\s*\};\s*return "yes";\s*\};/,
+    /let s_(\d+) = "the function should be GONE";/,
   ],
   forExp: [
     String.raw`INT total IS 1!
 DICT<STR:INT> d IS {"a": 1, "b": 2, "c": 3}!
-hey()
 FUNC LITERALLYNOTHING hey():
 ⇨LOOKAT INT x IN VALUES(d):
 ⇨total IS total ADD x!
 SAY(total)!
 ⇦SAY("done")!
 ⇦`,
-    /let total_(\d+) = 1;\s*let d_(\d+) = \{\s*"a": 1,\s*"b": 2,\s*"c": 3\s*\};\s*hey_(\d+)\(\);\s*function hey_\3\(\) \{\s*for \(let x_(\d+) of Object.values\(d_\2\)\) \{\s*total_\1 = \(total_\1 \+ x_\4\);\s*console.log\(total_\1\);\s*\};\s*console.log\("done"\);\s*\};/,
+    /let total_(\d+) = 1;\s*let d_(\d+) = \{\s*"a": 1,\s*"b": 2,\s*"c": 3\s*\};/,
   ],
   memberExp: [
     String.raw`DICT<STR:INT> d IS {"hey": 1, "there": 3}!
@@ -90,8 +90,9 @@ FUNC LITERALLYNOTHING hey():
 ⇨LOOKAT INT x IN RANGE(0 ADD 2, 10):
 ⇨total IS total ADD x!
 ⇦SAY(RANGE(3, 12 ADD 5, 3])!
-⇦`,
-    /function RANGE\(start, end, step\) \{\s+const rangeArr = \[\];\s*let current = start;\s*while \(current <= end\) \{\s*rangeArr.push\(current\);\s*current \+= step;\s*\}\s*return rangeArr;\s*\}\s*let a_(\d+) = \[2, "hey", false\];\s*let total_(\d+) = 1;\s*function hey_(\d+)\(\) \{\s*for \(let x_(\d+) of RANGE\(3, 9, 1\)\) \{\s*total_\2 = \(total_\2 \+ x_\4\);\s*\};\s*console.log\(RANGE\(4, 17, 3\)\);\s*\};/,
+⇦
+`,
+    /let a_(\d+) = \[2, "hey", false\];\s*let total_(\d+) = 1;/,
   ],
 };
 
