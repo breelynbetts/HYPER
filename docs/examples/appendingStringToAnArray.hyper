@@ -1,3 +1,5 @@
 ARR<STR> array IS ["Hi", "I'm", "Hyper"]!
 
 SAY(CONCAT("element @ 0: ", array[1]))!
+
+DICT<STR:FLT> alphabet IS {"a": 1.0 DIV 1, "b": 2.0 MULT 1.5, "c": 2.0 ADD 3.0}!

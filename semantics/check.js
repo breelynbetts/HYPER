@@ -76,7 +76,8 @@ module.exports = {
       (t1.constructor === ArrayType && t2 === SequenceType) ||
       (t1 !== NoneType && t2 === AnyType) ||
       (t1 === IntType && t2.constructor === UnionType) ||
-      (t2 !== NoneType && t1 === AnyType)
+      (t2 !== NoneType && t1 === AnyType) ||
+      (t2 === IntType && t1 === FloatType)
     ) {
       return true;
     } else return this.identicalTypes(t1, t2);

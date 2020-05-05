@@ -96,6 +96,9 @@ TUP<STR,FLT,FLT> tuple IS ("hello!", 2, 2.4)!
 SAY(d.GET("hey"))!
 `,
   ],
+  dict2: [
+    String.raw`DICT<STR:FLT> alphabet IS {"a": 1.0 DIV 1, "b": 2.0, "c": 2.0 ADD 3.0}!`,
+  ],
 };
 
 describe("The semantic analyzer", () => {
