@@ -52,6 +52,18 @@ function declaredFuncIsCalled(decl, calls, stmts) {
   return stmts.filter((s) => !(s instanceof Func && decl.includes(s.id)));
 }
 
+function removeStatementsAfterReturn(stmts) {
+  let optimizedBody = [];
+  for (let i = 0; i < stmts.length; i++) {
+    if (stmts[i] instanceof ReturnStatement) {
+      optimizedBody.push(stmts[i]);
+      break;
+    }
+    optimizedBody.push(stmts[i]);
+  }
+  return optimizedBody;
+}
+
 let functionDeclarations = [];
 let calledFunctions = [];
 
@@ -110,7 +122,10 @@ Func.prototype.optimize = function() {
   this.builtin ? "" : functionDeclarations.push(this.id);
   if (this.body) {
     this.body = this.body.map((s) => s.optimize());
+    this.body = removeStatementsAfterReturn(this.body);
   }
+  // let body = this.body ? removeStatementsAfterReturn(this.body) : "";
+  // console.log(body);
   return this;
 };
 

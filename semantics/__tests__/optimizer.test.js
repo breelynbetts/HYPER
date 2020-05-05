@@ -94,6 +94,19 @@ FUNC LITERALLYNOTHING hey():
 `,
     /let a_(\d+) = \[2, "hey", false\];\s*let total_(\d+) = 1;/,
   ],
+  removeLinesAfterReturn: [
+    String.raw`SAY(gcd(10, 25))!
+FUNC INT gcd(INT x, INT y):
+⇨UNTIL y NOTEQ 0:
+⇨INT t IS y!
+y IS x MOD y!
+x IS t!
+⇦GIMME x!
+x IS 3 MOD 2!
+SAY("REMOVE THIS LINE!")!
+⇦`,
+    /console.log\(gcd_(\d+)\(10, 25\)\);\s*function gcd_\1\(x_(\d+), y_(\d+)\) \{\s*while \(\(y_\3 !== 0\)\) \{\s*let t_(\d+) = y_\3;\s*y_\3 = \(x_\2 % y_\3\);\s*x_\2 = t_\4;\s*\};\s*return x_\2;\s*\};/,
+  ],
 };
 
 describe("The JavaScript generator with optimization", () => {
