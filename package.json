@@ -20,12 +20,13 @@
   "dependencies": {
     "js-beautify": "^1.11.0",
     "ohm-js": "^0.14.0",
-    "yargs": "^15.1.0"
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "jest": "^25.1.0",
+    "mocha-simple-html-reporter": "^1.1.0",
     "prettier": "1.19.1"
   }
 }
