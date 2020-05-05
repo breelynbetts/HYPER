@@ -1,7 +1,7 @@
 const parse = require("../../ast/parser");
 const analyze = require("../../semantics/analyzer");
 const generate = require("../../backend/javascript-generator");
-require("../../semantics/optimizer");
+const optimize = require("../../semantics/optimizer");
 
 const fixture = {
   arithmetic: [String.raw`5 MULT -2 ADD 8`, String.raw`-2`],
@@ -114,7 +114,7 @@ describe("The JavaScript generator with optimization", () => {
     test(`produces the correct output for ${name}`, (done) => {
       const ast = parse(source);
       analyze(ast);
-      ast.optimize();
+      optimize(ast);
       expect(generate(ast)).toMatch(expected);
       done();
     });
