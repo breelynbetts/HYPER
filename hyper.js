@@ -5,7 +5,7 @@ const yargs = require("yargs");
 const parse = require("./ast/parser");
 const analyze = require("./semantics/analyzer");
 const graphView = require("./semantics/viewer");
-// require("./semantics/optimizer");
+const optimize = require("./semantics/optimizer");
 const generate = require("./backend/javascript-generator");
 
 function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
@@ -15,8 +15,7 @@ function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
   }
   analyze(program);
   if (shouldOptimize) {
-    console.log(shouldOptimize);
-    // optimize(program);
+    optimize(program);
   }
   if (frontEndOnly) {
     return graphView(program);
