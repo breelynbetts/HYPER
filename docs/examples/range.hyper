@@ -1,7 +1,5 @@
 FLT total IS 1!
 
-hey()
-
 FUNC LITERALLYNOTHING hey():
     LOOKAT INT x IN RANGE(0, 10):
         total IS total ADD x!
