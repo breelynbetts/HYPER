@@ -1,5 +1,4 @@
-DICT<STR:INT> d IS {"hey": 1, "there": 3}!
+DICT<STR:INT> d IS {"hey": 1 ADD 4, "there": 3 MOD 1}!
 SAY(d.GET("there"))!
 SAY(KEYS(d))!
 SAY(VALUES(d))!
-SAY(d.SIZE())!
